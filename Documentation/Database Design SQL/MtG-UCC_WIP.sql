@@ -11,45 +11,51 @@ CREATE TABLE [User].[Access] (
 );
 
 CREATE TABLE [MtG].[AvailableSets] (
-    SetCode VARCHAR(10) PRIMARY KEY,
+    ID VARCHAR(36) PRIMARY KEY,
+    SetCode VARCHAR(10),
     SetName VARCHAR(100),
     SetType VARCHAR(25),
-    SetURL VARCHAR(250)
+    Released DATE,
+    SymbolUrl VARCHAR(250)
 );
 
 CREATE TABLE [MtG].[Card] (
     ID VARCHAR(36) PRIMARY KEY,
-    Name VARCHAR(141) NOT NULL,
-    ReleasedAt DATE NOT NULL,
-    Layout VARCHAR(25) NOT NULL DEFAULT('Normal'),
-    ConvertedManaCost DECIMAL(3,1) NOT NULL,
-    TypeLine VARCHAR(150) NOT NULL,
-    Reserved NCHAR(1) NOT NULL DEFAULT('N'),
-    Foil NCHAR(1) NOT NULL DEFAULT('N'),
-    Nonfoil NCHAR(1) NOT NULL DEFAULT('Y'),
-    Oversized NCHAR(1) NOT NULL DEFAULT('N'),
-    Promo NCHAR(1) NOT NULL DEFAULT('N'),
-    Reprint NCHAR(1) NOT NULL DEFAULT('N'),
-    SetCode VARCHAR(10) NOT NULL,
-    SetName VARCHAR(100) NOT NULL,
-    RulingsURL VARCHAR(250) NOT NULL,
-    Rarity VARCHAR(12) NOT NULL DEFAULT('Common'),
-    Artist VARCHAR(100) NOT NULL,
-    FullArt NCHAR(1) NOT NULL DEFAULT('N'),
-    Textless NCHAR(1) NOT NULL DEFAULT('N'),
+    Name VARCHAR(141),
+    ReleasedAt DATE,
+    Layout VARCHAR(25) DEFAULT('Normal'),
+    ConvertedManaCost DECIMAL(3,1),
+    TypeLine VARCHAR(150),
+    Reserved NCHAR(1) DEFAULT('N'),
+    Foil NCHAR(1) DEFAULT('N'),
+    Nonfoil NCHAR(1) DEFAULT('Y'),
+    Oversized NCHAR(1) DEFAULT('N'),
+    Promo NCHAR(1) DEFAULT('N'),
+    Reprint NCHAR(1) DEFAULT('N'),
+    SetID VARCHAR(36) FOREIGN KEY REFERENCES [MtG].[AvailableSets](ID),
+    RulingsURL VARCHAR(250),
+    Rarity VARCHAR(12) DEFAULT('Common'),
+    Artist VARCHAR(100),
+    FullArt NCHAR(1) DEFAULT('N'),
+    Textless NCHAR(1) DEFAULT('N')
 );
 
 CREATE TABLE [MtG].[Face] (
-    CardID VARCHAR(36) FOREIGN KEY REFERENCES [MtG].[Card](ID) NOT NULL,
-    FaceName VARCHAR(141) NOT NULL,
-    ManaCost VARCHAR(125) NOT NULL,
+    CardID VARCHAR(36) FOREIGN KEY REFERENCES [MtG].[Card](ID),
+    FaceName VARCHAR(141),
+    ManaCost VARCHAR(125),
+    TypeLine VARCHAR(150),
+    Power INT,
+    Toughness INT,
+    OracleText VARCHAR(500),
+    FlavorText VARCHAR(500),
     CONSTRAINT CPK_FaceID PRIMARY KEY (CardID, FaceName)
 );
 
 CREATE TABLE [MtG].[AvailableGrades] (
-    GradeID VARCHAR(12) PRIMARY KEY,
-    Type VARCHAR(10) NOT NULL,
-    Name VARCHAR(20) NOT NULL,
+    ID VARCHAR(12) PRIMARY KEY,
+    Type VARCHAR(10),
+    Name VARCHAR(20),
     Description VARCHAR(MAX)
 );
 
@@ -63,9 +69,9 @@ CREATE TABLE [User].[Compendium] (
 CREATE TABLE [User].[Collection] (
     CompendiumID VARCHAR(MAX),
     CardID VARCHAR(36) FOREIGN KEY REFERENCES [MtG].[Card](ID),
-    Condition VARCHAR(12) FOREIGN KEY REFERENCES [MtG].[AvailableGrades](GradeID) DEFAULT('Unknown') NOT NULL,
+    Condition VARCHAR(12) FOREIGN KEY REFERENCES [MtG].[AvailableGrades](ID) DEFAULT('UO-UKN') NOT NULL,
     StorageLocation VARCHAR(250) DEFAULT('Undefined') NOT NULL,
-    Quantity INT DEFAULT(1) NOT NULL,
+    Quantity INT DEFAULT(1),
     CONSTRAINT CPK_UserCollection PRIMARY KEY (CompendiumID, CardID, Condition, StorageLocation)
 );
 
@@ -73,30 +79,30 @@ CREATE TABLE [User].[Details] (
     AccountID NVARCHAR(450) PRIMARY KEY,
     CompendiumID VARCHAR(MAX) FOREIGN KEY REFERENCES [User].[Compendium](ID), /* Handled by Trigger */
     AccessID VARCHAR(45) FOREIGN KEY REFERENCES [User].[Access](ID), /* Handled by Trigger */
-    CONSTRAINT FK_DetailsAccountID FOREIGN KEY REFERENCES [Admin].[AspNetUsers](Id)
+    CONSTRAINT FK_DetailsAccountID FOREIGN KEY (AccountID) REFERENCES [Admin].[AspNetUsers](Id)
 );
 
 CREATE TABLE [MtG].[AvailableColors] (
     ColorID CHAR(1) PRIMARY KEY,
-    ColorName VARCHAR(5) UNIQUE NOT NULL,
-    LandName VARCHAR(8) UNIQUE NOT NULL
+    ColorName VARCHAR(5) UNIQUE,
+    LandName VARCHAR(8) UNIQUE
 );
 
 CREATE TABLE [MtG].[Colors] (
     CardID VARCHAR(36) FOREIGN KEY REFERENCES [MtG].[Card](ID) NOT NULL,
     FaceName VARCHAR(141) FOREIGN KEY REFERENCES [MtG].[Face](FaceName) NOT NULL,
     ColorID CHAR(1) FOREIGN KEY REFERENCES [MtG].[AvailableColors](ColorID) NOT NULL,
-    CONSTRAINT CFK_FaceID FOREIGN KEY REFERENCES [MtG].[Face](ID, FaceName),
+    CONSTRAINT CFK_FaceID FOREIGN KEY (CardID, FaceName) REFERENCES [MtG].[Face](ID, FaceName),
     CONSTRAINT CPK_CardColorID PRIMARY KEY (CardID, FaceName, ColorID)
 );
 
 CREATE TABLE [MtG].[AvailableIdentities] (
     IdentityName VARCHAR(8) PRIMARY KEY,
-    Black NCHAR(1) NOT NULL,
-    Green NCHAR(1) NOT NULL,
-    Red NCHAR(1) NOT NULL,
-    Blue NCHAR(1) NOT NULL,
-    White NCHAR(1) NOT NULL
+    Black NCHAR(1) DEFAULT('N'),
+    Green NCHAR(1) DEFAULT('N'),
+    Red NCHAR(1) DEFAULT('N'),
+    Blue NCHAR(1) DEFAULT('N'),
+    White NCHAR(1) DEFAULT('N')
 );
 
 CREATE TABLE [MtG].[ColorIdentity] (
@@ -118,14 +124,14 @@ CREATE TABLE [MtG].[Keywords] (
 );
 
 CREATE TABLE [MtG].[Prices] (
-    PriceID INT IDENTITY PRIMARY KEY,
-    CardID VARCHAR(36) UNIQUE FOREIGN KEY REFERENCES [MtG].[Card](ID) NOT NULL,
+    CardID VARCHAR(36) PRIMARY KEY,
     USD DECIMAL(10,2) NULL,
     USD_Foil DECIMAL(10,2) NULL,
     USD_Etched DECIMAL(10,2) NULL,
     EUR DECIMAL(10,2) NULL,
     EUR_Foil DECIMAL(10,2) NULL,
-    TIX DECIMAL(10,2) NULL
+    TIX DECIMAL(10,2) NULL,
+    CONSTRAINT FK_CardPrices FOREIGN KEY (CardID) REFERENCES [MtG].[Card](ID)
 );
 
 CREATE TABLE [MtG].[ImageURLs] (
@@ -141,59 +147,63 @@ CREATE TABLE [MtG].[ImageURLs] (
 );
 
 CREATE TABLE [MtG].[CardURLs] (
-    CardID VARCHAR(36) FOREIGN KEY REFERENCES [MtG].[Card](ID) NOT NULL,
+    CardID VARCHAR(36) PRIMARY KEY,
     Scryfall VARCHAR(250) NULL,
     Gatherer VARCHAR(250) NULL,
     EDHRec VARCHAR(250) NULL
+    CONSTRAINT FK_CardUrls FOREIGN KEY (CardID) REFERENCES [MtG].[Card](ID)
 );
 
 CREATE TABLE [MtG].[PurchaseURLs] (
-    CardID VARCHAR(36) FOREIGN KEY REFERENCES [MtG].[Card](ID) NOT NULL,
+    CardID VARCHAR(36) PRIMARY KEY,
     TCGPlayer VARCHAR(250) NULL,
     CardMarket VARCHAR(250) NULL,
-    CardHoarder VARCHAR(250) NULL
+    CardHoarder VARCHAR(250) NULL,
+    CONSTRAINT FK_CardPurchaseUrls FOREIGN KEY (CardID) REFERENCES [MtG].[Card](ID)
 );
 
 CREATE TABLE [MtG].[Artist] (
-    ID VARCHAR(36) PRIMARY KEY,
-    Name VARCHAR(50) NOT NULL
+    CardID VARCHAR(36) FOREIGN KEY REFERENCES [MtG].[Card](ID) NOT NULL,
+    FaceName VARCHAR(141) FOREIGN KEY REFERENCES [MtG].[Face](FaceName) NOT NULL,
+    Name VARCHAR(50),
+    CONSTRAINT CPK_CardArtist PRIMARY KEY (CardID, FaceName, Name)
 );
 
-CREATE TABLE [MtG].[ArtistIDs] (
+/*CREATE TABLE [MtG].[ArtistIDs] (
     CardID VARCHAR(36) FOREIGN KEY REFERENCES [MtG].[Card](ID) NOT NULL,
     FaceName VARCHAR(141) FOREIGN KEY REFERENCES [MtG].[Face](FaceName) NOT NULL,
     ArtistID VARCHAR(36) FOREIGN KEY REFERENCES [MtG].[Artist](ID) NOT NULL,
     CONSTRAINT CPK_FaceArtistID PRIMARY KEY (CardID, FaceName, ArtistID)
-);
+);*/
 
 CREATE TABLE [MtG].[Legalities] (
-    CardID VARCHAR(36) PRIMARY KEY REFERENCES [MtG].[Card](ID) NOT NULL,
-    Standard NCHAR(1) NOT NULL DEFAULT('N'),
-    Future NCHAR(1) NOT NULL DEFAULT('N'),
-    Historic NCHAR(1) NOT NULL DEFAULT('N'),
-    Gladiator NCHAR(1) NOT NULL DEFAULT('N'),
-    Pioneer NCHAR(1) NOT NULL DEFAULT('N'),
-    Explorer NCHAR(1) NOT NULL DEFAULT('N'),
-    Modern NCHAR(1) NOT NULL DEFAULT('N'),
-    Legacy NCHAR(1) NOT NULL DEFAULT('N'),
-    Pauper NCHAR(1) NOT NULL DEFAULT('N'),
-    Vintage NCHAR(1) NOT NULL DEFAULT('N'),
-    Penny NCHAR(1) NOT NULL DEFAULT('N'),
-    Commander NCHAR(1) NOT NULL DEFAULT('N'),
-    Oathbreaker NCHAR(1) NOT NULL DEFAULT('N'),
-    Brawl NCHAR(1) NOT NULL DEFAULT('N'),
-    HistoricBrawl NCHAR(1) NOT NULL DEFAULT('N'),
-    Alchemy NCHAR(1) NOT NULL DEFAULT('N'),
-    PauperCommander NCHAR(1) NOT NULL DEFAULT('N'),
-    Duel NCHAR(1) NOT NULL DEFAULT('N'),
-    Oldschool NCHAR(1) NOT NULL DEFAULT('N'),
-    Premodern NCHAR(1) NOT NULL DEFAULT('N'),
-    Predh NCHAR(1) NOT NULL DEFAULT('N')
+    CardID VARCHAR(36) PRIMARY KEY REFERENCES [MtG].[Card](ID),
+    Standard NCHAR(1) DEFAULT('N'),
+    Future NCHAR(1) DEFAULT('N'),
+    Historic NCHAR(1) DEFAULT('N'),
+    Gladiator NCHAR(1) DEFAULT('N'),
+    Pioneer NCHAR(1) DEFAULT('N'),
+    Explorer NCHAR(1) DEFAULT('N'),
+    Modern NCHAR(1) DEFAULT('N'),
+    Legacy NCHAR(1) DEFAULT('N'),
+    Pauper NCHAR(1) DEFAULT('N'),
+    Vintage NCHAR(1) DEFAULT('N'),
+    Penny NCHAR(1) DEFAULT('N'),
+    Commander NCHAR(1) DEFAULT('N'),
+    Oathbreaker NCHAR(1) DEFAULT('N'),
+    Brawl NCHAR(1) DEFAULT('N'),
+    HistoricBrawl NCHAR(1) DEFAULT('N'),
+    Alchemy NCHAR(1) DEFAULT('N'),
+    PauperCommander NCHAR(1) DEFAULT('N'),
+    Duel NCHAR(1) DEFAULT('N'),
+    Oldschool NCHAR(1) DEFAULT('N'),
+    Premodern NCHAR(1) DEFAULT('N'),
+    Predh NCHAR(1) DEFAULT('N')
 );
 
 CREATE TABLE [MtG].[AvailableFinishes] (
     Name VARCHAR(8) PRIMARY KEY,
-    Description VARCHAR(MAX) NOT NULL
+    Description VARCHAR(MAX)
 );
 
 CREATE TABLE [MtG].[Finishes] (
@@ -226,7 +236,8 @@ INSERT INTO [MtG].[AvailableGrades] VALUES('OG-N0', 'Official', 'Authentic Only'
 INSERT INTO [MtG].[AvailableGrades] VALUES('OG-AA', 'Official', 'Authentic Altered', 'Officially certified card that proves it is authentic, but has been refused a grade due to the existence of alterations. The term altered may mean that the card shows evidence of one or more of the following: trimming, recoloring, restoration, and/or cleaning.');
 
 /* Available Grades - Unofficial Grading */
-INSERT INTO [MtG].[AvailableGrades] VALUES('UO-NM', 'Unofficial', 'Near Mint', 'Self-graded card identified as being in Mint or Near Mint condition. Near Mint condition cards display minimal or no wear or damage. The card should appear “fresh out of the pack.” Other than minor chipping, indentation, or scratches, the card shows no moderate or major signs of damage. These cards may be “never played” cards or cards that have been played with sleeves.');
+INSERT INTO [MtG].[AvailableGrades] VALUES('UO-UKN', 'Unofficial', 'Unknown', 'A card with an undetermined grade.');
+INSERT INTO [MtG].[AvailableGrades] VALUES('UO-NM', 'Unofficial', 'Near Mint', 'Self-graded card identified as being in Mint or Near Mint condition. Near Mint condition cards display minimal or no wear or damage. The card should appear "fresh out of the pack." Other than minor chipping, indentation, or scratches, the card shows no moderate or major signs of damage. These cards may be "never played" cards or cards that have been played with sleeves.');
 INSERT INTO [MtG].[AvailableGrades] VALUES('UO-LP', 'Unofficial', 'Lightly Played', 'Self-graded card identified as being lightly played. Lightly Played condition cards may have minor border or corner wear, scruffs or scratches. There are no major defects such as grime, bends, or issues with the structural integrity of the card. Noticeable imperfections are okay, but none should be too severe or at too high a volume.');
 INSERT INTO [MtG].[AvailableGrades] VALUES('UO-MP', 'Unofficial', 'Moderately Played', 'Self-graded card identified as being moderately played. Moderately Played condition cards can have border wear, corner wear, scratching or scuffing, creasing or whitening, or any combination of moderate examples of these flaws. A Moderately Played card may have some imperfection impacting a small area of the card from mishandling or poor storage, such as creasing that doesn''t affect card integrity, in combination with other issues such as scratches, scuffs, or border/edge wear.');
 INSERT INTO [MtG].[AvailableGrades] VALUES('UO-HP', 'Unofficial', 'Heavily Played', 'Self-graded card identified as being heavily played. Heavily Played condition cards show a major amount of wear. Cards can show a variety of moderate imperfections along with creasing, whitening, and bends. Heavily Played cards can also have flaws that impact the integrity of the card, but the card can still be sleeve playable.');
@@ -460,5 +471,62 @@ INSERT INTO [MtG].[AvailableKeywords] VALUES('Landwalk', 'This ability is writte
 INSERT INTO [MtG].[AvailableKeywords] VALUES('Phasing', 'Phasing introduced a new rule to the game. Cards with the status "phased out" are treated as though they do not exist except for cards that specifically interact with phased-out cards. At the beginning of each player''s turn, all permanents the player controls which have phasing become "phased out", along with anything attached to the phasing cards. Any cards the player controls which were phased out become "phased in" and return to the battlefield at the same time. Phasing in or out does not tap or untap the permanent. A token that phases out ceases to exist, while anything attached to it phases out and does not phase in on the token''s controller''s next turn.');
 INSERT INTO [MtG].[AvailableKeywords] VALUES('Regenerate', ' An ability such as "Regenerate [this creature]" could be activated; in this context "regenerate" means "set up a regeneration shield", which protects the affected permanent from the next time it would be destroyed (either due to damage or to "destroy" effects). Instead of being destroyed, the permanent would become tapped and be removed from combat. The second keyword action refers to when this actually occurs: cards like Skeleton Scavengers have a delayed triggered ability that only triggers when the creature has a destroy effect prevented by its regeneration ability.');
 INSERT INTO [MtG].[AvailableKeywords] VALUES('Shroud', 'A player or permanent with shroud cannot be the target of spells or abilities (even their own).');
+
+/* Available Sets */
+
+/* Available Sets - Core Editions */
+INSERT INTO [MtG].[AvailableSets] VALUES('288bd996-960e-448b-a187-9504c1930c2c', 'LEA', 'Limited Edition Alpha', 'Core', 'August 1993', 'https://static.wikia.nocookie.net/mtg/images/d/dc/Limited_Edition_Alpha_Common.png/revision/latest?cb=20140407040302');
+INSERT INTO [MtG].[AvailableSets] VALUES('5307bd88-637c-4a5c-9801-a0d887715302', 'LEB', 'Limited Edition Beta', 'Core', 'October 1993', 'https://static.wikia.nocookie.net/mtg/images/5/58/Limited_Edition_Beta_Common.png/revision/latest?cb=20140407040558');
+INSERT INTO [MtG].[AvailableSets] VALUES('cd7694b9-339c-405d-a991-14413d4f6d5c', '2ED', 'Unlimited Edition', 'Core', 'December 1993', 'https://static.wikia.nocookie.net/mtg/images/6/6e/Unlimited_Edition_Common.png/revision/latest?cb=20140407041833');
+INSERT INTO [MtG].[AvailableSets] VALUES('45a69797-8adf-468e-a4e1-ba81fd9d66ac', '3ED', 'Revised Edition', 'Core', 'April 1994', 'https://static.wikia.nocookie.net/mtg/images/2/27/Revised_Edition_Common.png/revision/latest?cb=20140407042040');
+INSERT INTO [MtG].[AvailableSets] VALUES('2dd259d4-dc13-4956-a2dc-3e1d70b4a743', '4ED', 'Fourth Edition', 'Core', 'May 1995', 'https://static.wikia.nocookie.net/mtg/images/6/69/Fourth_Edition_Common.png/revision/latest?cb=20140407042805');
+INSERT INTO [MtG].[AvailableSets] VALUES('5afd2f4b-8309-4f45-a2b2-3785018474cb', '5ED', 'Fifth Edition', 'Core', 'March 1997', 'https://static.wikia.nocookie.net/mtg/images/0/06/Fifth_Edition_Common.png/revision/latest?cb=20140407043124');
+INSERT INTO [MtG].[AvailableSets] VALUES('78ee1957-d5d4-4551-acae-b1b418e8a50b', '6ED', 'Classic Sixth Edition', 'Core', 'April 1999', 'https://static.wikia.nocookie.net/mtg/images/1/13/Classic_Sixth_Edition_Common.png/revision/latest?cb=20161001185157');
+INSERT INTO [MtG].[AvailableSets] VALUES('230f38aa-9511-4db8-a3aa-aeddbc3f7bb9', '7ED', 'Seventh Edition', 'Core', 'April 2001', 'https://static.wikia.nocookie.net/mtg/images/d/dd/Seventh_Edition_Common.png/revision/latest?cb=20140407043705');
+INSERT INTO [MtG].[AvailableSets] VALUES('cae8d29d-5979-4d8f-884d-7f3183bcc886', '8ED', 'Eighth Edition', 'Core', 'July 2003', 'https://static.wikia.nocookie.net/mtg/images/7/71/Eighth_Edition_Common.png/revision/latest?cb=20140407044104');
+INSERT INTO [MtG].[AvailableSets] VALUES('e70c8572-4732-4e92-a140-b4e3c1c84c93', '9ED', 'Ninth Edition', 'Core', 'July 2005', 'https://static.wikia.nocookie.net/mtg/images/b/b0/Ninth_Edition_Common.png/revision/latest?cb=20140407044329');
+INSERT INTO [MtG].[AvailableSets] VALUES('a66a6124-0d81-488d-b080-91f5ba7fbad0', '10E', 'Tenth Edition', 'Core', 'July 2007', 'https://static.wikia.nocookie.net/mtg/images/3/38/Tenth_Edition_Common.png/revision/latest?cb=20140407044527');
+INSERT INTO [MtG].[AvailableSets] VALUES('0dba38a9-6b9d-4768-9831-4e03e8970a0b', 'M10', 'Magic 2010', 'Core', 'July 2009', 'https://static.wikia.nocookie.net/mtg/images/7/75/Magic_2010_Common.png/revision/latest?cb=20140407045719');
+INSERT INTO [MtG].[AvailableSets] VALUES('485d2468-18c8-42a4-9482-ca1c51e0470e', 'M11', 'Magic 2011', 'Core', 'July 2010', 'https://static.wikia.nocookie.net/mtg/images/3/3f/Magic_2011_Common.png/revision/latest?cb=20140407051028');
+INSERT INTO [MtG].[AvailableSets] VALUES('5cdd2643-229c-4441-a62a-c34e4b531e1c', 'M12', 'Magic 2012', 'Core', 'July 2011', 'https://static.wikia.nocookie.net/mtg/images/9/92/Magic_2012_Common.png/revision/latest?cb=20140407154534');
+INSERT INTO [MtG].[AvailableSets] VALUES('f9b0c6f4-8a4f-4f36-ad3c-e1e16fb8535d', 'M13', 'Magic 2013', 'Core', 'July 2012', 'https://static.wikia.nocookie.net/mtg/images/f/f1/Magic_2013_Common.png/revision/latest?cb=20140407155121');
+INSERT INTO [MtG].[AvailableSets] VALUES('e03ee1c0-ecd2-4fcc-ac3c-e8fdb103a847', 'M14', 'Magic 2014', 'Core', 'July 2013', 'https://static.wikia.nocookie.net/mtg/images/9/9c/Magic_2014_Common.png/revision/latest?cb=20140406170729');
+INSERT INTO [MtG].[AvailableSets] VALUES('6ce49890-3b37-42a5-8932-dbeef1d7b62c', 'M15', 'Magic 2015', 'Core', 'July 2014', 'https://static.wikia.nocookie.net/mtg/images/b/be/Magic_2015_Common.png/revision/latest?cb=20160302194623');
+INSERT INTO [MtG].[AvailableSets] VALUES('0eeb9a9a-20ac-404d-b55f-aeb7a43a7f62', 'ORI', 'Magic Origins', 'Core', 'July 2015', 'https://static.wikia.nocookie.net/mtg/images/6/63/Magic_Origins_Common.png/revision/latest?cb=20160404180428');
+INSERT INTO [MtG].[AvailableSets] VALUES('2f5f2509-56db-414d-9a7e-6e312ec3760c', 'M19', 'Core Set 2019', 'Core', 'July 2018', 'Missing');
+INSERT INTO [MtG].[AvailableSets] VALUES('4a787360-9767-4f44-80b1-2405dc5e39c7', 'M20', 'Core Set 2020', 'Core', 'July 2019', 'Missing');
+INSERT INTO [MtG].[AvailableSets] VALUES('bc94aba1-7376-4e02-a12d-3a2efb66ab0f', 'M21', 'Core Set 2021', 'Core', 'July 2020', 'Missing');
+
+/* Available Sets - Standard Sets */
+INSERT INTO [MtG].[AvailableSets] VALUES('', '', '', '', '', '');
+INSERT INTO [MtG].[AvailableSets] VALUES('', '', '', '', '', '');
+INSERT INTO [MtG].[AvailableSets] VALUES('', '', '', '', '', '');
+INSERT INTO [MtG].[AvailableSets] VALUES('', '', '', '', '', '');
+INSERT INTO [MtG].[AvailableSets] VALUES('', '', '', '', '', '');
+INSERT INTO [MtG].[AvailableSets] VALUES('', '', '', '', '', '');
+INSERT INTO [MtG].[AvailableSets] VALUES('', '', '', '', '', '');
+INSERT INTO [MtG].[AvailableSets] VALUES('', '', '', '', '', '');
+INSERT INTO [MtG].[AvailableSets] VALUES('', '', '', '', '', '');
+INSERT INTO [MtG].[AvailableSets] VALUES('', '', '', '', '', '');
+INSERT INTO [MtG].[AvailableSets] VALUES('', '', '', '', '', '');
+INSERT INTO [MtG].[AvailableSets] VALUES('', '', '', '', '', '');
+INSERT INTO [MtG].[AvailableSets] VALUES('', '', '', '', '', '');
+INSERT INTO [MtG].[AvailableSets] VALUES('', '', '', '', '', '');
+INSERT INTO [MtG].[AvailableSets] VALUES('', '', '', '', '', '');
+INSERT INTO [MtG].[AvailableSets] VALUES('', '', '', '', '', '');
+INSERT INTO [MtG].[AvailableSets] VALUES('', '', '', '', '', '');
+INSERT INTO [MtG].[AvailableSets] VALUES('', '', '', '', '', '');
+INSERT INTO [MtG].[AvailableSets] VALUES('', '', '', '', '', '');
+INSERT INTO [MtG].[AvailableSets] VALUES('', '', '', '', '', '');
+INSERT INTO [MtG].[AvailableSets] VALUES('', '', '', '', '', '');
+INSERT INTO [MtG].[AvailableSets] VALUES('', '', '', '', '', '');
+INSERT INTO [MtG].[AvailableSets] VALUES('', '', '', '', '', '');
+INSERT INTO [MtG].[AvailableSets] VALUES('', '', '', '', '', '');
+INSERT INTO [MtG].[AvailableSets] VALUES('', '', '', '', '', '');
+
+/* Available Sets - Special Sets */
+
+
+
 
 COMMIT TRANSACTION
