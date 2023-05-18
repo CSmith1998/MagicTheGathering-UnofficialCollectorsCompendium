@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace MtG_UCC.Models
 {
-    public partial class MtGUCCDataRepositoryContext : DbContext
+    public partial class MtG_UCC_Context : DbContext
     {
-        public MtGUCCDataRepositoryContext()
+        public MtG_UCC_Context()
         {
         }
 
-        public MtGUCCDataRepositoryContext(DbContextOptions<MtGUCCDataRepositoryContext> options)
+        public MtG_UCC_Context(DbContextOptions<MtG_UCC_Context> options)
             : base(options)
         {
         }
@@ -41,15 +41,6 @@ namespace MtG_UCC.Models
         public virtual DbSet<Legality> Legalities { get; set; } = null!;
         public virtual DbSet<Price> Prices { get; set; } = null!;
         public virtual DbSet<PurchaseUrl> PurchaseUrls { get; set; } = null!;
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=tcp:enterprise-applications.database.windows.net,1433;Initial Catalog=MtG-UCC-DataRepository;Persist Security Info=False;User ID=SmithCaine;Password=EnterpriseApplications2023;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
-            }
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
