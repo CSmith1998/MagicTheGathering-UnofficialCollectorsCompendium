@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\MtG_UCC.props" />
+</Project>
