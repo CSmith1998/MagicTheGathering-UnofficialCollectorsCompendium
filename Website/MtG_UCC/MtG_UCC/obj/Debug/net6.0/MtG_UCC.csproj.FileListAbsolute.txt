@@ -76,7 +76,6 @@ C:\Users\shado\Documents\GitHub\MagicTheGathering-UnofficialCollectorsCompendium
 C:\Users\shado\Documents\GitHub\MagicTheGathering-UnofficialCollectorsCompendium\Website\MtG_UCC\MtG_UCC\bin\Debug\net6.0\StarkbankEcdsa.dll
 C:\Users\shado\Documents\GitHub\MagicTheGathering-UnofficialCollectorsCompendium\Website\MtG_UCC\MtG_UCC\bin\Debug\net6.0\MessagePack.dll
 C:\Users\shado\Documents\GitHub\MagicTheGathering-UnofficialCollectorsCompendium\Website\MtG_UCC\MtG_UCC\bin\Debug\net6.0\MessagePack.Annotations.dll
-C:\Users\shado\Documents\GitHub\MagicTheGathering-UnofficialCollectorsCompendium\Website\MtG_UCC\MtG_UCC\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
 C:\Users\shado\Documents\GitHub\MagicTheGathering-UnofficialCollectorsCompendium\Website\MtG_UCC\MtG_UCC\bin\Debug\net6.0\Microsoft.AspNetCore.Razor.Language.dll
 C:\Users\shado\Documents\GitHub\MagicTheGathering-UnofficialCollectorsCompendium\Website\MtG_UCC\MtG_UCC\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\shado\Documents\GitHub\MagicTheGathering-UnofficialCollectorsCompendium\Website\MtG_UCC\MtG_UCC\bin\Debug\net6.0\Microsoft.Build.dll
@@ -96,9 +95,7 @@ C:\Users\shado\Documents\GitHub\MagicTheGathering-UnofficialCollectorsCompendium
 C:\Users\shado\Documents\GitHub\MagicTheGathering-UnofficialCollectorsCompendium\Website\MtG_UCC\MtG_UCC\bin\Debug\net6.0\Microsoft.CodeAnalysis.Workspaces.dll
 C:\Users\shado\Documents\GitHub\MagicTheGathering-UnofficialCollectorsCompendium\Website\MtG_UCC\MtG_UCC\bin\Debug\net6.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
 C:\Users\shado\Documents\GitHub\MagicTheGathering-UnofficialCollectorsCompendium\Website\MtG_UCC\MtG_UCC\bin\Debug\net6.0\Microsoft.DiaSymReader.dll
-C:\Users\shado\Documents\GitHub\MagicTheGathering-UnofficialCollectorsCompendium\Website\MtG_UCC\MtG_UCC\bin\Debug\net6.0\Microsoft.DotNet.PlatformAbstractions.dll
 C:\Users\shado\Documents\GitHub\MagicTheGathering-UnofficialCollectorsCompendium\Website\MtG_UCC\MtG_UCC\bin\Debug\net6.0\Microsoft.DotNet.Scaffolding.Shared.dll
-C:\Users\shado\Documents\GitHub\MagicTheGathering-UnofficialCollectorsCompendium\Website\MtG_UCC\MtG_UCC\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
 C:\Users\shado\Documents\GitHub\MagicTheGathering-UnofficialCollectorsCompendium\Website\MtG_UCC\MtG_UCC\bin\Debug\net6.0\Microsoft.NET.StringTools.dll
 C:\Users\shado\Documents\GitHub\MagicTheGathering-UnofficialCollectorsCompendium\Website\MtG_UCC\MtG_UCC\bin\Debug\net6.0\Microsoft.VisualStudio.Debugger.Contracts.dll
 C:\Users\shado\Documents\GitHub\MagicTheGathering-UnofficialCollectorsCompendium\Website\MtG_UCC\MtG_UCC\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.dll
@@ -108,7 +105,6 @@ C:\Users\shado\Documents\GitHub\MagicTheGathering-UnofficialCollectorsCompendium
 C:\Users\shado\Documents\GitHub\MagicTheGathering-UnofficialCollectorsCompendium\Website\MtG_UCC\MtG_UCC\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll
 C:\Users\shado\Documents\GitHub\MagicTheGathering-UnofficialCollectorsCompendium\Website\MtG_UCC\MtG_UCC\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll
 C:\Users\shado\Documents\GitHub\MagicTheGathering-UnofficialCollectorsCompendium\Website\MtG_UCC\MtG_UCC\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
-C:\Users\shado\Documents\GitHub\MagicTheGathering-UnofficialCollectorsCompendium\Website\MtG_UCC\MtG_UCC\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
 C:\Users\shado\Documents\GitHub\MagicTheGathering-UnofficialCollectorsCompendium\Website\MtG_UCC\MtG_UCC\bin\Debug\net6.0\NuGet.Common.dll
 C:\Users\shado\Documents\GitHub\MagicTheGathering-UnofficialCollectorsCompendium\Website\MtG_UCC\MtG_UCC\bin\Debug\net6.0\NuGet.Configuration.dll
 C:\Users\shado\Documents\GitHub\MagicTheGathering-UnofficialCollectorsCompendium\Website\MtG_UCC\MtG_UCC\bin\Debug\net6.0\NuGet.DependencyResolver.Core.dll
@@ -118,7 +114,6 @@ C:\Users\shado\Documents\GitHub\MagicTheGathering-UnofficialCollectorsCompendium
 C:\Users\shado\Documents\GitHub\MagicTheGathering-UnofficialCollectorsCompendium\Website\MtG_UCC\MtG_UCC\bin\Debug\net6.0\NuGet.ProjectModel.dll
 C:\Users\shado\Documents\GitHub\MagicTheGathering-UnofficialCollectorsCompendium\Website\MtG_UCC\MtG_UCC\bin\Debug\net6.0\NuGet.Protocol.dll
 C:\Users\shado\Documents\GitHub\MagicTheGathering-UnofficialCollectorsCompendium\Website\MtG_UCC\MtG_UCC\bin\Debug\net6.0\NuGet.Versioning.dll
-C:\Users\shado\Documents\GitHub\MagicTheGathering-UnofficialCollectorsCompendium\Website\MtG_UCC\MtG_UCC\bin\Debug\net6.0\Recaptcha.Web.dll
 C:\Users\shado\Documents\GitHub\MagicTheGathering-UnofficialCollectorsCompendium\Website\MtG_UCC\MtG_UCC\bin\Debug\net6.0\System.Composition.AttributedModel.dll
 C:\Users\shado\Documents\GitHub\MagicTheGathering-UnofficialCollectorsCompendium\Website\MtG_UCC\MtG_UCC\bin\Debug\net6.0\System.Composition.Convention.dll
 C:\Users\shado\Documents\GitHub\MagicTheGathering-UnofficialCollectorsCompendium\Website\MtG_UCC\MtG_UCC\bin\Debug\net6.0\System.Composition.Hosting.dll
