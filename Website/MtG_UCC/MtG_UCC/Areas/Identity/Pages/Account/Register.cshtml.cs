@@ -18,6 +18,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+<<<<<<< Updated upstream
+=======
+using MtG_UCC.Data;
+using MtG_UCC.Services.GoogleReCaptcha;
+>>>>>>> Stashed changes
 
 namespace MtG_UCC.Areas.Identity.Pages.Account
 {
@@ -29,13 +34,24 @@ namespace MtG_UCC.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+<<<<<<< Updated upstream
+=======
+        private readonly GoogleCaptchaService _captchaService;
+        private ApplicationDbContext _context;
+>>>>>>> Stashed changes
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
+<<<<<<< Updated upstream
             IEmailSender emailSender)
+=======
+            IEmailSender emailSender, 
+            GoogleCaptchaService captchaService,
+            ApplicationDbContext context)
+>>>>>>> Stashed changes
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -43,6 +59,11 @@ namespace MtG_UCC.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+<<<<<<< Updated upstream
+=======
+            _captchaService = captchaService;
+            _context = context;
+>>>>>>> Stashed changes
         }
 
         /// <summary>
@@ -130,6 +151,8 @@ namespace MtG_UCC.Areas.Identity.Pages.Account
                         pageHandler: null,
                         values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
+                    
+                    
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
