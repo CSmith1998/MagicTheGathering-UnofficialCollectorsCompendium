@@ -1,5 +1,5 @@
 /* Card Quantity for Computed Column */
-/*CREATE FUNCTION [MtG].[GetCardTotal] (@CompendiumID VARCHAR(450), @CardName VARCHAR(141))
+/* CREATE FUNCTION [MtG].[GetCardTotal] (@CompendiumID VARCHAR(450), @CardName VARCHAR(141))
 RETURNS INT AS
 BEGIN
     DECLARE @AccountID NVARCHAR(450);
@@ -117,13 +117,11 @@ AS BEGIN
     SET @AccountID = (SELECT i.Id FROM INSERTED as i);
     DECLARE @CompendiumID VARCHAR(450);
     SET @CompendiumID = CONCAT('UC', LEFT(@AccountID, 4), '-', RIGHT(@AccountID, 4), '_', NEXT VALUE FOR [Admin].[sqCounter]);
-    DECLARE @Time VARCHAR(26);
-    SET @Time = CAST(CONVERT(TIME, CURRENT_TIMESTAMP) AS VARCHAR(26));
     DECLARE @AccessID VARCHAR(45);
-    SET @AccessID = CONCAT('UA', LEFT(@AccountID, 4), HASHBYTES('MD2', @Time), 'f');
+    SET @AccessID = CONCAT('UA', LEFT(@AccountID, 4), RIGHT(@AccountID, 4), 'f');
 
     INSERT INTO [User].[Details] VALUES(@AccountID, @CompendiumID, @AccessID);
-END; */
+END;  */
 
 /* User Validated */
 /* CREATE TRIGGER [Admin].[trValidateRole]
@@ -140,7 +138,7 @@ AS BEGIN
 END; */
 
 /* New Card */
-/*CREATE PROCEDURE [MtG].[NewCard] (@CardID VARCHAR(141), @CardJSON NVARCHAR(MAX))
+/* CREATE PROCEDURE [MtG].[NewCard] (@CardID VARCHAR(141), @CardJSON NVARCHAR(MAX))
 AS BEGIN
     IF(@CardID IN (SELECT ID FROM [MtG].[Card])) RETURN;
 
@@ -150,5 +148,44 @@ AS BEGIN
 
     INSERT INTO [MtG].[Card] VALUES(@CardID, (SELECT Name FROM OPENJSON(@CardJSON)));   
     
-END;*/
+END; */
 
+/* Get User's CompendiumID */
+/* CREATE FUNCTION [User].[GetCompendiumID] (@AccountID NVARCHAR(450))
+RETURNS VARCHAR(450) AS 
+BEGIN
+    DECLARE @CompendiumID VARCHAR(450);
+    SET @CompendiumID = (SELECT UD.CompendiumID FROM [User].[Details] AS UD WHERE UD.AccountID = @AccountID);
+
+    RETURN @CompendiumID;
+END; */
+
+/* Check Authorization */
+/* CREATE FUNCTION [Admin].[UserValidation] (@Username NVARCHAR(256), @Password NVARCHAR(MAX))
+RETURNS INT AS
+BEGIN
+    DECLARE @PasswordHash NVARCHAR(MAX);
+    SET @PasswordHash = (SELECT PasswordHash FROM [Admin].[AspNetUsers] WHERE UserName = @Username);
+    IF(@Password != @PasswordHash)
+        RETURN 0;
+    
+    RETURN 1;
+END; */
+
+/* Inserted into Collection */
+/* CREATE TRIGGER [User].[trInsertCollection]
+ON [User].[Collection]
+AFTER UPDATE
+AS BEGIN
+    DECLARE @CompendiumID VARCHAR(450);
+    SET @CompendiumID = (SELECT CompendiumID FROM INSERTED);
+    DECLARE @CardID VARCHAR(36);
+    SET @CardID = (SELECT CardID FROM INSERTED);
+    DECLARE @CardName VARCHAR(141);
+    SET @CardName = (SELECT Name FROM [MtG].[Card] WHERE ID = @CardID);
+
+    IF(@CardName IN (SELECT CardName FROM [MtG].[Compendium] WHERE ID = @CompendiumID))
+        RETURN;
+    ELSE
+        INSERT INTO [User].[Compendium] VALUES(@CompendiumID, @CardName);
+END; */

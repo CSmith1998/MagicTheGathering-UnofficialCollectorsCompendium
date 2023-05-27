@@ -1,0 +1,3 @@
+﻿ MtG_UCC_Testing.IdentityTests.TestRegisterCaptcha(email: "shadownightstrider@gmail.com", password: "1Strangefamily!")
+   Source: IdentityTests.cs line 40
+   Duration: 15 sec

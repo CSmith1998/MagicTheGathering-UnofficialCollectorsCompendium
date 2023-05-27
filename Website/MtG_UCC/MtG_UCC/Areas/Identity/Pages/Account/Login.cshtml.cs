@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using MtG_UCC.Services.GoogleReCaptcha;
 
 namespace MtG_UCC.Areas.Identity.Pages.Account
 {
@@ -21,11 +22,13 @@ namespace MtG_UCC.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly GoogleCaptchaService _captchaService;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, GoogleCaptchaService captchaService)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _captchaService = captchaService;
         }
 
         /// <summary>
@@ -103,6 +106,12 @@ namespace MtG_UCC.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
+            if (await _captchaService.VerifyCaptcha(Request.Form["g-recaptcha-response"]) == false)
+            {
+                ModelState.AddModelError("Recaptcha", "The reCAPTCHA response is invalid.");
+                return Page();
+            }
+
             returnUrl ??= Url.Content("~/");
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
