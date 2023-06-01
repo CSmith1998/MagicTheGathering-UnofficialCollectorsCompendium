@@ -1,0 +1,25 @@
+If name.contains('//') && card_faces > 1 && card_faces not.contains("image_uris")
+	then generate 2 ImageURLs, 1 for each name
+	else (proceed as normal)
+
+
+
+If name.contains('//') && card_faces > 1 && card_faces not.contains("colors")
+	then parse from ManaCost
+	else (proceed as normal)
+
+
+
+On insert. Read scryfall_uri, insert into CardURLs
+
+On insert. If artist > 1, insert + ', '
+
+On insert. If name.contains('//') && card_faces > 1
+	&& keywords != null
+	then parse from text with keywords as base
+	else if keywords != null, facename == fullname
+	(proceed as normal)
+
+On insert. If name not.contains('//') generate face.
+
+check for oracle and flavor text. 

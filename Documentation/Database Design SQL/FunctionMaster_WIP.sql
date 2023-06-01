@@ -189,3 +189,49 @@ AS BEGIN
     ELSE
         INSERT INTO [User].[Compendium] VALUES(@CompendiumID, @CardName);
 END; */
+
+/* String Aggregation */
+/* CREATE FUNCTION [dbo].[fn_DistinctList]
+(
+  @String NVARCHAR(MAX),
+  @Delimiter NVARCHAR(4)
+)
+RETURNS NVARCHAR(MAX)
+AS
+BEGIN
+  DECLARE @Finisher NVARCHAR(5);
+  IF(@Delimiter = '//')
+    SET @Finisher = (' ' + @Delimiter + ' ');
+  ELSE
+    SET @Finisher = (@Delimiter + ' ');
+  DECLARE @Result NVARCHAR(MAX);
+  WITH MY_CTE AS ( SELECT Distinct(value) FROM [dbo].[SimpleSplitFunction](@String, 
+@Delimiter)  )
+  SELECT @Result = STRING_AGG(value, @Finisher) FROM MY_CTE
+  RETURN @Result
+END; */
+
+/* Simple Split */
+/* CREATE FUNCTION [dbo].[SimpleSplitFunction]
+(
+  @List      NVARCHAR(MAX),
+  @Delimiter NVARCHAR(4)
+)
+RETURNS @T TABLE (VALUE NVARCHAR(MAX))
+AS
+BEGIN
+  DECLARE @Seek INT;
+  IF(@Delimiter = '//')
+    SET @Seek = 2;
+  ELSE
+    SET @Seek = 1;
+  WITH A(F,T) AS  
+  (
+    SELECT CAST(1 AS BIGINT), CHARINDEX(@Delimiter, @List)
+    UNION ALL
+    SELECT T + @Seek, CHARINDEX(@Delimiter, @List, T + 1) 
+    FROM A WHERE CHARINDEX(@Delimiter, @List, T + 1) > 0
+  )  
+  INSERT @T SELECT SUBSTRING(@List, F, F - f) FROM A OPTION (MAXRECURSION 0);
+  RETURN;  
+END; */
