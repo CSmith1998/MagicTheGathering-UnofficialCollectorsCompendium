@@ -2,16 +2,20 @@
     public class Collection {
         public String CompendiumID { get; set; }
         public String CardID { get; set; }
-        public String Condition { get; set; }
-        public string StorageLocation { get; set; }
+        public Condition CardCondition { get; set; }
+        public String StorageLocation { get; set; }
         public int Quantity { get; set; }
 
-        public Collection(string compendiumID, string cardID, string condition, string storageLocation, int quantity) {
+        public Collection(string compendiumID, string cardID, Condition condition, string storageLocation, int quantity) {
             CompendiumID = compendiumID;
             CardID = cardID;
-            Condition = condition;
+            CardCondition = condition;
             StorageLocation = storageLocation;
             Quantity = quantity;
+        }
+
+        public Collection() {
+
         }
     }
 }

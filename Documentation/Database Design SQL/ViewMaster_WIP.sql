@@ -14,10 +14,9 @@ INNER JOIN [MtG].[Face] AS Face
 INNER JOIN [MtG].[Colors] AS Color
     ON C.ID = Color.CardID */
 
-
 SELECT C.*,
 
-/*STRING_AGG(CONVERT(NVARCHAR(max), K.FaceName), ', ') as 'FaceNames', STRING_AGG(CONVERT(NVARCHAR(max), K.Keyword), ', ') AS 'Keywords',*/
+STRING_AGG(CONVERT(NVARCHAR(max), K.FaceName), ', ') as 'FaceNames', STRING_AGG(CONVERT(NVARCHAR(max), K.Keyword), ', ') AS 'Keywords',
 
 Legality.Standard, Legality.Future, Legality.Historic,
 Legality.Gladiator, Legality.Pioneer, Legality.Explorer,
@@ -79,12 +78,16 @@ dbo.fn_DistinctList(STRING_AGG(CONVERT(NVARCHAR(max), Face.OracleText), '//'), '
 dbo.fn_DistinctList(STRING_AGG(CONVERT(NVARCHAR(max), Face.FlavorText), '//'), '//') AS 'FlavorText',*/
 Face.ManaCost, K.Keyword, Face.Power, Face.Toughness, Face.OracleText, Face.FlavorText,
 
-STRING_AGG(CONVERT(NVARCHAR(max), Colors.FaceName), ', '), STRING_AGG(CONVERT(NVARCHAR(max), Colors.ColorID), ', '),
+dbo.fn_DistinctList(STRING_AGG(CONVERT(NVARCHAR(max), Colors.FaceName), '//'), '//') AS FaceName,
+dbo.fn_DistinctList(STRING_AGG(CONVERT(NVARCHAR(max), Colors.ColorID), ','), ',') AS ColorID,
 
-STRING_AGG(CONVERT(NVARCHAR(max), ImgUrl.FaceName), ', '), STRING_AGG(CONVERT(NVARCHAR(max), ImgUrl.Small), ', '), 
-STRING_AGG(CONVERT(NVARCHAR(max), ImgUrl.Normal), ', '), STRING_AGG(CONVERT(NVARCHAR(max), ImgUrl.Large), ', '), 
-STRING_AGG(CONVERT(NVARCHAR(max), ImgUrl.PNG), ', '), STRING_AGG(CONVERT(NVARCHAR(max), ImgUrl.ArtCrop), ', '), 
-STRING_AGG(CONVERT(NVARCHAR(max), ImgUrl.BorderCrop), ', ')
+/*dbo.fn_DistinctList(STRING_AGG(CONVERT(NVARCHAR(max), ImgUrl.FaceName), ', '), ',') AS */
+dbo.fn_DistinctList(STRING_AGG(CONVERT(NVARCHAR(max), ImgUrl.Small), ','), ',') AS Small,
+dbo.fn_DistinctList(STRING_AGG(CONVERT(NVARCHAR(max), ImgUrl.Normal), ','), ',') AS Normal,
+dbo.fn_DistinctList(STRING_AGG(CONVERT(NVARCHAR(max), ImgUrl.Large), ','), ',') AS Large,
+dbo.fn_DistinctList(STRING_AGG(CONVERT(NVARCHAR(max), ImgUrl.PNG), ','), ',') AS PNG,
+dbo.fn_DistinctList(STRING_AGG(CONVERT(NVARCHAR(max), ImgUrl.ArtCrop), ','), ',') AS ArtCrop,
+dbo.fn_DistinctList(STRING_AGG(CONVERT(NVARCHAR(max), ImgUrl.BorderCrop), ','), ',') AS BorderCrop
 
 FROM [MtG].[Card] AS C
 LEFT JOIN [MtG].[Keywords] AS K

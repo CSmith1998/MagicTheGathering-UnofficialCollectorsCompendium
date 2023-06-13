@@ -4,13 +4,19 @@ namespace MtG_UCC_API {
 
         public String CardName { get; set; }
 
+        public String ColorIdentity { get; set; }
+
         public int TotalQuantity { get; set; }
 
-        public Compendium(string id, string cardName, int totalQuantity) {
+        public Compendium(string id, string cardName, string colorIdentity, int totalQuantity) {
             ID = id;
             CardName = cardName;
+            ColorIdentity = colorIdentity;
             TotalQuantity = totalQuantity;
         }
 
+        public Compendium() {
+
+        }
     }
 }

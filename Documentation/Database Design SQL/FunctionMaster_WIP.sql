@@ -24,27 +24,94 @@ BEGIN
     RETURN @Qty;
 END; */
 
+/* Get Color Identity for Computed Column */
+/* CREATE FUNCTION [MtG].[GetColorIdentity] (@CardName VARCHAR(141))
+RETURNS VARCHAR(10) AS
+BEGIN
+    DECLARE @ColorIdentity VARCHAR(10);
+    SET @ColorIdentity = (
+        SELECT ColorIdentity 
+        FROM [MtG].[Card] AS C
+        WHERE C.Name = @CardName
+    );
+    RETURN @ColorIdentity
+END; */
+
+/* Get User Collection */
+/* CREATE FUNCTION [User].[GetUserCollection] (
+    @CompendiumID VARCHAR(450),
+    @CardID VARCHAR(36))
+RETURNS TABLE AS
+RETURN (
+    SELECT UC.*, AG.Type, AG.Name, AG.Description
+    FROM [User].[Collection] AS UC
+    LEFT JOIN [MtG].[AvailableGrades] AS AG ON UC.Condition = AG.ID
+    WHERE UC.CompendiumID = @CompendiumID AND UC.CardID = @CardID
+); */
+
+/* Get Username */
+/* CREATE FUNCTION [User].[GetUsername] (
+    @AccountID NVARCHAR(450))
+RETURNS NVARCHAR(256) AS
+BEGIN
+    DECLARE @UserName NVARCHAR(256);
+    SET @UserName = (
+        SELECT UserName
+        FROM [Admin].[AspNetUsers] AS ANU
+        WHERE ANU.Id = @AccountID
+    );
+    RETURN @AccountID; 
+END; */
+
 /* Update Card Quantity */
-/* CREATE PROCEDURE [MtG].[UpdateCardQuantity] (@AccountID NVARCHAR(450), @CardID VARCHAR(36), @Qty INT)
-AS BEGIN
+/* ALTER PROCEDURE [MtG].[UpdateCardQuantity] 
+    @AccountID NVARCHAR(450), 
+    @CardID VARCHAR(36),
+    @Condition VARCHAR(12),
+    @Location VARCHAR(250),
+    @Qty INT
+AS 
+BEGIN
+    SET NOCOUNT ON;
+
     DECLARE @CompendiumID VARCHAR(450);
-    SET @CompendiumID = (
-        SELECT CompendiumID
-        FROM [User].[Details] AS UD
-        WHERE UD.AccountID = @AccountID
-    );
     DECLARE @Quantity INT;
-    SET @Quantity = (
-        SELECT Quantity
-        FROM [User].[Collection] AS UC
-        WHERE UC.CompendiumID = @CompendiumID
-    );
-    IF(@Quantity + @Qty <= 0) DELETE FROM [User].[Collection] WHERE CompendiumID = @CompendiumID AND CardID = @CardID;
-    ELSE UPDATE [User].[Collection] SET Quantity = Quantity + @Qty WHERE CompendiumID = @CompendiumID AND CardID = @CardID;
+    DECLARE @CardName VARCHAR(141);
+    DECLARE @TotalQty INT;
+
+    SELECT @CompendiumID = CompendiumID
+    FROM [User].[Details]
+    WHERE AccountID = @AccountID;
+
+    SELECT @Quantity = Quantity
+    FROM [User].[Collection]
+    WHERE CompendiumID = @CompendiumID AND CardID = @CardID;
+
+    SELECT @CardName = Name
+    FROM [MtG].[Card]
+    WHERE ID = @CardID;
+
+    IF (@Quantity + @Qty <= 0)
+    BEGIN
+        DELETE FROM [User].[Collection]
+        WHERE CompendiumID = @CompendiumID AND CardID = @CardID AND Condition = @Condition AND StorageLocation = @Location;
+
+        IF ((SELECT ISNULL(TotalQty, 0) FROM [User].[Compendium] WHERE ID = @CompendiumID AND CardName = @CardName) <= 0)
+        BEGIN
+            DELETE FROM [User].[Compendium] 
+            WHERE ID = @CompendiumID AND CardName = @CardName;
+        END
+    END
+    ELSE
+    BEGIN
+        UPDATE [User].[Collection] 
+        SET Quantity = Quantity + @Qty 
+        WHERE CompendiumID = @CompendiumID AND CardID = @CardID AND Condition = @Condition AND StorageLocation = @Location;
+    END
 END; */
 
 /* Collection Update Trigger */
-/* CREATE TRIGGER [User].[trUpdateCollection]
+/* ALTER TRIGGER [User].[trUpdateCollection]
 ON [User].[Collection]
 INSTEAD OF UPDATE
 AS BEGIN
@@ -71,7 +138,7 @@ AS BEGIN
     END
 
     UPDATE [User].[Collection] SET Condition = @Condition, StorageLocation = @Location, Quantity = @Qty
-    WHERE CompendiumID = @CompendiumID AND CardID = @CardID;
+    WHERE CompendiumID = @CompendiumID AND CardID = @CardID AND Condition = @Condition AND StorageLocation = @Location;
 END; */
 
 /* Compendium Update Trigger */
@@ -173,19 +240,27 @@ BEGIN
 END; */
 
 /* Inserted into Collection */
-/* CREATE TRIGGER [User].[trInsertCollection]
+/* ALTER TRIGGER [User].[trInsertCollection]
 ON [User].[Collection]
-AFTER UPDATE
+AFTER INSERT
 AS BEGIN
     DECLARE @CompendiumID VARCHAR(450);
     SET @CompendiumID = (SELECT CompendiumID FROM INSERTED);
     DECLARE @CardID VARCHAR(36);
     SET @CardID = (SELECT CardID FROM INSERTED);
     DECLARE @CardName VARCHAR(141);
-    SET @CardName = (SELECT Name FROM [MtG].[Card] WHERE ID = @CardID);
+    SET @CardName = (SELECT Name FROM [MtG].[Card] AS C WHERE C.ID = @CardID);
+    DECLARE @Qty INT;
+    SET @Qty = (SELECT Quantity FROM INSERTED);
+    DECLARE @ColorIdentity VARCHAR(10);
+    SET @ColorIdentity = (SELECT ColorIdentity FROM [MtG].[Card] AS C WHERE C.ID = @CardID);
 
-    IF(@CardName IN (SELECT CardName FROM [MtG].[Compendium] WHERE ID = @CompendiumID))
-        RETURN;
+    IF EXISTS (
+        SELECT 1 
+        FROM [User].[Compendium] 
+        WHERE ID = @CompendiumID 
+          AND CardName = @CardName
+    ) RETURN;
     ELSE
         INSERT INTO [User].[Compendium] VALUES(@CompendiumID, @CardName);
 END; */
@@ -217,7 +292,7 @@ END; */
   @List      NVARCHAR(MAX),
   @Delimiter NVARCHAR(4)
 )
-RETURNS @T TABLE (VALUE NVARCHAR(MAX))
+RETURNS @T TABLE (value NVARCHAR(MAX))
 AS
 BEGIN
   DECLARE @Seek INT;
@@ -232,6 +307,6 @@ BEGIN
     SELECT T + @Seek, CHARINDEX(@Delimiter, @List, T + 1) 
     FROM A WHERE CHARINDEX(@Delimiter, @List, T + 1) > 0
   )  
-  INSERT @T SELECT SUBSTRING(@List, F, F - f) FROM A OPTION (MAXRECURSION 0);
+  INSERT @T SELECT SUBSTRING(@List, F, F - F) FROM A OPTION (MAXRECURSION 0);
   RETURN;  
 END; */

@@ -2,14 +2,14 @@ SET IMPLICIT_TRANSACTIONS ON
 SET XACT_ABORT ON
 BEGIN TRANSACTION
 
-CREATE TABLE [MtG].[AvailableSets] (
+/* CREATE TABLE [MtG].[AvailableSets] (
     ID VARCHAR(36) PRIMARY KEY,
     SetCode VARCHAR(10),
     SetName VARCHAR(100),
     SetType VARCHAR(25),
     Released VARCHAR(20) DEFAULT('Missing'),
     SymbolUrl VARCHAR(250) DEFAULT('Missing')
-);
+); */
 
 CREATE TABLE [MtG].[AvailableIdentities] (
     IdentityName VARCHAR(10) PRIMARY KEY,
@@ -20,7 +20,7 @@ CREATE TABLE [MtG].[AvailableIdentities] (
     White NCHAR(1) DEFAULT('N')
 );
 
-CREATE TABLE [MtG].[Card] (
+/* CREATE TABLE [MtG].[Card] (
     ID VARCHAR(36) PRIMARY KEY,
     Name VARCHAR(141) Unique,
     ReleasedAt DATE,
@@ -40,9 +40,15 @@ CREATE TABLE [MtG].[Card] (
     Artist VARCHAR(100),
     FullArt NCHAR(1) DEFAULT('N'),
     Textless NCHAR(1) DEFAULT('N')
+); */
+
+CREATE TABLE [MtG].[Card] (
+    ID VARCHAR(36) PRIMARY KEY,
+    Name VARCHAR(141) UNIQUE,
+    ColorIdentity VARCHAR(10) FOREIGN KEY REFERENCES [MtG].[AvailableIdentities](IdentityName)
 );
 
-CREATE TABLE [MtG].[Face] (
+/* CREATE TABLE [MtG].[Face] (
     CardID VARCHAR(36) FOREIGN KEY REFERENCES [MtG].[Card](ID) NOT NULL,
     FaceName VARCHAR(141) UNIQUE NOT NULL,
     ManaCost VARCHAR(125),
@@ -52,7 +58,7 @@ CREATE TABLE [MtG].[Face] (
     OracleText VARCHAR(500),
     FlavorText VARCHAR(500),
     CONSTRAINT CPK_FaceID PRIMARY KEY (CardID, FaceName)
-);
+); */
 
 CREATE TABLE [MtG].[AvailableGrades] (
     ID VARCHAR(12) PRIMARY KEY,
@@ -63,15 +69,16 @@ CREATE TABLE [MtG].[AvailableGrades] (
 
 CREATE TABLE [User].[Details] (
     AccountID NVARCHAR(450) PRIMARY KEY,
-    CompendiumID VARCHAR(450) UNIQUE NOT NULL, /* Handled by Trigger */
-    AccessID VARCHAR(45) UNIQUE NOT NULL, /* Handled by Trigger */
+    CompendiumID VARCHAR(450) UNIQUE NOT NULL, 
+    AccessID VARCHAR(45) UNIQUE NOT NULL, 
     CONSTRAINT FK_DetailsAccountID FOREIGN KEY (AccountID) REFERENCES [Admin].[AspNetUsers](Id)
 );
 
 CREATE TABLE [User].[Compendium] (
     ID VARCHAR(450) FOREIGN KEY REFERENCES [User].[Details](CompendiumID) NOT NULL,
     CardName VARCHAR(141) FOREIGN KEY REFERENCES [MtG].[Card](Name) NOT NULL,
-    TotalQty AS [MtG].GetCardTotal(ID, CardName), /* Computed Column */
+    ColorIdentity AS [MtG].[GetColorIdentity](CardName),
+    TotalQty AS [MtG].[GetCardTotal](ID, CardName), 
     CONSTRAINT CPK_UserCompendium PRIMARY KEY (ID, CardName)
 );
 
@@ -92,7 +99,7 @@ CREATE TABLE [User].[Access] (
     CONSTRAINT CPK_UserAccess PRIMARY KEY (ID, Time)
 );
 
-CREATE TABLE [MtG].[AvailableColors] (
+/* CREATE TABLE [MtG].[AvailableColors] (
     ColorID CHAR(1) PRIMARY KEY,
     ColorName VARCHAR(5) UNIQUE,
     LandName VARCHAR(8) UNIQUE
@@ -104,15 +111,15 @@ CREATE TABLE [MtG].[Colors] (
     ColorID CHAR(1) FOREIGN KEY REFERENCES [MtG].[AvailableColors](ColorID) NOT NULL,
     CONSTRAINT CFK_FaceID FOREIGN KEY (CardID, FaceName) REFERENCES [MtG].[Face](CardID, FaceName),
     CONSTRAINT CPK_CardColorID PRIMARY KEY (CardID, FaceName, ColorID)
-);
+); */
 
-/*CREATE TABLE [MtG].[ColorIdentity] (
+/* CREATE TABLE [MtG].[ColorIdentity] (
     CardID VARCHAR(36) FOREIGN KEY REFERENCES [MtG].[Card](ID) NOT NULL,
     IdentityName VARCHAR(10) FOREIGN KEY REFERENCES [MtG].[AvailableIdentities](IdentityName) NOT NULL,
     CONSTRAINT CPK_CardColorIdentity PRIMARY KEY (CardID, IdentityName)
 ); */
 
-CREATE TABLE [MtG].[AvailableKeywords] (
+/* CREATE TABLE [MtG].[AvailableKeywords] (
     Keyword VARCHAR(25) PRIMARY KEY,
     Description VARCHAR(MAX)
 );
@@ -161,23 +168,23 @@ CREATE TABLE [MtG].[PurchaseURLs] (
     CardMarket VARCHAR(250) NULL,
     CardHoarder VARCHAR(250) NULL,
     CONSTRAINT FK_CardPurchaseUrls FOREIGN KEY (CardID) REFERENCES [MtG].[Card](ID)
-);
+); */
 
-/*CREATE TABLE [MtG].[Artist] (
+/* CREATE TABLE [MtG].[Artist] (
     CardID VARCHAR(36) FOREIGN KEY REFERENCES [MtG].[Card](ID) NOT NULL,
     FaceName VARCHAR(141) FOREIGN KEY REFERENCES [MtG].[Face](FaceName) NOT NULL,
     Name VARCHAR(50),
     CONSTRAINT CPK_CardArtist PRIMARY KEY (CardID, FaceName, Name)
 ); */
 
-/*CREATE TABLE [MtG].[ArtistIDs] (
+/* CREATE TABLE [MtG].[ArtistIDs] (
     CardID VARCHAR(36) FOREIGN KEY REFERENCES [MtG].[Card](ID) NOT NULL,
     FaceName VARCHAR(141) FOREIGN KEY REFERENCES [MtG].[Face](FaceName) NOT NULL,
     ArtistID VARCHAR(36) FOREIGN KEY REFERENCES [MtG].[Artist](ID) NOT NULL,
     CONSTRAINT CPK_FaceArtistID PRIMARY KEY (CardID, FaceName, ArtistID)
-);*/
+); */
 
-CREATE TABLE [MtG].[Legalities] (
+/* CREATE TABLE [MtG].[Legalities] (
     CardID VARCHAR(36) PRIMARY KEY,
     Standard NCHAR(1) DEFAULT('N'),
     Future NCHAR(1) DEFAULT('N'),
@@ -212,7 +219,7 @@ CREATE TABLE [MtG].[Finishes] (
     CardID VARCHAR(36) FOREIGN KEY REFERENCES [MtG].[Card](ID) NOT NULL,
     FinishName VARCHAR(8) FOREIGN KEY REFERENCES [MtG].[AvailableFinishes](Name) NOT NULL,
     CONSTRAINT CPK_CardFinishes PRIMARY KEY (CardID, FinishName)
-);
+); */
 
 /* EMERGENCY DROP COMMANDS
 DROP TABLE [MtG].[Finishes];
@@ -240,10 +247,10 @@ DROP TABLE [MtG].[AvailableSets];
 /* INSERT STATIC INFORMATION */
 
 /* Available Finishes */
-INSERT INTO [MtG].[AvailableFinishes] VALUES('Nonfoil', 'A standard Magic: The Gathering card with no special finish.');
+/*INSERT INTO [MtG].[AvailableFinishes] VALUES('Nonfoil', 'A standard Magic: The Gathering card with no special finish.');
 INSERT INTO [MtG].[AvailableFinishes] VALUES('Foil', 'A Magic: The Gathering card with a holo/foil finish.');
 INSERT INTO [MtG].[AvailableFinishes] VALUES('Etched', 'A Magic: The Gathering card with a special etched finish.');
-INSERT INTO [MtG].[AvailableFinishes] VALUES('Glossy', 'A Magic: The Gathering card with a glossy finish.');
+INSERT INTO [MtG].[AvailableFinishes] VALUES('Glossy', 'A Magic: The Gathering card with a glossy finish.');*/
 
 /* Available Grades - Official Grading */
 INSERT INTO [MtG].[AvailableGrades] VALUES('OG-GEM-MT 10', 'Official', 'Gem Mint', 'Officially graded card that has been deemed to be virtually perfect. Attributes include four perfectly shaped corners, sharp focus and full original gloss. A Gem Mint 10 must be free of staining of any kind, but an allowance may be made for a slight printing imperfection, if it doesn''t impair the overall appeal of the card. The card''s contents must be centered on the card face within a tolerance not to exceed approximately 55/45 to 60/40 percent on the front and 75/25 percent on the back.');
@@ -269,11 +276,11 @@ INSERT INTO [MtG].[AvailableGrades] VALUES('UO-HP', 'Unofficial', 'Heavily Playe
 INSERT INTO [MtG].[AvailableGrades] VALUES('UO-DMG', 'Unofficial', 'Damaged', 'Self-graded card identified as being damaged. Damaged condition cards show wear or imperfections beyond the standards for other conditions. Card in this condition can also exhibit an imperfection that may make the card illegal for tournament play, even in a sleeve. Cards may have major border wear, scratching or scuffing, as well as folds, creases, tears or other damage that impacts the structural integrity of the card.');
 
 /* Available Colors */
-INSERT INTO [MtG].[AvailableColors] VALUES('B', 'Black', 'Swamp');
+/*INSERT INTO [MtG].[AvailableColors] VALUES('B', 'Black', 'Swamp');
 INSERT INTO [MtG].[AvailableColors] VALUES('G', 'Green', 'Forest');
 INSERT INTO [MtG].[AvailableColors] VALUES('R', 'Red', 'Mountain');
 INSERT INTO [MtG].[AvailableColors] VALUES('U', 'Blue', 'Island');
-INSERT INTO [MtG].[AvailableColors] VALUES('W', 'White', 'Plains');
+INSERT INTO [MtG].[AvailableColors] VALUES('W', 'White', 'Plains');*/
 
 /* Available Identities - MonoColor - BGRUW */
 INSERT INTO [MtG].[AvailableIdentities] VALUES('Mono Black', 'Y', 'N', 'N', 'N', 'N');
@@ -320,7 +327,7 @@ INSERT INTO [MtG].[AvailableIdentities] VALUES('Yore', 'Y', 'N', 'Y', 'Y', 'Y');
 INSERT INTO [MtG].[AvailableIdentities] VALUES('Rainbow', 'Y', 'Y', 'Y', 'Y', 'Y');
 
 /* Available Keywords  - Evergreen Actions*/
-INSERT INTO [MtG].[AvailableKeywords] VALUES('Attach', 'The term attach is used on Auras, Equipment, and Fortifications, which provide effects to certain other cards for an indeterminate amount of time. These types of cards are used by designating something (usually a permanent) for them to be "attached" to.');
+/*INSERT INTO [MtG].[AvailableKeywords] VALUES('Attach', 'The term attach is used on Auras, Equipment, and Fortifications, which provide effects to certain other cards for an indeterminate amount of time. These types of cards are used by designating something (usually a permanent) for them to be "attached" to.');
 INSERT INTO [MtG].[AvailableKeywords] VALUES('Counter', 'To counter a spell or ability is to remove it from the stack without resolving its effects, putting it directly into its owner''s graveyard. Some spells and abilities have an additional clause that replaces the graveyard with another game zone. There are instant spells that will explicitly counter other spells, generally known as "counterspells" after the original card with this effect. Some cards specify that they "cannot be countered".');
 INSERT INTO [MtG].[AvailableKeywords] VALUES('Exile', 'To exile a card is to put it into the exile zone, usually as part of a card''s effect. Starting from the Magic 2010 rules changes, cards that say "remove [something] from the game" or "set [something] aside" were issued errata to say "exile [something]" instead.');
 INSERT INTO [MtG].[AvailableKeywords] VALUES('Fight', 'When two creatures fight each other, each creature deals damage equal to its power to the other creature. Multiple creatures may fight each other at the same time.');
@@ -328,10 +335,10 @@ INSERT INTO [MtG].[AvailableKeywords] VALUES('Mill', 'When a player Mills x card
 INSERT INTO [MtG].[AvailableKeywords] VALUES('Sacrifice', 'To sacrifice a permanent is to put it into its owner''s graveyard. A player can only sacrifice a permanent they control. Note that this term is separate from other ways permanents can be put into their owners'' graveyards, such as destruction (meaning regeneration has no effect on sacrifice) and state-based actions (a creature having 0 toughness, for example). Players are not allowed to sacrifice unless prompted to by a game effect.');
 INSERT INTO [MtG].[AvailableKeywords] VALUES('Scry', 'Scry x allows the player to take the top x cards from their deck, examine them, and place any number of them on the bottom of their deck and the rest on top in any order desired.');
 INSERT INTO [MtG].[AvailableKeywords] VALUES('Tap', 'To tap a permanent is to rotate the card 90 degrees. This indicates it is being used, often as a cost, or to indicate that a creature is attacking (except for creatures with vigilance). Creatures a player controls that have not been under their control since the beginning of their most recent turn are said to have "summoning sickness" and cannot be tapped for their abilities that include the "tap symbol", nor can they attack, but they can be tapped for costs that use the word "tap" (for example, "Tap two untapped creatures you control").');
-INSERT INTO [MtG].[AvailableKeywords] VALUES('Untap', 'To untap a permanent is to return it to a vertical orientation, allowing it to be tapped again. A tapped permanent must be untapped before it can be tapped again. However, untapping can also be a cost for activated abilities. It has its own special untap symbol (often called "Q"), and is separate from normal untapping. To pay a cost including the untap symbol, the permanent must be already tapped. If that permanent is also a creature, then, as with the tap symbol, that ability can only be used if the creature has been under its controller''s control since the beginning of their most recent turn.');
+INSERT INTO [MtG].[AvailableKeywords] VALUES('Untap', 'To untap a permanent is to return it to a vertical orientation, allowing it to be tapped again. A tapped permanent must be untapped before it can be tapped again. However, untapping can also be a cost for activated abilities. It has its own special untap symbol (often called "Q"), and is separate from normal untapping. To pay a cost including the untap symbol, the permanent must be already tapped. If that permanent is also a creature, then, as with the tap symbol, that ability can only be used if the creature has been under its controller''s control since the beginning of their most recent turn.');*/
 
 /* Available Keywords - Evergreen */
-INSERT INTO [MtG].[AvailableKeywords] VALUES('Deathtouch', 'Deathtouch is a static ability that causes a creature to be destroyed as a result of having been dealt damage by a source with deathtouch. In this way, for a creature with deathtouch, any nonzero amount of damage it deals to another creature is considered enough to kill it.');
+/*INSERT INTO [MtG].[AvailableKeywords] VALUES('Deathtouch', 'Deathtouch is a static ability that causes a creature to be destroyed as a result of having been dealt damage by a source with deathtouch. In this way, for a creature with deathtouch, any nonzero amount of damage it deals to another creature is considered enough to kill it.');
 INSERT INTO [MtG].[AvailableKeywords] VALUES('Defender', 'Creatures with defender cannot attack.');
 INSERT INTO [MtG].[AvailableKeywords] VALUES('Double Strike', 'A creature with double strike deals both first strike and normal combat damage.');
 INSERT INTO [MtG].[AvailableKeywords] VALUES('Enchant', 'This ability is written Enchant (quality) and appears on Auras, a subtype of enchantment spells. An Aura enters the battlefield attached to a permanent spell with the quality of its Enchant ability, and can only be attached to a permanent with that quality. If an Aura is no longer attached to a permanent with the required quality (such as if the object it enchants leaves the battlefield), it is put into its owner''s discard pile. Like protection, the quality can be almost anything, but it normally has a permanent type associated with it, such as "Enchant creature".');
@@ -348,10 +355,10 @@ INSERT INTO [MtG].[AvailableKeywords] VALUES('Protection', 'A creature with prot
 INSERT INTO [MtG].[AvailableKeywords] VALUES('Prowess', 'Prowess is a triggered ability. A creature with prowess gains +1/+1 (until end of turn) whenever a noncreature spell is cast by its controller. If a creature has multiple instances of prowess, each triggers separately.');
 INSERT INTO [MtG].[AvailableKeywords] VALUES('Reach', 'Reach is a countermeasure to block creatures with flying. Creatures with flying can only be blocked by creatures with flying or reach.');
 INSERT INTO [MtG].[AvailableKeywords] VALUES('Trample', 'An attacking creature with trample which is blocked may deal any excess damage, above what is needed to kill the blocker, directly to the defending player. The choice is made by the attacking player, as circumstances can arise in which "overkilling" the blocking creature is a more advantageous move.');
-INSERT INTO [MtG].[AvailableKeywords] VALUES('Vigilance', 'Creatures with vigilance do not tap when attacking, meaning they can still be used during the opponent''s turn to block.');
+INSERT INTO [MtG].[AvailableKeywords] VALUES('Vigilance', 'Creatures with vigilance do not tap when attacking, meaning they can still be used during the opponent''s turn to block.');*/
 
 /* Keywords - Expert Level (Mechanics) */
-INSERT INTO [MtG].[AvailableKeywords] VALUES('Absorb', 'This ability is written Absorb x, where x is a quantity of damage prevented on a creature with the ability.');
+/*INSERT INTO [MtG].[AvailableKeywords] VALUES('Absorb', 'This ability is written Absorb x, where x is a quantity of damage prevented on a creature with the ability.');
 INSERT INTO [MtG].[AvailableKeywords] VALUES('Adapt', 'This ability is written (cost): Adapt x. If a creature has no +1/+1 counters on it, the player may pay the adapt cost to put N +1/+1 counters on that creature. In comparison to monstrosity, if a creature somehow loses its +1/+1 counters, it can adapt again and pick up more.');
 INSERT INTO [MtG].[AvailableKeywords] VALUES('Affinity', 'This ability is written Affinity for (quality). A card with affinity costs 1 generic mana less to cast for each permanent with that quality under the caster''s control.');
 INSERT INTO [MtG].[AvailableKeywords] VALUES('Afterlife', 'This ability is written Afterlife x. When a creature with afterlife dies, its controller creates x 1/1 black and white spirit tokens with flying.');
@@ -465,10 +472,10 @@ INSERT INTO [MtG].[AvailableKeywords] VALUES('Unearth', 'This ability is written
 INSERT INTO [MtG].[AvailableKeywords] VALUES('Unleash', 'A player may choose to have a creature with unleash enter the battlefield with a +1/+1 counter on it. If a creature with unleash has a +1/+1 counter on it (whether put there by its own ability or another source), that creature cannot block.');
 INSERT INTO [MtG].[AvailableKeywords] VALUES('Vanishing', 'This ability is written Vanishing x. A permanent with vanishing enters the battlefield with x time counters on it. At the beginning of its controller''s upkeep, a time counter is removed. When the last counter is removed, the card is sacrificed.');
 INSERT INTO [MtG].[AvailableKeywords] VALUES('Ward', 'Whenever a permanent with ward becomes the target of a spell or ability an opponent controls, the ability is countered unless that player pays the associated Ward cost.');
-INSERT INTO [MtG].[AvailableKeywords] VALUES('Wither', 'Wither is a replacement ability that modifies damage. Nonlethal damage marked on a creature normally goes away at the end of the turn. However, whenever a source with wither deals damage to a creature, that creature receives a number of -1/-1 counters equal to the amount of damage dealt to it. When it deals damage to a player, that player will receive regular damage unlike infect.');
+INSERT INTO [MtG].[AvailableKeywords] VALUES('Wither', 'Wither is a replacement ability that modifies damage. Nonlethal damage marked on a creature normally goes away at the end of the turn. However, whenever a source with wither deals damage to a creature, that creature receives a number of -1/-1 counters equal to the amount of damage dealt to it. When it deals damage to a player, that player will receive regular damage unlike infect.');*/
 
 /* Available Keywords - Ability Words */
-INSERT INTO [MtG].[AvailableKeywords] VALUES('Addendum', 'Cards with addendum have additional effects if they are cast during their controller''s main phase.');
+/*INSERT INTO [MtG].[AvailableKeywords] VALUES('Addendum', 'Cards with addendum have additional effects if they are cast during their controller''s main phase.');
 INSERT INTO [MtG].[AvailableKeywords] VALUES('Battalion', 'Battalion is a creature ability word which gives an advantage whenever the creature attacks with at least two other creatures.');
 INSERT INTO [MtG].[AvailableKeywords] VALUES('Bloodrush', 'For a cost, bloodrush allows a creature card to be discarded to give a temporary boost to an attacking creature, equal to the discarded creature''s power and toughness and also temporarily granting the discarded creature''s abilities.');
 INSERT INTO [MtG].[AvailableKeywords] VALUES('Channel', 'All cards with channel have the ability to be discarded for a cost to yield a specified effect.');
@@ -491,10 +498,10 @@ INSERT INTO [MtG].[AvailableKeywords] VALUES('Raid', 'A card with raid gains an 
 INSERT INTO [MtG].[AvailableKeywords] VALUES('Rally', 'A creature with a rally ability triggers whenever an ally enters the battlefield under their control and gives some kind of bonus to all of that player''s creatures, even non-ally creatures.');
 INSERT INTO [MtG].[AvailableKeywords] VALUES('Sweep', 'Sweep is an ability word used on spells with effects which can be strengthened by returning any number of lands of a single basic land type to their owners'' hands.');
 INSERT INTO [MtG].[AvailableKeywords] VALUES('Threshold', 'This ability is written Threshold — ability. Whenever a player has seven or more cards in the graveyard, their cards gain any threshold abilities they might have. A player cannot activate an ability tied to threshold unless they have seven or more cards in the graveyard.');
-INSERT INTO [MtG].[AvailableKeywords] VALUES('Undergrowth', 'Undergrowth provides benefits depending on the number of creatures in the player''s graveyard.');
+INSERT INTO [MtG].[AvailableKeywords] VALUES('Undergrowth', 'Undergrowth provides benefits depending on the number of creatures in the player''s graveyard.');*/
 
 /* Available Keywords - Discontinued Keywords */
-INSERT INTO [MtG].[AvailableKeywords] VALUES('Banding', 'Banding is an ability that has defensive and offensive functions. A defending player determines how combat damage is dealt by an opposing creature if at least one of the creatures blocking has banding (without banding, the attacking player determines this). An attacking player may form "bands" of creatures with banding, which may also include one non-banding creature. If one creature in the band becomes blocked, the whole band becomes blocked as well, whether or not the defender could block other creatures in the band.');
+/*INSERT INTO [MtG].[AvailableKeywords] VALUES('Banding', 'Banding is an ability that has defensive and offensive functions. A defending player determines how combat damage is dealt by an opposing creature if at least one of the creatures blocking has banding (without banding, the attacking player determines this). An attacking player may form "bands" of creatures with banding, which may also include one non-banding creature. If one creature in the band becomes blocked, the whole band becomes blocked as well, whether or not the defender could block other creatures in the band.');
 INSERT INTO [MtG].[AvailableKeywords] VALUES('Bury', 'Destroy target creature. It cannot be regenerated.');
 INSERT INTO [MtG].[AvailableKeywords] VALUES('Fear', 'Creatures with fear cannot be blocked except by black creatures and by artifact creatures.');
 INSERT INTO [MtG].[AvailableKeywords] VALUES('Intimidate', 'A creature with intimidate cannot be blocked except by artifact creatures and creatures that share a color with it.');
@@ -502,12 +509,12 @@ INSERT INTO [MtG].[AvailableKeywords] VALUES('Landhome', 'This ability is writte
 INSERT INTO [MtG].[AvailableKeywords] VALUES('Landwalk', 'This ability is written as (Land type) walk. A creature with this ability can not be blocked while the defending player controls at least one land with the printed land type (e.g. a creature with swampwalk can not be blocked if the opponent has a swamp on the battlefield).');
 INSERT INTO [MtG].[AvailableKeywords] VALUES('Phasing', 'Phasing introduced a new rule to the game. Cards with the status "phased out" are treated as though they do not exist except for cards that specifically interact with phased-out cards. At the beginning of each player''s turn, all permanents the player controls which have phasing become "phased out", along with anything attached to the phasing cards. Any cards the player controls which were phased out become "phased in" and return to the battlefield at the same time. Phasing in or out does not tap or untap the permanent. A token that phases out ceases to exist, while anything attached to it phases out and does not phase in on the token''s controller''s next turn.');
 INSERT INTO [MtG].[AvailableKeywords] VALUES('Regenerate', ' An ability such as "Regenerate [this creature]" could be activated; in this context "regenerate" means "set up a regeneration shield", which protects the affected permanent from the next time it would be destroyed (either due to damage or to "destroy" effects). Instead of being destroyed, the permanent would become tapped and be removed from combat. The second keyword action refers to when this actually occurs: cards like Skeleton Scavengers have a delayed triggered ability that only triggers when the creature has a destroy effect prevented by its regeneration ability.');
-INSERT INTO [MtG].[AvailableKeywords] VALUES('Shroud', 'A player or permanent with shroud cannot be the target of spells or abilities (even their own).');
+INSERT INTO [MtG].[AvailableKeywords] VALUES('Shroud', 'A player or permanent with shroud cannot be the target of spells or abilities (even their own).');*/
 
 /* Available Sets */
 
 /* Available Sets - Core Editions */
-INSERT INTO [MtG].[AvailableSets] VALUES('288bd996-960e-448b-a187-9504c1930c2c', 'LEA', 'Limited Edition Alpha', 'Core', 'August 1993', 'https://static.wikia.nocookie.net/mtg/images/d/dc/Limited_Edition_Alpha_Common.png/revision/latest?cb=20140407040302');
+/*INSERT INTO [MtG].[AvailableSets] VALUES('288bd996-960e-448b-a187-9504c1930c2c', 'LEA', 'Limited Edition Alpha', 'Core', 'August 1993', 'https://static.wikia.nocookie.net/mtg/images/d/dc/Limited_Edition_Alpha_Common.png/revision/latest?cb=20140407040302');
 INSERT INTO [MtG].[AvailableSets] VALUES('5307bd88-637c-4a5c-9801-a0d887715302', 'LEB', 'Limited Edition Beta', 'Core', 'October 1993', 'https://static.wikia.nocookie.net/mtg/images/5/58/Limited_Edition_Beta_Common.png/revision/latest?cb=20140407040558');
 INSERT INTO [MtG].[AvailableSets] VALUES('cd7694b9-339c-405d-a991-14413d4f6d5c', '2ED', 'Unlimited Edition', 'Core', 'December 1993', 'https://static.wikia.nocookie.net/mtg/images/6/6e/Unlimited_Edition_Common.png/revision/latest?cb=20140407041833');
 INSERT INTO [MtG].[AvailableSets] VALUES('45a69797-8adf-468e-a4e1-ba81fd9d66ac', '3ED', 'Revised Edition', 'Core', 'April 1994', 'https://static.wikia.nocookie.net/mtg/images/2/27/Revised_Edition_Common.png/revision/latest?cb=20140407042040');
@@ -527,10 +534,10 @@ INSERT INTO [MtG].[AvailableSets] VALUES('6ce49890-3b37-42a5-8932-dbeef1d7b62c',
 INSERT INTO [MtG].[AvailableSets] VALUES('0eeb9a9a-20ac-404d-b55f-aeb7a43a7f62', 'ORI', 'Magic Origins', 'Core', 'July 2015', 'https://static.wikia.nocookie.net/mtg/images/6/63/Magic_Origins_Common.png/revision/latest?cb=20160404180428');
 INSERT INTO [MtG].[AvailableSets] VALUES('2f5f2509-56db-414d-9a7e-6e312ec3760c', 'M19', 'Core Set 2019', 'Core', 'July 2018', 'https://static.wikia.nocookie.net/mtg/images/5/59/Core_Set_2019_Common.png/revision/latest?cb=20181020194738');
 INSERT INTO [MtG].[AvailableSets] VALUES('4a787360-9767-4f44-80b1-2405dc5e39c7', 'M20', 'Core Set 2020', 'Core', 'July 2019', 'Missing');
-INSERT INTO [MtG].[AvailableSets] VALUES('bc94aba1-7376-4e02-a12d-3a2efb66ab0f', 'M21', 'Core Set 2021', 'Core', 'July 2020', 'Missing');
+INSERT INTO [MtG].[AvailableSets] VALUES('bc94aba1-7376-4e02-a12d-3a2efb66ab0f', 'M21', 'Core Set 2021', 'Core', 'July 2020', 'Missing');*/
 
 /* Available Sets - Standard Sets */
-INSERT INTO [MtG].[AvailableSets] VALUES('856f63eb-e056-43e5-8a56-7a58e1608940', 'ARN', 'Arabian Nights', 'Expansion', 'December 1993', 'https://static.wikia.nocookie.net/mtg/images/5/59/Arabian_Nights_Common.png/revision/latest?cb=20140409211806');
+/*INSERT INTO [MtG].[AvailableSets] VALUES('856f63eb-e056-43e5-8a56-7a58e1608940', 'ARN', 'Arabian Nights', 'Expansion', 'December 1993', 'https://static.wikia.nocookie.net/mtg/images/5/59/Arabian_Nights_Common.png/revision/latest?cb=20140409211806');
 INSERT INTO [MtG].[AvailableSets] VALUES('819f9678-87dd-4aba-a47b-2d553bfea21f', 'ATQ', 'Antiquities', 'Expansion', 'March 1994', 'https://static.wikia.nocookie.net/mtg/images/b/b1/Antiquities_Common.png/revision/latest?cb=20140409211530');
 INSERT INTO [MtG].[AvailableSets] VALUES('78c50b4b-b220-455b-a2d5-cee458fa56f3', 'LEG', 'Legends', 'Expansion', 'June 1994', 'https://static.wikia.nocookie.net/mtg/images/6/61/Legends_Common.png/revision/latest?cb=20140409211341');
 INSERT INTO [MtG].[AvailableSets] VALUES('a21c6836-c435-459a-81e3-22d2da174549', 'DRK', 'The Dark', 'Expansion', 'August 1994', 'https://static.wikia.nocookie.net/mtg/images/c/c7/Homelands_Common.png/revision/latest?cb=20140409210543');
@@ -641,25 +648,25 @@ INSERT INTO [MtG].[AvailableSets] VALUES('df837242-8c15-42e4-b049-c933a02dc501',
 INSERT INTO [MtG].[AvailableSets] VALUES('4e47a6cd-cdeb-4b0f-8f24-cfe1a0127cb3', 'DMU', 'Dominaria United', 'Expansion', 'September 2022', 'Missing');
 INSERT INTO [MtG].[AvailableSets] VALUES('4219a14e-6701-4ddd-a185-21dc054ab19b', 'BRO', 'The Brothers'' War', 'Expansion', 'November 2022', 'Missing');
 INSERT INTO [MtG].[AvailableSets] VALUES('04bef644-343f-4230-95ee-255f29aa67a2', 'ONE', 'Phyrexia: All Will Be One', 'Expansion', 'February 2023', 'Missing');
-INSERT INTO [MtG].[AvailableSets] VALUES('392f7315-dc53-40a3-a2cc-5482dbd498b3', 'MOM', 'March of the Machine', 'Expansion', 'April 2023', 'Missing');
+INSERT INTO [MtG].[AvailableSets] VALUES('392f7315-dc53-40a3-a2cc-5482dbd498b3', 'MOM', 'March of the Machine', 'Expansion', 'April 2023', 'Missing');*/
 /*INSERT INTO [MtG].[AvailableSets] VALUES('', 'MAT', 'March of the Machine: The Aftermath', '', '', '');
 INSERT INTO [MtG].[AvailableSets] VALUES('', 'WOE', 'Wilds of Eldraine', '', '', '');
 INSERT INTO [MtG].[AvailableSets] VALUES('', 'Expansion', 'The Lost Caverns of Ixalan', '', '', '');*/
 
 /* Available Sets - Non-Rotation Sets */
-INSERT INTO [MtG].[AvailableSets] VALUES('d7efccd6-55bc-4fb8-9138-e72577510a99', 'MH1', 'Modern Horizons', 'Draft Innovation', 'June 2019', 'Missing');
-INSERT INTO [MtG].[AvailableSets] VALUES('c1c7eb8c-f205-40ab-a609-767cb296544e', 'MH2', 'Modern Horizons 2', 'Draft Innovation', 'June 2021', 'Missing');
+/*INSERT INTO [MtG].[AvailableSets] VALUES('d7efccd6-55bc-4fb8-9138-e72577510a99', 'MH1', 'Modern Horizons', 'Draft Innovation', 'June 2019', 'Missing');
+INSERT INTO [MtG].[AvailableSets] VALUES('c1c7eb8c-f205-40ab-a609-767cb296544e', 'MH2', 'Modern Horizons 2', 'Draft Innovation', 'June 2021', 'Missing');*/
 
 /* Available Sets - Introductory Sets */
-INSERT INTO [MtG].[AvailableSets] VALUES('478c47df-5058-4ce6-830e-7e80732b2ca9', 'POR', 'Portal', 'Starter', 'June 1997', 'https://static.wikia.nocookie.net/mtg/images/f/f3/Exp_sym_portal.png/revision/latest?cb=20070515214652');
+/*INSERT INTO [MtG].[AvailableSets] VALUES('478c47df-5058-4ce6-830e-7e80732b2ca9', 'POR', 'Portal', 'Starter', 'June 1997', 'https://static.wikia.nocookie.net/mtg/images/f/f3/Exp_sym_portal.png/revision/latest?cb=20070515214652');
 INSERT INTO [MtG].[AvailableSets] VALUES('ac67f18a-4f0e-407e-bab1-a9fe4f659565', 'P02', 'Portal Second Age', 'Starter', 'June 1998', 'https://static.wikia.nocookie.net/mtg/images/5/5f/Exp_sym_portalsecondage.png/revision/latest?cb=20070515214630');
 INSERT INTO [MtG].[AvailableSets] VALUES('2676ff2e-9d86-4b5b-b935-e84e41b0755e', 'P3K', 'Portal Three Kingdoms', 'Starter', 'May 1999', 'https://static.wikia.nocookie.net/mtg/images/d/db/Exp_sym_portalthreekingdoms.png/revision/latest?cb=20070515214548');
 INSERT INTO [MtG].[AvailableSets] VALUES('7e345c51-7a88-4c7a-8184-4e1ba493b40d', 'S99', 'Starter 1999', 'Starter', 'July 1999', 'https://static.wikia.nocookie.net/mtg/images/e/ee/Exp_sym_starter1999.png/revision/latest?cb=20070515214902');
 INSERT INTO [MtG].[AvailableSets] VALUES('1c105623-2564-40d7-a3aa-4134787fb127', 'S00', 'Starter 2000', 'Starter', 'July 2000', 'Missing');
-INSERT INTO [MtG].[AvailableSets] VALUES('19c285e9-68e0-45e1-b82b-ac6051eb43be', 'GS1', 'Global Series: Kiang Yanggu & Mu Yanling', 'Duel Deck', 'June 2018', 'Missing');
+INSERT INTO [MtG].[AvailableSets] VALUES('19c285e9-68e0-45e1-b82b-ac6051eb43be', 'GS1', 'Global Series: Kiang Yanggu & Mu Yanling', 'Duel Deck', 'June 2018', 'Missing');*/
 
 /* Available Sets - Compilation/Reprint Sets */
-INSERT INTO [MtG].[AvailableSets] VALUES('985eab7d-655a-4cb0-ba74-d48c8dcfb3d4', 'CHR', 'Chronicles', 'Masters', 'July 1995', 'Missing');
+/*INSERT INTO [MtG].[AvailableSets] VALUES('985eab7d-655a-4cb0-ba74-d48c8dcfb3d4', 'CHR', 'Chronicles', 'Masters', 'July 1995', 'Missing');
 INSERT INTO [MtG].[AvailableSets] VALUES('49c9409d-5948-4c00-bd0a-bf3ebd50e23a', 'ATH', 'Anthologies', 'Box', 'November 1996', 'Missing');
 INSERT INTO [MtG].[AvailableSets] VALUES('81118b2a-b5c8-4fdc-830a-ce5b74eb60b9', 'BRB', 'Battle Royale Box Set', 'Box', 'November 1998', 'Missing');
 INSERT INTO [MtG].[AvailableSets] VALUES('cdc88d15-c4de-4210-a7e4-dcc366de845f', 'BTD', 'Beatdown Box Set', 'Box', 'October 2000', 'https://static.wikia.nocookie.net/mtg/images/e/e7/Beatdown_Box_Set_Common.png/revision/latest?cb=20140411154344');
@@ -668,10 +675,10 @@ INSERT INTO [MtG].[AvailableSets] VALUES('491666a2-3de4-4214-8238-2dad9dfb5a7a',
 INSERT INTO [MtG].[AvailableSets] VALUES('3c31de17-6766-448e-a4eb-878d83031f3e', 'MD1', 'Modern Event Deck 2014', 'Box', 'May 2014', 'Missing');
 INSERT INTO [MtG].[AvailableSets] VALUES('d13bfc70-6137-4179-aa96-da30fd84de29', 'MB1', 'Mystery Booster', 'Masters', 'March 2020', 'Missing');
 INSERT INTO [MtG].[AvailableSets] VALUES('11e90d1b-0502-43e6-b056-e24836523c13', 'TSR', 'Time Spiral Remastered', 'Masters', 'March 2021', 'Missing');
-INSERT INTO [MtG].[AvailableSets] VALUES('ca4c2884-e539-4b7f-980d-5d6a50220f2a', 'DMR', 'Dominaria Remastered', 'Masters', 'January 2023', 'Missing');
+INSERT INTO [MtG].[AvailableSets] VALUES('ca4c2884-e539-4b7f-980d-5d6a50220f2a', 'DMR', 'Dominaria Remastered', 'Masters', 'January 2023', 'Missing');*/
 
 /* Available Sets - Duel Decks */
-INSERT INTO [MtG].[AvailableSets] VALUES('d5dbdea8-45f6-4d22-990b-6b6897f99d18', 'EVG', 'Duel Decks: Elves vs. Goblins', 'Duel Deck', 'November 2007', 'Missing');
+/*INSERT INTO [MtG].[AvailableSets] VALUES('d5dbdea8-45f6-4d22-990b-6b6897f99d18', 'EVG', 'Duel Decks: Elves vs. Goblins', 'Duel Deck', 'November 2007', 'Missing');
 INSERT INTO [MtG].[AvailableSets] VALUES('7161cc1c-adbd-479c-9125-df4c40b0e3ad', 'DD2', 'Duel Decks: Jace vs. Chandra', 'Duel Deck', 'November 2008', 'Missing');
 INSERT INTO [MtG].[AvailableSets] VALUES('4a1b5533-e4a3-456e-9fb1-53e754402c23', 'DDC', 'Duel Decks: Divine vs. Demonic', 'Duel Deck', 'April 2009', 'https://static.wikia.nocookie.net/mtg/images/1/18/Duel_Decks_Divine_vs._Demonic_Common.png/revision/latest?cb=20140411011611');
 INSERT INTO [MtG].[AvailableSets] VALUES('15f41db6-1810-475b-bf2c-24a488050a37', 'DDD', 'Duel Decks: Garruk vs. Liliana', 'Duel Deck', 'October 2009', 'Missing');
@@ -684,18 +691,18 @@ INSERT INTO [MtG].[AvailableSets] VALUES('2dfea68b-b0c4-4f63-ba6c-36c9a6e3030f',
 INSERT INTO [MtG].[AvailableSets] VALUES('529a5259-8a88-4baf-86a0-cd88098c3ce7', 'DDK', 'Duel Decks: Sorin vs. Tibalt', 'Duel Deck', 'March 2013', 'https://static.wikia.nocookie.net/mtg/images/1/19/Duel_Decks_Sorin_vs._Tibalt_Common.png/revision/latest?cb=20140406023912');
 INSERT INTO [MtG].[AvailableSets] VALUES('7dfc5406-c4cf-479d-b005-11e578752dc9', 'DDL', 'Duel Decks: Heros vs. Monsters', 'Duel Deck', 'September 2013', 'Missing');
 INSERT INTO [MtG].[AvailableSets] VALUES('a80b4ba1-7485-4c16-b745-eeea904863c3', 'DDM', 'Duel Decks: Jace vs. Vraska', 'Duel Deck', 'March 2014', 'Missing');
-INSERT INTO [MtG].[AvailableSets] VALUES('163844e5-077e-4e2c-a0f0-fa33fbc7bb3b', 'DDN', 'Duel Decks: Speed vs. Cunning', 'Duel Deck', 'September 2014', 'Missing');
+INSERT INTO [MtG].[AvailableSets] VALUES('163844e5-077e-4e2c-a0f0-fa33fbc7bb3b', 'DDN', 'Duel Decks: Speed vs. Cunning', 'Duel Deck', 'September 2014', 'Missing');*/
 /*INSERT INTO [MtG].[AvailableSets] VALUES('', 'DD3', 'Duel Decks Anthology', 'Duel Deck', 'December 2014', 'Missing');*/
-INSERT INTO [MtG].[AvailableSets] VALUES('6b350326-34f3-43c6-8df5-2b1d9a61ceff', 'DDO', 'Duel Decks: Elspeth vs. Kiora', 'Duel Deck', 'February 2015', 'Missing');
+/*INSERT INTO [MtG].[AvailableSets] VALUES('6b350326-34f3-43c6-8df5-2b1d9a61ceff', 'DDO', 'Duel Decks: Elspeth vs. Kiora', 'Duel Deck', 'February 2015', 'Missing');
 INSERT INTO [MtG].[AvailableSets] VALUES('0dbc7609-b12c-471a-bfd3-c57bc670c445', 'DDP', 'Duel Decks: Zendikar vs. Eldrazi', 'Duel Deck', 'August 2015', 'Missing');
 INSERT INTO [MtG].[AvailableSets] VALUES('9f6e1af2-3913-47d6-aa6a-81f34ec7224c', 'DDQ', 'Duel Decks: Blessed vs. Cursed', 'Duel Deck', 'February 2016', 'Missing');
 INSERT INTO [MtG].[AvailableSets] VALUES('20e10d8d-c2b0-4d3f-942d-28ae9e137c6e', 'DDR', 'Duel Decks: Nissa vs. Ob Nixilis', 'Duel Deck', 'September 2016', 'Missing');
 INSERT INTO [MtG].[AvailableSets] VALUES('758fe4d1-ce2b-4106-8cec-820841d730af', 'DDS', 'Duel Decks: Mind vs. Might', 'Duel Deck', 'March 2017', 'Missing');
 INSERT INTO [MtG].[AvailableSets] VALUES('c77df674-0ef5-47d9-ab22-56a6e1dc901c', 'DDT', 'Duel Decks: Merfolk vs. Goblins', 'Duel Deck', 'November 2017', 'Missing');
-INSERT INTO [MtG].[AvailableSets] VALUES('01e30e53-f292-4c39-ab09-435b015877f5', 'DDU', 'Duel Decks: Elves vs. Inventors', 'Duel Deck', 'April 2018', 'Missing');
+INSERT INTO [MtG].[AvailableSets] VALUES('01e30e53-f292-4c39-ab09-435b015877f5', 'DDU', 'Duel Decks: Elves vs. Inventors', 'Duel Deck', 'April 2018', 'Missing');*/
 
 /* Available Sets - From the Vault */
-INSERT INTO [MtG].[AvailableSets] VALUES('c1cec8aa-5906-41d9-ae01-cbdde2e776fb', 'DRB', 'From the Vault: Dragons', 'From the Vault', 'August 2008', 'Missing');
+/*INSERT INTO [MtG].[AvailableSets] VALUES('c1cec8aa-5906-41d9-ae01-cbdde2e776fb', 'DRB', 'From the Vault: Dragons', 'From the Vault', 'August 2008', 'Missing');
 INSERT INTO [MtG].[AvailableSets] VALUES('6254693f-c620-4e47-8bab-01085f8c3ffb', 'V09', 'From the Vault: Exiled', 'From the Vault', 'August 2009', 'Missing');
 INSERT INTO [MtG].[AvailableSets] VALUES('3e3ea3e8-3d63-481f-b3ec-03c4f50b602e', 'V10', 'From the Vault: Relics', 'From the Vault', 'August 2010', 'Missing');
 INSERT INTO [MtG].[AvailableSets] VALUES('b83c0908-ae67-47eb-9099-7a1791ada84a', 'V11', 'From the Vault: Legends', 'From the Vault', 'August 2011', 'Missing');
@@ -704,20 +711,20 @@ INSERT INTO [MtG].[AvailableSets] VALUES('815577c6-652f-4171-8298-c1063c5bced1',
 INSERT INTO [MtG].[AvailableSets] VALUES('21dd7ae2-1196-46d4-9acf-4ff9d82797be', 'V14', 'From the Vault: Annihilation', 'From the Vault', 'August 2014', 'Missing');
 INSERT INTO [MtG].[AvailableSets] VALUES('bd5cb4e5-8090-4bd9-bcd4-89741056689b', 'V15', 'From the Vault: Angels', 'From the Vault', 'August 2015', 'Missing');
 INSERT INTO [MtG].[AvailableSets] VALUES('599b33cd-678b-4149-9e68-2a59da7d7f81', 'V16', 'From the Vault: Lore', 'From the Vault', 'August 2016', 'Missing');
-INSERT INTO [MtG].[AvailableSets] VALUES('63c89a12-d115-4084-a4af-fceef40ca02f', 'V17', 'From the Vault: Transform', 'From the Vault', 'November 2017', 'Missing');
+INSERT INTO [MtG].[AvailableSets] VALUES('63c89a12-d115-4084-a4af-fceef40ca02f', 'V17', 'From the Vault: Transform', 'From the Vault', 'November 2017', 'Missing');*/
 
 /* Available Sets - Signature Spellbook */
-INSERT INTO [MtG].[AvailableSets] VALUES('a24031db-1378-420f-b671-bcaec52d6f6c', 'SS1', 'Signature Spellbook: Jace', 'Spellbook', 'June 2018', 'https://static.wikia.nocookie.net/mtg/images/8/85/Signature_Spellbook_Jace_Rare.png/revision/latest?cb=20181020194739');
+/*INSERT INTO [MtG].[AvailableSets] VALUES('a24031db-1378-420f-b671-bcaec52d6f6c', 'SS1', 'Signature Spellbook: Jace', 'Spellbook', 'June 2018', 'https://static.wikia.nocookie.net/mtg/images/8/85/Signature_Spellbook_Jace_Rare.png/revision/latest?cb=20181020194739');
 INSERT INTO [MtG].[AvailableSets] VALUES('9ae53f04-9cbb-45db-8b5c-972fe847a984', 'SS2', 'Signature Spellbook: Gideon', 'Spellbook', 'June 2019', 'Missing');
-INSERT INTO [MtG].[AvailableSets] VALUES('4887d21f-71e7-4d7a-a079-e9521fd7e6d7', 'SS3', 'Signature Spellbook: Chandra', 'Spellbook', 'June 2020', 'Missing');
+INSERT INTO [MtG].[AvailableSets] VALUES('4887d21f-71e7-4d7a-a079-e9521fd7e6d7', 'SS3', 'Signature Spellbook: Chandra', 'Spellbook', 'June 2020', 'Missing');*/
 
 /* Available Sets - Premium Deck Series */
-INSERT INTO [MtG].[AvailableSets] VALUES('3a045e59-64b5-465d-9dbd-f4ddadf8f4dc', 'H09', 'Premium Deck Series: Slivers', 'Premium Deck', 'November 2009', 'https://static.wikia.nocookie.net/mtg/images/d/d5/Premium_Deck_Series_Slivers_Common.png/revision/latest?cb=20140411152459');
+/*INSERT INTO [MtG].[AvailableSets] VALUES('3a045e59-64b5-465d-9dbd-f4ddadf8f4dc', 'H09', 'Premium Deck Series: Slivers', 'Premium Deck', 'November 2009', 'https://static.wikia.nocookie.net/mtg/images/d/d5/Premium_Deck_Series_Slivers_Common.png/revision/latest?cb=20140411152459');
 INSERT INTO [MtG].[AvailableSets] VALUES('e0d91aba-be11-4ddd-96a4-4753e708458a', 'PD2', 'Premium Deck Series: Fire and Lightning', 'Premium Deck', 'November 2010', 'Missing');
-INSERT INTO [MtG].[AvailableSets] VALUES('b6d6ba83-3b91-4203-8103-320cfa50f848', 'PD3', 'Premium Deck Series: Graveborn', 'Premium Deck', 'November 2011', 'Missing');
+INSERT INTO [MtG].[AvailableSets] VALUES('b6d6ba83-3b91-4203-8103-320cfa50f848', 'PD3', 'Premium Deck Series: Graveborn', 'Premium Deck', 'November 2011', 'Missing');*/
 
 /* Available Sets - Masters Series */
-INSERT INTO [MtG].[AvailableSets] VALUES('0b7020f2-336d-4706-9ce6-f6710b9ebd5c', 'MMA', 'Modern Masters', 'Masters', 'June 2013', 'https://static.wikia.nocookie.net/mtg/images/c/c3/Modern_Masters_Common.png/revision/latest?cb=20171230083728');
+/*INSERT INTO [MtG].[AvailableSets] VALUES('0b7020f2-336d-4706-9ce6-f6710b9ebd5c', 'MMA', 'Modern Masters', 'Masters', 'June 2013', 'https://static.wikia.nocookie.net/mtg/images/c/c3/Modern_Masters_Common.png/revision/latest?cb=20171230083728');
 INSERT INTO [MtG].[AvailableSets] VALUES('28cac015-43df-4e88-90d0-95dcdd894834', 'MM2', 'Modern Masters 2015', 'Masters', 'May 2015', 'Missing');
 INSERT INTO [MtG].[AvailableSets] VALUES('1f29f022-3ace-4c96-85e8-1f7b63aadf7e', 'EMA', 'Eternal Masters', 'Masters', 'June 2016', 'Missing');
 INSERT INTO [MtG].[AvailableSets] VALUES('02624962-f727-4c31-bbf2-a94fa6c5b653', 'MM3', 'Modern Masters 2017', 'Masters', 'March 2017', 'Missing');
@@ -725,7 +732,7 @@ INSERT INTO [MtG].[AvailableSets] VALUES('741bcd30-7709-4133-8919-f4b46483bed7',
 INSERT INTO [MtG].[AvailableSets] VALUES('41ee6e2f-69b3-4c53-8a8e-960f5e974cfc', 'A25', 'Masters 25', 'Masters', 'March 2018', 'https://static.wikia.nocookie.net/mtg/images/8/8f/Masters_25_Common.png/revision/latest?cb=20180310161731');
 INSERT INTO [MtG].[AvailableSets] VALUES('2ec77b94-6d47-4891-a480-5d0b4e5c9372', 'UMA', 'Ultimate Masters', 'Masters', 'December 2018', 'Missing');
 INSERT INTO [MtG].[AvailableSets] VALUES('372dafe8-b5d1-4b81-998f-3ae96b59498a', '2XM', 'Double Masters', 'Masters', 'August 2020', 'Missing');
-INSERT INTO [MtG].[AvailableSets] VALUES('5a645837-b050-449f-ac90-1e7ccbf45031', '2X2', 'Double Masters 2022', 'Masters', 'July 2022', 'Missing');
+INSERT INTO [MtG].[AvailableSets] VALUES('5a645837-b050-449f-ac90-1e7ccbf45031', '2X2', 'Double Masters 2022', 'Masters', 'July 2022', 'Missing');*/
 
 /* Available Sets - Deck Builder's Toolkits */
 /*INSERT INTO [MtG].[AvailableSets] VALUES('', 'W10', 'Deck Builder''s Toolkit', 'Expansion', 'May 2010', 'Missing');
@@ -738,7 +745,7 @@ INSERT INTO [MtG].[AvailableSets] VALUES('', 'W15', 'Deck Builder''s Toolkit (20
 INSERT INTO [MtG].[AvailableSets] VALUES('', 'W17', 'Deck Builder''s Toolkit (Amonkhet Edition)', 'Expansion', 'April 2017', 'Missing');*/
 /*INSERT INTO [MtG].[AvailableSets] VALUES('', '', 'Deck Builder''s Toolkit (Ixalan Edition)', '', 'September 2017', 'Missing');
 INSERT INTO [MtG].[AvailableSets] VALUES('', '', 'Deck Builder''s Toolkit (Core 2019 Edition)', 'Expansion', 'July 2018', 'Missing');
- INTO [MtG].[AvailableSets] VALUES('', '', 'Deck Builder''s Toolkit (Ravnica Allegiance Edition)', '', 'January 2019', 'Missing');
+INSERT INTO [MtG].[AvailableSets] VALUES('', '', 'Deck Builder''s Toolkit (Ravnica Allegiance Edition)', '', 'January 2019', 'Missing');
 INSERT INTO [MtG].[AvailableSets] VALUES('', '', 'Deck Builder''s Toolkit (Core Set 2020 Edition)', '', 'July 2019', 'Missing');
 INSERT INTO [MtG].[AvailableSets] VALUES('', '', 'Deck Builder''s Toolkit (Theros Beyond Death Edition)', '', 'January 2020', 'Missing');*/
 
