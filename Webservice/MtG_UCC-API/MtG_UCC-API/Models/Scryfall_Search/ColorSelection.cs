@@ -4,7 +4,6 @@ using System.Text;
 
 namespace MtG_UCC_API.Models.Scryfall_Search {
     public class ColorSelection {
-        public bool Containing { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
         public ColorOption Black { get; set; }
@@ -19,6 +18,7 @@ namespace MtG_UCC_API.Models.Scryfall_Search {
 
         public override String ToString() {
             if (Black == ColorOption.UNDECIDED && Green == ColorOption.UNDECIDED && Red == ColorOption.UNDECIDED && Blue == ColorOption.UNDECIDED && White == ColorOption.UNDECIDED) { return ""; }
+            if (Black == ColorOption.EXCLUDED && Green == ColorOption.EXCLUDED && Red == ColorOption.EXCLUDED && Blue == ColorOption.EXCLUDED && White == ColorOption.EXCLUDED) { return "c:colorless"; }
 
             if (Black == ColorOption.EXCLUDED || Green == ColorOption.EXCLUDED || Red == ColorOption.EXCLUDED || Blue == ColorOption.EXCLUDED || White == ColorOption.EXCLUDED) {
 

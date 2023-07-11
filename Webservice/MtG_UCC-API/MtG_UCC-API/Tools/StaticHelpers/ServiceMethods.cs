@@ -4,6 +4,7 @@ using MtG_UCC_API.Models;
 using MtG_UCC_API.Models.Scryfall_Search;
 using Newtonsoft.Json;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Text;
 
 using static MtG_UCC_API.SQLMethods;
@@ -22,7 +23,7 @@ namespace MtG_UCC_API {
             return ("Basic " + auth);
         }
         public static Dictionary<String, String> AuthDecryption(String AuthToken) {
-            String unencryptedToken = System.Text.ASCIIEncoding.UTF8.GetString(Convert.FromBase64String(AuthToken.ToString().Substring("Basic ".Length).Trim()));
+            String unencryptedToken = System.Text.ASCIIEncoding.UTF8.GetString(Convert.FromBase64String(AuthToken.Substring("Basic ".Length).Trim()));
             int seperatorIndex = unencryptedToken.IndexOf(':');
 
             var username = unencryptedToken.Substring(0, seperatorIndex);
@@ -43,10 +44,13 @@ namespace MtG_UCC_API {
             var username = UserDetails.GetValueOrDefault("Username");
             var password = UserDetails.GetValueOrDefault("Password");
 
-            EstablishSQLConnection($"SELECT [Admin].[UserValidation]('{username}', '{password}')");
+            var connection = await EstablishSQLConnection($"SELECT [Admin].[UserValidation]('{username}', '{password}')");
+            var result = 0;
 
-            var result = (int)await cmd.ExecuteScalarAsync();
-            EndSQLConnection();
+            if (connection == 1) {
+                result = (int)await cmd.ExecuteScalarAsync();
+                EndSQLConnection();
+            }
 
             return (result == 1);
         }
@@ -59,17 +63,26 @@ namespace MtG_UCC_API {
         public static String GetAccountID(Dictionary<String, String> headers) {
             return headers.GetValueOrDefault("AccountID");
         }
-        public async static Task<String> GetCompendiumID(String AccountID) {
-            EstablishSQLConnection($"SELECT [User].[GetCompendiumID]('{AccountID}')");
-            String ID = (String)await cmd.ExecuteScalarAsync();
-            EndSQLConnection();
+
+        public async static Task<String?> GetCompendiumID(String AccountID) {
+            var connection = await EstablishSQLConnection($"SELECT [User].[GetCompendiumID]('{AccountID}')");
+            String ID = null;
+
+            if(connection == 1) {
+                ID = (String)await cmd.ExecuteScalarAsync();
+                EndSQLConnection();
+            }
 
             return ID;
         }
-        public async static Task<String> GetUsername(String AccountID) {
-            EstablishSQLConnection($"SELECT [User].[GetUsername]('{AccountID}')");
-            String Username = (String)await cmd.ExecuteScalarAsync();
-            EndSQLConnection();
+        public async static Task<String?> GetUsername(String AccountID) {
+            var connection = await EstablishSQLConnection($"SELECT [User].[GetUsername]('{AccountID}')");
+            String Username = null;
+
+            if(connection == 1) {
+                Username = (String)await cmd.ExecuteScalarAsync();
+                EndSQLConnection();
+            }
 
             return Username;
         }
@@ -77,9 +90,13 @@ namespace MtG_UCC_API {
 
         #region Input Access Details
         public async static Task<int> GenerateNewAccessEvent(String AccountID, AccessType Type, String IP) {
-            EstablishSQLConnection($"EXECUTE [Admin].[NewAccess]('{AccountID}'. '{Type.ToString()}', '{IP}')");
-            int RowsEffected = await cmd.ExecuteNonQueryAsync();
-            EndSQLConnection();
+            var connection = await EstablishSQLConnection($"EXECUTE [Admin].[NewAccess]('{AccountID}'. '{Type.ToString()}', '{IP}')");
+            int RowsEffected = 0;
+
+            if(connection == 1) {
+                RowsEffected = await cmd.ExecuteNonQueryAsync();
+                EndSQLConnection();
+            }
 
             return RowsEffected;
         }
@@ -116,39 +133,75 @@ namespace MtG_UCC_API {
         public async static Task<List<Compendium>> GetUserCompendium(String CompendiumID) {
             List<Compendium> UserCompendium = new();
 
-            EstablishSQLConnection($"SELECT * FROM [User].[Compendium] WHERE ID = '{CompendiumID}'");
-            SqlDataReader reader = await cmd.ExecuteReaderAsync();
+            var connection = await EstablishSQLConnection($"SELECT * FROM [User].[Compendium] WHERE ID = '{CompendiumID}'");
+            
+            if(connection == 1) { 
+                SqlDataReader reader = await cmd.ExecuteReaderAsync();
 
-            while(await reader.ReadAsync()) {
-                UserCompendium.Add(new Compendium() {
-                    ID = reader.GetString(reader.GetOrdinal("ID")),
-                    CardName = reader.GetString(reader.GetOrdinal("CardName")),
-                    ColorIdentity = reader.GetString(reader.GetOrdinal("ColorIdentity")),
-                    TotalQuantity = reader.GetInt32(reader.GetOrdinal("TotalQty"))
-                });
+                while(await reader.ReadAsync()) {
+                    UserCompendium.Add(new Compendium() {
+                        ID = reader.GetString(reader.GetOrdinal("ID")),
+                        CardName = reader.GetString(reader.GetOrdinal("CardName")),
+                        ManaCost = reader.GetString(reader.GetOrdinal("ManaCost")),
+                        ColorIdentity = reader.GetString(reader.GetOrdinal("ColorIdentity")),
+                        TotalQuantity = reader.GetInt32(reader.GetOrdinal("TotalQty"))
+                    });
+                }
             }
 
             return UserCompendium;
         }
-        public async static Task<List<Collection>> GetUserCollection(String CompendiumID, String CardID) {
+
+        public static async Task<List<String>> RetrieveCardNames(List<String> IDs) {
+            List<String> CardNames = new();
+
+            foreach(String CardID in IDs) { 
+                var connection = await EstablishSQLConnection($"SELECT [MtG].[GetCardName]('{CardID}')");
+                String CardName = null;
+
+                if(connection == 1) {
+                    CardName = (String)await cmd.ExecuteScalarAsync();
+                    EndSQLConnection();
+                }
+
+                CardNames.Add(CardName);
+            }
+
+            return CardNames;
+        }
+
+        public async static Task<List<Collection>> GetUserCollection(String CompendiumID, String CardName = null) {
             List<Collection> UserCollection = new();
 
-            EstablishSQLConnection($"SELECT [User].[GetUserCollection]('{CompendiumID}', '{CardID}')");
-            SqlDataReader reader = await cmd.ExecuteReaderAsync();
+            int connection;
 
-            while(await reader.ReadAsync()) {
-                UserCollection.Add(new Collection() {
-                    CompendiumID = reader.GetString(reader.GetOrdinal("CompendiumID")),
-                    CardID = reader.GetString(reader.GetOrdinal("CardID")),
-                    CardCondition = new Condition() { 
-                        ID = reader.GetString(reader.GetOrdinal("Condition")),
-                        Type = reader.GetString(reader.GetOrdinal("Type")),
-                        Name = reader.GetString(reader.GetOrdinal("Name")),
-                        Description = reader.GetString(reader.GetOrdinal("Description"))
-                    },
-                    StorageLocation = reader.GetString(reader.GetOrdinal("StorageLocation")),
-                    Quantity = reader.GetInt32(reader.GetOrdinal("Quantity"))
-                });
+            if (CardName == null || CardName == "None" || CardName == "") {
+                connection = await EstablishSQLConnection($"SELECT * FROM [User].[GetFullCollection]('{CompendiumID}')");
+            } else {
+                connection = await EstablishSQLConnection($"SELECT * FROM [User].[GetCardCollection]('{CompendiumID}', '{CardName}')");
+            }
+
+            if (connection == 1) { 
+                SqlDataReader reader = await cmd.ExecuteReaderAsync();
+
+                while(await reader.ReadAsync()) {
+                    UserCollection.Add(new Collection() {
+                        CompendiumID = reader.GetString(reader.GetOrdinal("CompendiumID")),
+                        CardID = reader.GetString(reader.GetOrdinal("CardID")),
+                        CardName = reader.GetString(reader.GetOrdinal("CardName")),
+                        CardFace = reader.GetString(reader.GetOrdinal("CardFace")),
+                        SetName = reader.GetString(reader.GetOrdinal("SetName")),
+                        SetIcon = reader.GetString(reader.GetOrdinal("SetIcon")),
+                        CardCondition = new Condition() { 
+                            ID = reader.GetString(reader.GetOrdinal("Condition")),
+                            Type = reader.GetString(reader.GetOrdinal("Type")),
+                            Name = reader.GetString(reader.GetOrdinal("Name")),
+                            Description = reader.GetString(reader.GetOrdinal("Description"))
+                        },
+                        StorageLocation = reader.GetString(reader.GetOrdinal("StorageLocation")),
+                        Quantity = reader.GetInt32(reader.GetOrdinal("Quantity"))
+                    });
+                }
             }
 
             return UserCollection;
@@ -164,7 +217,7 @@ namespace MtG_UCC_API {
 
             return temp;
         }
-        public static HttpResponseMessage RequestResponse(HttpStatusCode statusCode, String content = null, String contentType = "text/plain", String message = null) {
+        public static HttpResponseMessage RequestResponse(HttpStatusCode statusCode, object content = null, String contentType = "text/plain", String message = null) {
             var response = new HttpResponseMessage(statusCode);
 
             if (!String.IsNullOrEmpty(message)) {
@@ -172,17 +225,27 @@ namespace MtG_UCC_API {
             }
 
             if (content != null) {
-                if (content is String || content is string) {
-                    var stringContent = (string)content;
-                    response.Content = new StringContent(stringContent, Encoding.Unicode, contentType);
-                } else {
-                    var jsonContent = JsonConvert.SerializeObject(content);
-                    response.Content = new StringContent(jsonContent, Encoding.Unicode, contentType);
-                }
+                var jsonContent = JsonConvert.SerializeObject(content);
+                response.Content = new StringContent(jsonContent, Encoding.Unicode, contentType);
+                response.Content.Headers.Add("json", jsonContent);
             }
 
             return response;
         }
+
+        //public static HttpResponseMessage RequestResponse(HttpStatusCode statusCode, List<object> content = null, String contentType = "text/plain", String message = null) {
+        //    var response = new HttpResponseMessage(statusCode);
+
+        //    if (!String.IsNullOrEmpty(message)) {
+        //        response.Headers.Add("Message", message);
+        //    }
+
+        //    var jsonContent = JsonConvert.SerializeObject(content);
+        //    response.Content = new StringContent(jsonContent, Encoding.Unicode, "application/json");
+        //    response.Content.Headers.Add("json", jsonContent);
+
+        //    return response;
+        //}
 
         public static String GenerateUnknownError(RouteData route, Exception ex = null) {
             var actionName = route.Values["action"].ToString();

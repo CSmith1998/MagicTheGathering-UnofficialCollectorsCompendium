@@ -17,7 +17,7 @@ namespace MtG_UCC_API.Controllers {
         }
 
         [HttpGet]
-        public async Task<HttpResponseMessage> GetCompendium() {
+        public async Task<List<Compendium>> GetCompendium() {
             Dictionary<String, String> headers = GetHeaderValues(this.Request.Headers);
             List<Compendium> UserCompendium = new();
 
@@ -30,23 +30,35 @@ namespace MtG_UCC_API.Controllers {
 
                     if(compendiumID.IsNullOrEmpty()) {
                         errorMessage = "CompendiumID was not found for the user!";
-                        return RequestResponse(HttpStatusCode.NotFound, errorMessage);
+                        UserCompendium.Add(new Compendium("ERROR", "NotFound", "", errorMessage, 404));
+
+                        return UserCompendium;
+                        //return RequestResponse(HttpStatusCode.NotFound, errorMessage);
                     } else {
                         string username = await GetUsername(accountID);
                         UserCompendium = await GetUserCompendium(compendiumID);
 
-                        return RequestResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(UserCompendium), "application/json", $"{username}'s compendium was retrieved, containing {UserCompendium.Count} entries.");
+                        return UserCompendium;
+                        //return RequestResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(UserCompendium), "application/json", $"{username}'s compendium was retrieved, containing {UserCompendium.Count} entries.");
                     }
 
-                } else return RequestResponse(HttpStatusCode.Unauthorized, "You are not authorized to access this content!");
+                } else {
+                    UserCompendium.Add(new Compendium("ERROR", "Unauthorized", "", "You are not authorized to access this content!", 401));
+
+                    return UserCompendium;
+                    //return RequestResponse(HttpStatusCode.Unauthorized, "You are not authorized to access this content!");
+                }
             } catch(Exception ex) {
                 errorMessage = GenerateUnknownError(this.ControllerContext.RouteData, ex);
-                return RequestResponse(HttpStatusCode.BadRequest, errorMessage);
+                UserCompendium.Add(new Compendium("ERROR", "Unknown", "", errorMessage, 400));
+
+                return UserCompendium;
+                //return RequestResponse(HttpStatusCode.BadRequest, ex.ToString());
             }
         }
 
-        [HttpGet("/{CardID}")]  
-        public async Task<HttpResponseMessage> GetCollection(String CardID) {
+        [HttpGet("{CardName}")]  
+        public async Task<List<Collection>> GetCollection(String CardName = null) {
             Dictionary<String, String> headers = GetHeaderValues(this.Request.Headers);
             List<Collection> UserCollection = new();
 
@@ -59,18 +71,31 @@ namespace MtG_UCC_API.Controllers {
 
                     if(compendiumID.IsNullOrEmpty()) {
                         errorMessage = "CompendiumID was not found for the user!";
-                        return RequestResponse(HttpStatusCode.NotFound, errorMessage);
-                    } else {
-                        string username = await GetUsername(accountID);
-                        UserCollection = await GetUserCollection(compendiumID, CardID);
+                        UserCollection.Add(new Collection("404", "NotFound", "", "https://pandemoniumbooks.com/cdn/shop/products/mtg_placeholder_f91b371f-6043-4a82-8b81-dc2855e39a65_large.png?v=1684507268", "", "", new Condition(), errorMessage, 404));
 
-                        return RequestResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(UserCollection), "application/json", $"{username}'s collection was retrieved, containing {UserCollection.Count} entries for '{CardID}'.");
+                        return UserCollection;
+                        //return RequestResponse(HttpStatusCode.NotFound, errorMessage);
+                    } else {
+                        if(CardName == "None") {
+                            UserCollection = await GetUserCollection(compendiumID, null);
+                        } else UserCollection = await GetUserCollection(compendiumID, CardName);
+
+                        return UserCollection;
+                        //return RequestResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(UserCollection), "application/json", $"{username}'s collection was retrieved, containing {UserCollection.Count} entries for '{CardID}'.");
                     }
 
-                } else return RequestResponse(HttpStatusCode.Unauthorized, "You are not authorized to access this content!");
+                } else {
+                    UserCollection.Add(new Collection("401", "Unauthorized", "", "https://pandemoniumbooks.com/cdn/shop/products/mtg_placeholder_f91b371f-6043-4a82-8b81-dc2855e39a65_large.png?v=1684507268", "", "", new Condition(), "You are not authorized to access this content!", 401));
+
+                    return UserCollection;
+                    //return RequestResponse(HttpStatusCode.Unauthorized, "You are not authorized to access this content!");
+                }
             } catch(Exception ex) {
                 errorMessage = GenerateUnknownError(this.ControllerContext.RouteData, ex);
-                return RequestResponse(HttpStatusCode.BadRequest, errorMessage);
+                UserCollection.Add(new Collection("400", "Unknown", "", "https://pandemoniumbooks.com/cdn/shop/products/mtg_placeholder_f91b371f-6043-4a82-8b81-dc2855e39a65_large.png?v=1684507268", "", "", new Condition(), $"CardName: {CardName}\nTrace: {errorMessage}", 400));
+
+                return UserCollection;
+                //return RequestResponse(HttpStatusCode.BadRequest, errorMessage);
             }
         }
 

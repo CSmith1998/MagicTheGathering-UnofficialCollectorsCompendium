@@ -13,6 +13,66 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Forests\\Default_Forests.png",
+      "PackagePath": "staticwebassets\\images\\ManaSymbols\\Forests\\Default_Forests.png"
+    },
+    {
+      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Forests\\Excluded_Forests.png",
+      "PackagePath": "staticwebassets\\images\\ManaSymbols\\Forests\\Excluded_Forests.png"
+    },
+    {
+      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Forests\\Included_Forests.png",
+      "PackagePath": "staticwebassets\\images\\ManaSymbols\\Forests\\Included_Forests.png"
+    },
+    {
+      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Islands\\Default_Islands.png",
+      "PackagePath": "staticwebassets\\images\\ManaSymbols\\Islands\\Default_Islands.png"
+    },
+    {
+      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Islands\\Excluded_Islands.png",
+      "PackagePath": "staticwebassets\\images\\ManaSymbols\\Islands\\Excluded_Islands.png"
+    },
+    {
+      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Islands\\Included_Islands.png",
+      "PackagePath": "staticwebassets\\images\\ManaSymbols\\Islands\\Included_Islands.png"
+    },
+    {
+      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Mountains\\Default_Mountains.png",
+      "PackagePath": "staticwebassets\\images\\ManaSymbols\\Mountains\\Default_Mountains.png"
+    },
+    {
+      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Mountains\\Excluded_Mountains.png",
+      "PackagePath": "staticwebassets\\images\\ManaSymbols\\Mountains\\Excluded_Mountains.png"
+    },
+    {
+      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Mountains\\Included_Mountains.png",
+      "PackagePath": "staticwebassets\\images\\ManaSymbols\\Mountains\\Included_Mountains.png"
+    },
+    {
+      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Plains\\Default_Plains.png",
+      "PackagePath": "staticwebassets\\images\\ManaSymbols\\Plains\\Default_Plains.png"
+    },
+    {
+      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Plains\\Excluded_Plains.png",
+      "PackagePath": "staticwebassets\\images\\ManaSymbols\\Plains\\Excluded_Plains.png"
+    },
+    {
+      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Plains\\Included_Plains.png",
+      "PackagePath": "staticwebassets\\images\\ManaSymbols\\Plains\\Included_Plains.png"
+    },
+    {
+      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Swamps\\Default_Swamps.png",
+      "PackagePath": "staticwebassets\\images\\ManaSymbols\\Swamps\\Default_Swamps.png"
+    },
+    {
+      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Swamps\\Excluded_Swamps.png",
+      "PackagePath": "staticwebassets\\images\\ManaSymbols\\Swamps\\Excluded_Swamps.png"
+    },
+    {
+      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Swamps\\Included_Swamps.png",
+      "PackagePath": "staticwebassets\\images\\ManaSymbols\\Swamps\\Included_Swamps.png"
+    },
+    {
       "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

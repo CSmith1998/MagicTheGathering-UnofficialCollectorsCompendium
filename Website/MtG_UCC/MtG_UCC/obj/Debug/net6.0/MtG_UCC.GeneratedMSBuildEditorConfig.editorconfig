@@ -44,6 +44,22 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/shado/Documents/GitHub/MagicTheGathering-UnofficialCollectorsCompendium/Website/MtG_UCC/MtG_UCC/Views/Collection/Collection.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29sbGVjdGlvblxDb2xsZWN0aW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/shado/Documents/GitHub/MagicTheGathering-UnofficialCollectorsCompendium/Website/MtG_UCC/MtG_UCC/Views/Collection/Compendium.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29sbGVjdGlvblxDb21wZW5kaXVtLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/shado/Documents/GitHub/MagicTheGathering-UnofficialCollectorsCompendium/Website/MtG_UCC/MtG_UCC/Views/Collection/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29sbGVjdGlvblxEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/shado/Documents/GitHub/MagicTheGathering-UnofficialCollectorsCompendium/Website/MtG_UCC/MtG_UCC/Views/Collection/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29sbGVjdGlvblxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/shado/Documents/GitHub/MagicTheGathering-UnofficialCollectorsCompendium/Website/MtG_UCC/MtG_UCC/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -56,8 +72,24 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/shado/Documents/GitHub/MagicTheGathering-UnofficialCollectorsCompendium/Website/MtG_UCC/MtG_UCC/Views/Shared/_CardCollection.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9DYXJkQ29sbGVjdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/shado/Documents/GitHub/MagicTheGathering-UnofficialCollectorsCompendium/Website/MtG_UCC/MtG_UCC/Views/Shared/_CardGrid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9DYXJkR3JpZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/shado/Documents/GitHub/MagicTheGathering-UnofficialCollectorsCompendium/Website/MtG_UCC/MtG_UCC/Views/Shared/_CollectionItem.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Db2xsZWN0aW9uSXRlbS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/shado/Documents/GitHub/MagicTheGathering-UnofficialCollectorsCompendium/Website/MtG_UCC/MtG_UCC/Views/Shared/_LoginPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dpblBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/shado/Documents/GitHub/MagicTheGathering-UnofficialCollectorsCompendium/Website/MtG_UCC/MtG_UCC/Views/Shared/_SearchPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9TZWFyY2hQYXJ0aWFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/shado/Documents/GitHub/MagicTheGathering-UnofficialCollectorsCompendium/Website/MtG_UCC/MtG_UCC/Views/Shared/_ValidationScriptsPartial.cshtml]

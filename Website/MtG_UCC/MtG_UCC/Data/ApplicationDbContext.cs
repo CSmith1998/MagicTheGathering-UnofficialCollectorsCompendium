@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using MtG_UCC;
+using MtG_UCC.Models;
 
 namespace MtG_UCC.Data
 {
@@ -20,6 +22,11 @@ namespace MtG_UCC.Data
             builder.Entity<IdentityUserLogin<string>>().ToTable("AspNetUserLogins", "Admin");
             builder.Entity<IdentityRoleClaim<string>>().ToTable("AspNetRoleClaims", "Admin");
             builder.Entity<IdentityUserToken<string>>().ToTable("AspNetUserTokens", "Admin");
+
+            builder.Entity<Compendium>().HasNoKey();
+            builder.Entity<Collection>().HasNoKey();
         }
+        public DbSet<MtG_UCC.Compendium>? Compendium { get; set; }
+        public DbSet<MtG_UCC.Models.Collection>? Collection { get; set; }
     }
 }

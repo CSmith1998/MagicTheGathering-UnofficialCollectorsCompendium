@@ -1,0 +1,46 @@
+﻿@model List<Collection>
+
+@{
+    string previousCardName = Model.First().CardName;
+    bool first = true;
+    List<List<Collection>> parsedList = new();
+    List<Collection> temp = new();
+
+    foreach(Collection item in Model) {
+        if(item.CardName == previousCardName) {
+            temp.Add(item);
+        } else {
+            previousCardName = item.CardName;
+            parsedList.Add(temp);
+            temp = new();
+            temp.Add(item);
+        }
+    }
+}
+
+<div class="grid-container">
+    @{
+        foreach(var item in parsedList) {
+            if(first) { first = false; }
+            else { <hr class="cardname-spacer" /> }
+
+            <h4>@item.First().CardName</h4>
+
+            @Html.Partial("_CardCollection", item)
+        }
+    }
+</div>
+
+
+@*<div class="grid-row">
+    @foreach (var item in Model) {
+        if (item.CardName != previousCardName) {
+            if (previousCardName != null) {
+                <hr class="cardname-spacer" />
+            }
+            <h1>@item.CardName</h1>
+            previousCardName = item.CardName;
+        }
+        @Html.Partial("_CollectionItem", item)
+    }
+</div>*@

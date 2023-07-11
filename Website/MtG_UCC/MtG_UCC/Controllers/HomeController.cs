@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MtG_UCC.Models;
+using MtG_UCC.Models.Scryfall_Search;
 using System.Diagnostics;
 
 namespace MtG_UCC.Controllers
@@ -13,8 +14,9 @@ namespace MtG_UCC.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
-        {
+        public IActionResult Index() {
+            var Parameters = new SearchParameters();
+            ViewData["Search"] = Parameters;
             return View();
         }
 

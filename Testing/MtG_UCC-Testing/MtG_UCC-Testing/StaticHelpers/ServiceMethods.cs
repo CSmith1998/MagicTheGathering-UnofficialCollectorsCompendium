@@ -11,10 +11,10 @@ namespace MtG_UCC_Testing {
 
         #region Authorization Encryption Methods
         public static String AuthEncryption(String username, String password) {
-            return (Convert.ToBase64String(System.Text.ASCIIEncoding.UTF8.GetBytes(username + ":" + password)));
+            return (Convert.ToBase64String(System.Text.ASCIIEncoding.Unicode.GetBytes(username + ":" + password)));
         }
         public static Dictionary<String, String> AuthDecryption(String AuthToken) {
-            String unencryptedToken = System.Text.ASCIIEncoding.UTF8.GetString(Convert.FromBase64String(AuthToken.ToString().Substring("Basic ".Length).Trim()));
+            String unencryptedToken = System.Text.ASCIIEncoding.Unicode.GetString(Convert.FromBase64String(AuthToken.ToString().Substring("Basic ".Length).Trim()));
             int seperatorIndex = unencryptedToken.IndexOf(':');
 
             var username = unencryptedToken.Substring(0, seperatorIndex);

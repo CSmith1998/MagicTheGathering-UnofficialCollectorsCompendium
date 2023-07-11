@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Compendium";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model List<Compendium>
+
+<h1>Compendium</h1>
+
+<table class="table Clickable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.First().CardName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().ManaCost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().ColorIdentity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().TotalQuantity)
+            </th>
+            @*<th></th>*@
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+            //<a asp-action="Collection" asp-route-id="@item.CardName">
+            <tr onclick="location.href = '@Url.Action("Collection", "Collection", new { CardName = item.CardName })'">
+                <td>
+                    @Html.DisplayFor(modelItem => item.CardName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ManaCost)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ColorIdentity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalQuantity)
+                </td>
+            </tr>
+            //</a>
+        }
+    </tbody>
+</table>

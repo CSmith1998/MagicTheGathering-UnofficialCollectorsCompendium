@@ -12,14 +12,16 @@ namespace MtG_UCC_API {
             conn = new SqlConnection(connectionString);
         }
 
-        public static async void EstablishSQLConnection(String SQL) {
-            if(conn == null) {
-                CreateSQLConnection();
-            }
+        public static async Task<int> EstablishSQLConnection(String SQL) {
+            CreateSQLConnection();
 
             cmd = new SqlCommand($"{SQL}", conn);
 
             await conn.OpenAsync();
+
+            if(conn.State == System.Data.ConnectionState.Open) {
+                return 1;
+            } else return 0;
         }
 
         public static async void EndSQLConnection() {

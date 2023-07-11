@@ -44,7 +44,11 @@ CREATE TABLE [MtG].[AvailableIdentities] (
 
 CREATE TABLE [MtG].[Card] (
     ID VARCHAR(36) PRIMARY KEY,
-    Name VARCHAR(141) UNIQUE,
+    Name VARCHAR(141),
+    PNG VARCHAR(450),
+    SetName VARCHAR(250),
+    SetIcon VARCHAR(450),
+    ManaCost VARCHAR(150),
     ColorIdentity VARCHAR(10) FOREIGN KEY REFERENCES [MtG].[AvailableIdentities](IdentityName)
 );
 
@@ -76,15 +80,22 @@ CREATE TABLE [User].[Details] (
 
 CREATE TABLE [User].[Compendium] (
     ID VARCHAR(450) FOREIGN KEY REFERENCES [User].[Details](CompendiumID) NOT NULL,
-    CardName VARCHAR(141) FOREIGN KEY REFERENCES [MtG].[Card](Name) NOT NULL,
+    CardName VARCHAR(141) UNIQUE NOT NULL,
+    ManaCost AS [MtG].[GetManaCost](CardName),
     ColorIdentity AS [MtG].[GetColorIdentity](CardName),
     TotalQty AS [MtG].[GetCardTotal](ID, CardName), 
     CONSTRAINT CPK_UserCompendium PRIMARY KEY (ID, CardName)
 );
 
+/* UPDATE COLLECTION IN API AND SITE TO USE NEW CardName FIELD! REMOVE CardName PASS FROM COMPENDIUM VIEW */
+
 CREATE TABLE [User].[Collection] (
     CompendiumID VARCHAR(450) FOREIGN KEY REFERENCES [User].[Details](CompendiumID) NOT NULL,
     CardID VARCHAR(36) FOREIGN KEY REFERENCES [MtG].[Card](ID) NOT NULL,
+    CardName VARCHAR(141),
+    CardFace AS [MtG].[GetCardFace](CardID),
+    SetName AS [MtG].[GetSetName](CardID),
+    SetIcon AS [MtG].[GetSetIcon](CardID),
     Condition VARCHAR(12) FOREIGN KEY REFERENCES [MtG].[AvailableGrades](ID) DEFAULT('UO-UKN') NOT NULL,
     StorageLocation VARCHAR(250) DEFAULT('Undefined') NOT NULL,
     Quantity INT DEFAULT(1),

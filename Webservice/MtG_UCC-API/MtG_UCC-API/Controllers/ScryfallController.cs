@@ -11,7 +11,7 @@ namespace MtG_UCC_API.Controllers {
     [Route("[controller]/[action]")]
     [ApiController]
     public class ScryfallController : ControllerBase {
-        [HttpGet("/{CardID}")]
+        [HttpGet("{CardID}")]
         public async Task<HttpResponseMessage> GetCardDetails(String CardID) {
             String errorMessage = "";
 

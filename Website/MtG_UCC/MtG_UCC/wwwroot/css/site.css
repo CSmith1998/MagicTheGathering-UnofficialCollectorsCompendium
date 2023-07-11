@@ -1,3 +1,46 @@
+:root {
+    --Radial: radial-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5));
+
+    --Swamps_FG: radial-gradient(circle, #150b00, #0b0600);
+    --Swamps_BG: radial-gradient(circle, #a69f9d, #53504f);
+    --Swamps: radial-gradient(circle, #150b00, #a69f9d);
+    --DefaultSwamp: url(../images/ManaSymbols/Swamps/Default_Swamps.png);
+    --IncludedSwamp: url(../images/ManaSymbols/Swamps/Included_Swamps.png);
+    --ExcludedSwamp: url(../images/ManaSymbols/Swamps/Excluded_Swamps.png);
+
+    --Forests_FG: radial-gradient(circle, #00733d, #003a1f);
+    --Forests_BG: radial-gradient(circle, #c4d3ca, #626a65);
+    --Swamps: radial-gradient(circle, #00733d, #c4d3ca);
+    --DefaultForest: url(../images/ManaSymbols/Forests/Default_Forests.png);
+    --IncludedForest: url(../images/ManaSymbols/Forests/Included_Forests.png);
+    --ExcludedForest: url(../images/ManaSymbols/Forests/Excluded_Forests.png);
+
+    --Mountains_FG: radial-gradient(circle, #d32029, #6a1015);
+    --Mountains_FG: radial-gradient(circle, #eb9f82, #765041);
+    --Swamps: radial-gradient(circle, #d32029, #eb9f82);
+    --DefaultMountain: url(../images/ManaSymbols/Mountains/Default_Mountains.png);
+    --IncludedMountain: url(../images/ManaSymbols/Mountains/Included_Mountains.png);
+    --ExcludedMountain: url(../images/ManaSymbols/Mountains/Excluded_Mountains.png);
+
+    --Islands_FG: radial-gradient(circle, #0e68ab, #073456);
+    --Islands_FG: radial-gradient(circle, #b3ceea, #5a6775);
+    --Swamps: radial-gradient(circle, #0e68ab, #b3ceea);
+    --DefaultIsland: url(../images/ManaSymbols/Islands/Default_Islands.png);
+    --IncludedIsland: url(../images/ManaSymbols/Islands/Included_Islands.png);
+    --ExcludedIsland: url(../images/ManaSymbols/Islands/Excluded_Islands.png);
+
+    --Plains_FG: radial-gradient(circle, #f9faf4, #7d7d7a);
+    --Plains_FG: radial-gradient(circle, #f8e7b9, #7c745d);
+    --Swamps: radial-gradient(circle, #f9faf4, #f8e7b9);
+    --DefaultPlain: url(../images/ManaSymbols/Plains/Default_Plains.png);
+    --IncludedPlain: url(../images/ManaSymbols/Plains/Included_Plains.png);
+    --ExcludedPlain: url(../images/ManaSymbols/Plains/Excluded_Plains.png);
+
+    --CardBack_FG: radial-gradient(circle, #703C2E, #381e17);
+    --CardBack_BG: radial-gradient(circle, #332D13, #1a170a);
+    --CardBack: radial-gradient(circle, #703C2E, #332D13);
+}
+
 html {
   font-size: 14px;
 }
@@ -15,4 +58,85 @@ html {
 
 body {
   margin-bottom: 60px;
+}
+
+.CardBack {
+    background: var(--CardBack_FG);
+}
+
+.FormBack {
+    background-image: var(--bs-gradient);
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.mana-checkbox {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.mana-checkbox .mana-icon {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.mana-icon.check-swamp.included {
+    background-image: var(--IncludedSwamp);
+}
+.mana-icon.check-swamp.excluded {
+    background-image: var(--ExcludedSwamp);
+}
+.mana-icon.check-swamp.undecided {
+    background-image: var(--DefaultSwamp);
+}
+
+.mana-icon.check-forest.included {
+    background-image: var(--IncludedForest);
+}
+.mana-icon.check-forest.excluded {
+    background-image: var(--ExcludedForest);
+}
+.mana-icon.check-forest.undecided {
+    background-image: var(--DefaultForest);
+}
+
+.mana-icon.check-mountain.included {
+    background-image: var(--IncludedMountain);
+}
+.mana-icon.check-mountain.excluded {
+    background-image: var(--ExcludedMountain);
+}
+.mana-icon.check-mountain.undecided {
+    background-image: var(--DefaultMountain);
+}
+
+.mana-icon.check-island.included {
+    background-image: var(--IncludedIsland);
+}
+.mana-icon.check-island.excluded {
+    background-image: var(--ExcludedIsland);
+}
+.mana-icon.check-island.undecided {
+    background-image: var(--DefaultIsland);
+}
+
+.mana-icon.check-plain.included {
+    background-image: var(--IncludedPlain);
+}
+.mana-icon.check-plain.excluded {
+    background-image: var(--ExcludedPlain);
+}
+.mana-icon.check-plain.undecided {
+    background-image: var(--DefaultPlain);
+}
+
+table.Clickable tbody tr {
+    cursor: pointer;
+}
+
+table.Clickable tbody tr:hover {
+    background: var(--Radial);
 }
