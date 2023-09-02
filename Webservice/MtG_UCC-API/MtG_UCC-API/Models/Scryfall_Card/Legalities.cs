@@ -1,66 +1,93 @@
+using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 
-public class Legalities {
-        [JsonProperty("standard")]
+namespace MtG_UCC_API.Models.Scryfall_Card{ 
+
+    public class Legalities
+    {
+        [JsonProperty("standard", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("standard")]
         public string Standard { get; set; }
 
-        [JsonProperty("future")]
+        [JsonProperty("future", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("future")]
         public string Future { get; set; }
 
-        [JsonProperty("historic")]
+        [JsonProperty("historic", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("historic")]
         public string Historic { get; set; }
 
-        [JsonProperty("gladiator")]
+        [JsonProperty("gladiator", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("gladiator")]
         public string Gladiator { get; set; }
 
-        [JsonProperty("pioneer")]
+        [JsonProperty("pioneer", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("pioneer")]
         public string Pioneer { get; set; }
 
-        [JsonProperty("explorer")]
+        [JsonProperty("explorer", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("explorer")]
         public string Explorer { get; set; }
 
-        [JsonProperty("modern")]
+        [JsonProperty("modern", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("modern")]
         public string Modern { get; set; }
 
-        [JsonProperty("legacy")]
+        [JsonProperty("legacy", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("legacy")]
         public string Legacy { get; set; }
 
-        [JsonProperty("pauper")]
+        [JsonProperty("pauper", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("pauper")]
         public string Pauper { get; set; }
 
-        [JsonProperty("vintage")]
+        [JsonProperty("vintage", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("vintage")]
         public string Vintage { get; set; }
 
-        [JsonProperty("penny")]
+        [JsonProperty("penny", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("penny")]
         public string Penny { get; set; }
 
-        [JsonProperty("commander")]
+        [JsonProperty("commander", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("commander")]
         public string Commander { get; set; }
 
-        [JsonProperty("oathbreaker")]
+        [JsonProperty("oathbreaker", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("oathbreaker")]
         public string Oathbreaker { get; set; }
 
-        [JsonProperty("brawl")]
+        [JsonProperty("brawl", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("brawl")]
         public string Brawl { get; set; }
 
-        [JsonProperty("historicbrawl")]
+        [JsonProperty("historicbrawl", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("historicbrawl")]
         public string Historicbrawl { get; set; }
 
-        [JsonProperty("alchemy")]
+        [JsonProperty("alchemy", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("alchemy")]
         public string Alchemy { get; set; }
 
-        [JsonProperty("paupercommander")]
+        [JsonProperty("paupercommander", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("paupercommander")]
         public string Paupercommander { get; set; }
 
-        [JsonProperty("duel")]
+        [JsonProperty("duel", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("duel")]
         public string Duel { get; set; }
 
-        [JsonProperty("oldschool")]
+        [JsonProperty("oldschool", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("oldschool")]
         public string Oldschool { get; set; }
 
-        [JsonProperty("premodern")]
+        [JsonProperty("premodern", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("premodern")]
         public string Premodern { get; set; }
 
-        [JsonProperty("predh")]
+        [JsonProperty("predh", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("predh")]
         public string Predh { get; set; }
     }
+
+}

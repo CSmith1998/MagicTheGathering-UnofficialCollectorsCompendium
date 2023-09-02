@@ -1,0 +1,131 @@
+﻿@model Collection
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<Condition> AvailableGrades = (List<Condition>)ViewData["AvailableGrades"];
+
+    var Grades = AvailableGrades.Select(c => new {
+        Value = c.ID,
+        Text = $"{c.Type} - {c.Name}"
+    }).ToList();
+
+    var selectedValue = Model.CardCondition?.ID;
+}
+
+<h1 class="text-center AdjustedBacking Plains_pFG">Collection Editor</h1>
+<hr />
+<div class="col-10 m-3 p-0 mx-auto">
+    <div class="row w-100 justify-content-around m-0 p-0">
+        <div class="col-3 p-0 m-0">
+            <div class="container h-100 p-0 m-0">
+                <div class="row">
+                    <div class="m-0 p-0">
+                        <img class="CardSearch" id="ImageDisplay" />
+                    </div>
+                </div>
+            </div>
+            <script>
+                var imageUrl = ("@Model.CardFace");
+                var containerId = "@("ImageDisplay")";
+                var img = document.getElementById(containerId);
+
+                function displayCard(img) {
+                    fetch(imageUrl)
+                        .then(response => response.blob())
+                        .then(blob => {
+                            var reader = new FileReader();
+                            reader.onloadend = function () {
+                                img.src = reader.result;
+                            };
+                            reader.readAsDataURL(blob);
+                        });
+                }
+                displayCard(img);
+            </script>
+        </div>
+        <div class="col-8 p-0 bg-light bg-gradient mx-3 h-100 my-auto">
+            <form asp-controller="Collection" asp-action="Edit" method="post" id="CollectionRecord" class="p-0 m-3">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                @Html.TextBoxFor(m => m.CompendiumID, new { @class = "form-control", @type = "hidden", @value = "" })
+                @Html.TextBoxFor(m => m.CardID, new { @class = "form-control", @type = "hidden" })
+                @Html.TextBoxFor(m => m.CardFace, new { @class = "form-control", @type = "hidden" })
+                @Html.TextBoxFor(m => m.SetIcon, new { @class = "form-control", @type = "hidden", @value = "" })
+                <div class="d-flex flex-column justify-content-between">
+                    <div class="form-group my-2">
+                        @Html.TextBoxFor(m => m.CardName, new { @class = "form-control", @type = "hidden" })
+                        @Html.LabelFor(m => m.CardName, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.CardName, new { @class = "form-control", @disabled = "true" })
+                        @Html.ValidationMessageFor(m => m.CardName, String.Empty, new { @class = "text-danger" })
+                    </div>
+
+                    <div class="row d-flex flex-row justify-contents-baseline align-items-start">
+                        <div class="col-1 align-self-end">
+                            <iframe class="IconImage" id="IconContainer"></iframe>
+                            <script>
+                                var imageUrl = "@Model.SetIcon";
+                                var containerId = "IconContainer";
+                                var iframe = document.getElementById(containerId);
+
+                                function displayIcon(iframe) {
+                                    iframe.src = imageUrl;
+                                }
+                                displayIcon(iframe);
+                            </script>
+                        </div>
+                        <div class="form-group col-11">
+                            @Html.TextBoxFor(m => m.SetName, new { @class = "form-control", @type = "hidden" })
+                            @Html.LabelFor(m => m.SetName, new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.SetName, new { @class = "form-control", @disabled = "true" })
+                            @Html.ValidationMessageFor(m => m.SetName, String.Empty, new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group my-2">
+                        @Html.LabelFor(m => m.CardCondition, new { @class = "control-label" })
+                        @Html.DropDownListFor(m => m.CardCondition.ID, new SelectList(Grades, "Value", "Text", selectedValue), new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.CardCondition, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group my-2">
+                        @Html.LabelFor(m => m.StorageLocation, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.StorageLocation, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.StorageLocation, String.Empty, new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group my-2">
+                        @Html.LabelFor(m => m.Quantity, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control", @type = "number" })
+                        @Html.ValidationMessageFor(m => m.Quantity, String.Empty, new { @class = "text-danger" })
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row w-100 justify-content-around mx-0 my-3 p-0">
+        <div class="col-6">
+            <button type="submit" form="CollectionRecord" class="btn-Forest_BG btn-block w-50">Save</button>
+        </div>
+        <div class="col-6">
+            <div>
+                <a class="btn btn-Island_BG btn-block w-50" asp-action="Collection">Back to Collection</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<script>
+    var imageUrl = "@Model.SetIcon";
+    var containerId = "iconContainer";
+    var iframe = document.getElementById(containerId);
+
+    function displayIcon(iframe) {
+        iframe.src = imageUrl;
+    }
+    displayIcon(iframe);
+</script>*@
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

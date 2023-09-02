@@ -1,9 +1,16 @@
-﻿namespace MtG_UCC.Models {
+﻿using Newtonsoft.Json;
+
+namespace MtG_UCC.Models {
+    [JsonObject]
     public class Condition {
+        [JsonProperty("id")]
         public String ID { get; set; }
-        public String Type { get; set; }
-        public String Name { get; set; }
-        public String Description { get; set; }
+        [JsonProperty("type")]
+        public String? Type { get; set; }
+        [JsonProperty("name")]
+        public String? Name { get; set; }
+        [JsonProperty("description")]
+        public String? Description { get; set; }
 
         public Condition() { 
         

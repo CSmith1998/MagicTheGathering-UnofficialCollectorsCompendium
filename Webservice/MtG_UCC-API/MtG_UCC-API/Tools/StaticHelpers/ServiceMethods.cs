@@ -1,13 +1,20 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Tokens;
 using MtG_UCC_API.Models;
+using MtG_UCC_API.Models.Database;
+using MtG_UCC_API.Models.Scryfall_Card;
 using MtG_UCC_API.Models.Scryfall_Search;
 using Newtonsoft.Json;
+using System.Data;
+using System.Diagnostics;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Text;
 
 using static MtG_UCC_API.SQLMethods;
+using static MtG_UCC_API.ProjectConstants;
+using static System.Collections.Specialized.BitVector32;
+using Microsoft.AspNetCore.Hosting.Server;
 
 namespace MtG_UCC_API {
     public static class ServiceMethods {
@@ -36,6 +43,11 @@ namespace MtG_UCC_API {
 
             return UserDetails;
         }
+        public static string Base64Decode(string base64EncodedData) {
+            var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
+            return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
+        }
+
         public async static Task<bool> CheckAuthorization(String AuthToken) {
             if(AuthToken == null) { return false; }
 
@@ -54,6 +66,24 @@ namespace MtG_UCC_API {
 
             return (result == 1);
         }
+        public async static Task<bool> CheckAdminAuthorization(String Authtoken, String AccountID) { 
+            if(Authtoken == null) { return false; }
+
+            var UserDetails = AuthDecryption(Authtoken);
+
+            var username = UserDetails.GetValueOrDefault("Username");
+            var password = UserDetails.GetValueOrDefault("Password");
+
+            var connection = await EstablishSQLConnection($"SELECT [Admin].[AdminValidation]('{username}', '{password}', '{AccountID}')");
+            var result = 0;
+
+            if (connection == 1) {
+                result = (int)await cmd.ExecuteScalarAsync();
+                EndSQLConnection();
+            }
+
+            return (result == 1);
+        }
         public static String GetAuthToken(Dictionary<String, String> headers) {
             return headers.GetValueOrDefault("Authorization");
         }
@@ -62,6 +92,25 @@ namespace MtG_UCC_API {
         #region Retrieve User Details
         public static String GetAccountID(Dictionary<String, String> headers) {
             return headers.GetValueOrDefault("AccountID");
+        }
+        public static String GetUserAccountID(Dictionary<String, String> headers) {
+            return headers.GetValueOrDefault("UserAccountID");
+        }
+        public static String GetRoleID(Dictionary<String, String> headers) {
+            return headers.GetValueOrDefault("RoleID");
+        }
+
+        public static Collection? RetrieveCollection(Dictionary<string, string> headers) {
+            Collection? record = null;
+
+            var json = headers.GetValueOrDefault("Collection");
+
+            if(!json.IsNullOrEmpty()) {
+                Console.WriteLine($"\n\n\nDecoded Json: {Base64Decode(json)}"); Debug.WriteLine($"\n\n\nDecoded Json: {Base64Decode(json)}");
+                record = JsonConvert.DeserializeObject<Collection>(Base64Decode(json));
+            }
+
+            return record;
         }
 
         public async static Task<String?> GetCompendiumID(String AccountID) {
@@ -134,8 +183,8 @@ namespace MtG_UCC_API {
             List<Compendium> UserCompendium = new();
 
             var connection = await EstablishSQLConnection($"SELECT * FROM [User].[Compendium] WHERE ID = '{CompendiumID}'");
-            
-            if(connection == 1) { 
+
+            if (connection == 1) { 
                 SqlDataReader reader = await cmd.ExecuteReaderAsync();
 
                 while(await reader.ReadAsync()) {
@@ -149,9 +198,89 @@ namespace MtG_UCC_API {
                 }
             }
 
+            EndSQLConnection();
+
             return UserCompendium;
         }
+        public async static Task<List<CardStatistic>> GetTop25() {
+            List<CardStatistic> Stats = new();
 
+            var connection = await EstablishSQLConnection($"SELECT * FROM [Admin].[Top25Cards]()");
+
+            if(connection == 1) {
+                SqlDataReader reader = await cmd.ExecuteReaderAsync();
+
+                while(await reader.ReadAsync()) {
+                    Stats.Add(new CardStatistic() {
+                        CardID = reader.GetString(reader.GetOrdinal("CardID")),
+                        Count = reader.GetInt32(reader.GetOrdinal("Count")),
+                        Name = reader.GetString(reader.GetOrdinal("Name")),
+                        PNG = reader.GetString(reader.GetOrdinal("PNG")),
+                        SetName = reader.GetString(reader.GetOrdinal("SetName")),
+                        SetIcon = reader.GetString(reader.GetOrdinal("SetIcon")),
+                        ManaCost = reader.GetString(reader.GetOrdinal("ManaCost")),
+                        ColorIdentity = reader.GetString(reader.GetOrdinal("ColorIdentity"))
+                    });
+                }
+            }
+
+            EndSQLConnection();
+
+            return Stats;
+        }
+        public async static Task<string> DeleteUserFromDatabase(String UserID) {
+            var connection = await EstablishSQLConnection($"EXECUTE [Admin].[DeleteUser] '{UserID}");
+
+            if(connection == 1) {
+                await cmd.ExecuteNonQueryAsync();
+            }
+
+            return $"Successfully deleted record!";
+        }
+
+        public async static Task<List<UsersWithRoles>> RetrieveUsersWithRoles() {
+            List<UsersWithRoles> list = new();
+
+            var connection = await EstablishSQLConnection($"SELECT * FROM [Admin].[GetUsersWithRoles]()");
+
+            if(connection == 1) {
+                SqlDataReader reader = await cmd.ExecuteReaderAsync();
+
+                while(await reader.ReadAsync()) {
+                    list.Add(new UsersWithRoles() {
+                        UserId = reader.GetString(reader.GetOrdinal("UserId")),
+                        UserName = reader.GetString(reader.GetOrdinal("UserName")),
+                        RoleId = reader.GetString(reader.GetOrdinal("RoleId")),
+                        RoleName = reader.GetString(reader.GetOrdinal("RoleName")),
+                    });
+                }
+            }
+
+            return list;
+        }
+        
+        public async static Task<List<Condition>> GetConditions() {
+            List<Condition> states = new();
+
+            var connection = await EstablishSQLConnection($"SELECT * FROM [MtG].[AvailableGrades]");
+
+            if(connection == 1) {
+                SqlDataReader reader = await cmd.ExecuteReaderAsync();
+
+                while(await reader.ReadAsync()) { 
+                    states.Add(new Condition() { 
+                        ID = reader.GetString(reader.GetOrdinal("ID")),
+                        Type = reader.GetString(reader.GetOrdinal("Type")),
+                        Name = reader.GetString(reader.GetOrdinal("Name")),
+                        Description = reader.GetString(reader.GetOrdinal("Description"))
+                    });
+                }
+            }
+
+            EndSQLConnection();
+
+            return states;
+        }
         public static async Task<List<String>> RetrieveCardNames(List<String> IDs) {
             List<String> CardNames = new();
 
@@ -204,8 +333,165 @@ namespace MtG_UCC_API {
                 }
             }
 
+            EndSQLConnection();
+
             return UserCollection;
         }
+        #endregion
+
+        #region Modify Database
+        public async static Task<string> CheckAndInsert(Card card, Collection record, string compendiumID) {
+            int connection;
+            string response = "";
+
+            try { 
+                connection = await EstablishSQLConnection($"SELECT [MtG].[CheckCardExists]('{card.Id}')");
+                
+                if(connection == 1) {
+                    //Debug.WriteLine($"Connection succeeded : CardID = {card.Id}"); Console.WriteLine($"Connection succeeded : CardID = {card.Id}");
+                    int result = (int)await cmd.ExecuteScalarAsync();
+                    //Debug.WriteLine($"result = {result}"); Console.WriteLine($"result = {result}");
+
+                    if (result != 1) {
+                        //Debug.WriteLine($"Card Does Not Exist"); Console.WriteLine($"Card Does Not Exist");
+                        card.DetermineIdentity();
+
+                        string SetIcon = await RetrieveSetIconFromID(card.SetId);
+
+                        string png = "";
+                        if(card.ImageUris == null) {
+                            png = card.CardFaces[0].ImageUris.Png;
+                        } else png = card.ImageUris.Png;
+
+                        cmd = new SqlCommand($"EXECUTE [MtG].[NewCard] '{card.Id}', '{card.Name}', '{png}', '{card.SetName}', '{SetIcon}', '{card.ManaCost}', '{card.Identity}'", conn);
+
+                        await cmd.ExecuteNonQueryAsync();
+                    }
+
+                    string condition, location;
+                    condition = record.CardCondition.ID;
+                    location = record.StorageLocation;
+
+                    if (condition == null || condition == "") { condition = "UO-UKN"; }
+                    if (location == null || condition == "") { location = "Undefined"; }
+
+                    cmd = new SqlCommand($"EXECUTE [User].[InsertIntoCollection] '{compendiumID}', '{card.Id}', '{condition}', '{location}', {record.Quantity}", conn);
+
+                    await cmd.ExecuteNonQueryAsync();
+                    response = new($"Successfully updated database!");
+                } else response = new($"SQL Connection failed");
+
+            } catch (Exception ex) {
+                //Debug.WriteLine($"\n\n\nException details: {ex.StackTrace} --- {ex.InnerException.StackTrace}");
+                //Console.WriteLine($"\n\n\nException details: {ex.StackTrace} --- {ex.InnerException.StackTrace}");
+                return (response = new($"An unknown exception occurred! {ex.StackTrace}"));
+            } finally {
+                EndSQLConnection();
+            }
+
+            return response;
+        }
+        public static async Task<string> UpdateUserCollection(string AccountID, Collection record) {
+            int connection;
+            string response = "";
+
+            try {
+                string condition, location, cardID;
+                condition = record.CardCondition.ID;
+                location = record.StorageLocation;
+
+
+                if (condition == null || condition == "") { condition = "UO-UKN"; }
+                if (location == null || condition == "") { location = "Undefined"; }
+
+                connection = await EstablishSQLConnection($"EXECUTE [User].[UpdateCollection] '{AccountID}', '{record.CardID}', '{condition}', '{location}', {record.Quantity}");
+
+                if(connection == 1) {
+                    await cmd.ExecuteNonQueryAsync();
+                    response = new($"Successfully updated database!");
+                } else response = new($"SQL Connection failed");
+
+            } catch(Exception ex) {
+                return (response = new($"An unknown exception occurred! {ex.StackTrace}"));
+            } finally {
+                EndSQLConnection();
+            }
+
+            return response;
+        }
+        public static async Task<string> UpdateCollectionQuantity(string AccountID, Collection record) {
+            int connection;
+            string response = "";
+
+            try {
+                connection = await EstablishSQLConnection($"EXECUTE [MtG].[UpdateCardQuantity] '{AccountID}', '{record.CardID}', '{record.CardCondition.ID}', '{record.StorageLocation}', {record.Quantity}");
+
+                if(connection == 1) {
+                    await cmd.ExecuteNonQueryAsync();
+                    response = new($"Successfully updated database!");
+                } else response = new($"SQL Connection failed");
+
+            } catch(Exception ex) {
+                return (response = new($"An unknown exception occurred! {ex.StackTrace}"));
+            } finally {
+                EndSQLConnection();
+            }
+
+            return response;
+        }
+        public static async Task<string> DeleteRecord(Collection record) {
+            int connection;
+            string response = "";
+
+            try {
+                connection = await EstablishSQLConnection($"DELETE FROM [User].[Collection] WHERE CompendiumID = '{record.CompendiumID}' AND CardID = '{record.CardID}' AND Condition = '{record.CardCondition.ID}' AND StorageLocation = '{record.StorageLocation}'");
+
+                if(connection == 1) {
+                    await cmd.ExecuteNonQueryAsync();
+                    response = new($"Successfully deleted record!");
+                } else response = new($"SQL Connection failed");
+
+            } catch(Exception ex) {
+                return (response = new($"An unknown exception occurred! {ex.StackTrace}"));
+            } finally {
+                EndSQLConnection();
+            }
+
+            return response;
+        }
+        public static async Task<string> ChangeUserRole(string AccountID, string RoleID)
+        {
+            string response = "";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString)) // Replace yourConnectionString with the actual connection string to your SQL Server database
+                {
+                    await connection.OpenAsync();
+
+                    using (SqlCommand cmd = new SqlCommand("[Admin].[ChangeUserRole]", connection))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add("@UserId", SqlDbType.NVarChar).Value = AccountID;
+                        cmd.Parameters.Add("@RoleId", SqlDbType.NVarChar).Value = RoleID;
+
+                        await cmd.ExecuteNonQueryAsync();
+
+                        response = "Successfully updated record!";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                response = $"An unknown exception occurred! {ex.StackTrace}";
+                Console.WriteLine($"EXCEPTION : {response}");
+                Debug.WriteLine($"EXCEPTION : {response}");
+            }
+
+            return response;
+        }
+
         #endregion
 
         #region Http Extension Methods
@@ -278,12 +564,16 @@ namespace MtG_UCC_API {
 
         #region Scryfall Methods
         public static async Task<Card?> RetrieveCardFromID(String CardID) {
-            EstablishClient();
             Card? RetrievedCard = null;
+
+            EstablishClient();
+
+            Console.WriteLine($"\n\n\nCard ID: {CardID}\n\n\n"); Debug.WriteLine($"\n\n\nCard ID: {CardID}\n\n\n");
 
             var response = _client.GetAsync(CardID).Result;
             if(response.IsSuccessStatusCode) {
                 String json = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"\n\n\nJson: {json}\n\n\n"); Debug.WriteLine($"\n\n\nJson: {json}\n\n\n");
                 RetrievedCard = JsonConvert.DeserializeObject<Card>(json);
 
                 if(RetrievedCard != null) {
@@ -295,29 +585,59 @@ namespace MtG_UCC_API {
             return RetrievedCard;
         }
 
-        public static async Task<List<Card>?> RetrieveCardsFromQuery(SearchParameters parameters) {
-            List<Card>? RetrievedCards = new();
+        public static async Task<Root> RetrieveCardsFromQuery(SearchParameters parameters) {
+            Root ApiReply = new();
 
-            if (parameters != null) {
+            if (parameters != null)
+            {
                 EstablishClient();
 
                 var response = _client.GetAsync($"search{parameters.ToString()}").Result;
-                if(response.IsSuccessStatusCode) {
-                    RetrievedCards = JsonConvert.DeserializeObject<List<Card>>(await response.Content.ReadAsStringAsync());
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+                    try
+                    {
+                        var settings = new JsonSerializerSettings
+                        {
+                            Error = (sender, args) =>
+                            {
+                                // Log or inspect the error here
+                                Console.WriteLine(args.ErrorContext.Error);
+                            }
+                        };
 
-                    if(RetrievedCards != null) { 
-                        foreach(Card item in RetrievedCards) {
-                            item.DetermineIdentity();
-                        }
+                        ApiReply = JsonConvert.DeserializeObject<Root>(json, settings);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Log or handle the exception here
+                        Console.WriteLine(ex.Message);
                     }
                 }
 
                 CloseClient();
             }
 
-            return RetrievedCards;
+            return ApiReply;
         }
 
+        public static async Task<string> RetrieveSetIconFromID(String SetID) {
+            Set retrievedSet = new();
+            string result = "";
+
+            EstablishClient(new Uri($"https://api.scryfall.com/sets/"));
+
+            var response = _client.GetAsync($"{SetID}").Result;
+
+            if(response.IsSuccessStatusCode ) { 
+                result = await response.Content.ReadAsStringAsync();
+                retrievedSet = JsonConvert.DeserializeObject<Set>(result);
+            }
+            CloseClient();
+
+            return retrievedSet.IconSvgUri;
+        }
         public static SearchParameters? RetrieveParameters(Dictionary<String, String> headers) {
             SearchParameters? RetrievedParameters = null;
 
@@ -328,6 +648,18 @@ namespace MtG_UCC_API {
             }
 
             return RetrievedParameters;
+        }
+        public static Card? RetrieveCard(Dictionary<string, string> headers) {
+            Card? card = null;
+
+            var json = headers.GetValueOrDefault("Card");
+
+            if(!json.IsNullOrEmpty()) {
+                //Console.WriteLine($"\n\n\nDecoded Json: {Base64Decode(json)}"); Debug.WriteLine($"\n\n\nDecoded Json: {Base64Decode(json)}");
+                card = JsonConvert.DeserializeObject<Card>(Base64Decode(json));
+            }
+
+            return card;
         }
         #endregion
     }

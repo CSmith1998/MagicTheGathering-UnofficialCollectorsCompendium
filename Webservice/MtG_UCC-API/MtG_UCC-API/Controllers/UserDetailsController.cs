@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using MtG_UCC_API.Models;
-using Newtonsoft.Json;
-using System.Net;
 
 using static MtG_UCC_API.ServiceMethods;
 

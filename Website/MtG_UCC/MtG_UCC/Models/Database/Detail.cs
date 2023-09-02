@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace MtG_UCC.Models
-{
-    public partial class Detail
-    {
-        public Detail()
-        {
+﻿namespace MtG_UCC.Models {
+    public partial class Detail {
+        public Detail() {
             Accesses = new HashSet<Access>();
             Collections = new HashSet<Collection>();
             Compendia = new HashSet<Compendium>();

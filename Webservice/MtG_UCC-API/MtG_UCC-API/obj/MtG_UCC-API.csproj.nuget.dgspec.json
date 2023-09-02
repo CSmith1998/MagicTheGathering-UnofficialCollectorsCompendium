@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Webservice\\MtG_UCC-API\\MtG_UCC-API\\MtG_UCC-API.csproj": {}
+    "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Webservice\\MtG_UCC-API\\MtG_UCC-API\\MtG_UCC-API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Webservice\\MtG_UCC-API\\MtG_UCC-API\\MtG_UCC-API.csproj": {
+    "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Webservice\\MtG_UCC-API\\MtG_UCC-API\\MtG_UCC-API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Webservice\\MtG_UCC-API\\MtG_UCC-API\\MtG_UCC-API.csproj",
+        "projectUniqueName": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Webservice\\MtG_UCC-API\\MtG_UCC-API\\MtG_UCC-API.csproj",
         "projectName": "MtG_UCC-API",
-        "projectPath": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Webservice\\MtG_UCC-API\\MtG_UCC-API\\MtG_UCC-API.csproj",
-        "packagesPath": "C:\\Users\\shado\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Webservice\\MtG_UCC-API\\MtG_UCC-API\\obj\\",
+        "projectPath": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Webservice\\MtG_UCC-API\\MtG_UCC-API\\MtG_UCC-API.csproj",
+        "packagesPath": "C:\\Users\\Shado\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Webservice\\MtG_UCC-API\\MtG_UCC-API\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\shado\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Shado\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,7 +22,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
+          "C:\\Program Files\\dotnet\\sdk\\7.0.304\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -77,7 +73,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
         }
       }
     }

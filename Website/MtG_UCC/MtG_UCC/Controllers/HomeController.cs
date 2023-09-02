@@ -3,14 +3,11 @@ using MtG_UCC.Models;
 using MtG_UCC.Models.Scryfall_Search;
 using System.Diagnostics;
 
-namespace MtG_UCC.Controllers
-{
-    public class HomeController : Controller
-    {
+namespace MtG_UCC.Controllers {
+    public class HomeController : Controller {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
-        {
+        public HomeController(ILogger<HomeController> logger) {
             _logger = logger;
         }
 
@@ -20,15 +17,14 @@ namespace MtG_UCC.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error() {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult HelpDocumentation()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View();
         }
     }
 }

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace MtG_UCC.Models
-{
-    public partial class AspNetRoleClaim
-    {
+﻿namespace MtG_UCC.Models {
+    public partial class AspNetRoleClaim {
         public int Id { get; set; }
         public string RoleId { get; set; } = null!;
         public string? ClaimType { get; set; }

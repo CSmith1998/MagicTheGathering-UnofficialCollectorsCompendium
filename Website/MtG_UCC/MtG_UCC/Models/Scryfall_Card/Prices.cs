@@ -1,21 +1,32 @@
+using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 
-public class Prices {
-    [JsonProperty("usd")]
-    public string Usd { get; set; }
+namespace MtG_UCC.Models.Scryfall_Card { 
 
-    [JsonProperty("usd_foil")]
-    public string UsdFoil { get; set; }
+    public class Prices {
+        [JsonProperty("usd", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("usd")]
+        public string Usd { get; set; }
 
-    [JsonProperty("usd_etched")]
-    public object UsdEtched { get; set; }
+        [JsonProperty("usd_foil", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("usd_foil")]
+        public string UsdFoil { get; set; }
 
-    [JsonProperty("eur")]
-    public string Eur { get; set; }
+        [JsonProperty("usd_etched", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("usd_etched")]
+        public object UsdEtched { get; set; }
 
-    [JsonProperty("eur_foil")]
-    public string EurFoil { get; set; }
+        [JsonProperty("eur", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("eur")]
+        public string Eur { get; set; }
 
-    [JsonProperty("tix")]
-    public string Tix { get; set; }
+        [JsonProperty("eur_foil", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("eur_foil")]
+        public string EurFoil { get; set; }
+
+        [JsonProperty("tix", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("tix")]
+        public string Tix { get; set; }
+    }
+
 }

@@ -15,5 +15,25 @@ namespace MtG_UCC.Models.Scryfall_Search {
             IncludeMultilingual = false;
             IncludeVariations = false;
         }
+
+        public override String ToString() {
+            StringBuilder Inclusions = new();
+
+            if(IncludeExtras) { 
+                if(Inclusions.Length != 0) { Inclusions.Append("+"); }
+                Inclusions.Append("include:extras");
+            }
+            if(IncludeMultilingual) { 
+                if(Inclusions.Length != 0) { Inclusions.Append("+"); }
+                Inclusions.Append("include:multilingual");
+            }
+            if(IncludeVariations) { 
+                if(Inclusions.Length != 0) { Inclusions.Append("+"); }
+                Inclusions.Append("include:variations");
+            }
+
+            if(Inclusions.Length != 0) { return $"{Inclusions.ToString()}"; }
+            else return "";
+        }
     }
 }

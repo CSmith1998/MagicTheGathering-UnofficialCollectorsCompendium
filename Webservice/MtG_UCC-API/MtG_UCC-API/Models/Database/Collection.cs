@@ -1,4 +1,7 @@
-﻿namespace MtG_UCC_API.Models {
+﻿using Newtonsoft.Json;
+
+namespace MtG_UCC_API.Models {
+    [JsonObject]
     public class Collection {
         public String CompendiumID { get; set; }
         public String CardID { get; set; }

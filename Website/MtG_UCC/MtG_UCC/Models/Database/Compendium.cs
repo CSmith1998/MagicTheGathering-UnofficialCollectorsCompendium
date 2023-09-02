@@ -1,4 +1,3 @@
-using MessagePack;
 using System.ComponentModel.DataAnnotations;
 
 namespace MtG_UCC {

@@ -1,307 +1,331 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\MtG_UCC.bundle.scp.css",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\MtG_UCC.bundle.scp.css",
       "PackagePath": "staticwebassets\\MtG_UCC.bundle.scp.css"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\css\\site.css",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\favicon.ico",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Forests\\Default_Forests.png",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\fonts\\handwriting-black.otf",
+      "PackagePath": "staticwebassets\\fonts\\handwriting-black.otf"
+    },
+    {
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\fonts\\magic-medieval.ttf",
+      "PackagePath": "staticwebassets\\fonts\\magic-medieval.ttf"
+    },
+    {
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\fonts\\planeswalker-dings.ttf",
+      "PackagePath": "staticwebassets\\fonts\\planeswalker-dings.ttf"
+    },
+    {
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\CardBack.png",
+      "PackagePath": "staticwebassets\\images\\CardBack.png"
+    },
+    {
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\Icon\\ColoredMana.png",
+      "PackagePath": "staticwebassets\\images\\Icon\\ColoredMana.png"
+    },
+    {
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\Icon\\Colorless.png",
+      "PackagePath": "staticwebassets\\images\\Icon\\Colorless.png"
+    },
+    {
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Forests\\Default_Forests.png",
       "PackagePath": "staticwebassets\\images\\ManaSymbols\\Forests\\Default_Forests.png"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Forests\\Excluded_Forests.png",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Forests\\Excluded_Forests.png",
       "PackagePath": "staticwebassets\\images\\ManaSymbols\\Forests\\Excluded_Forests.png"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Forests\\Included_Forests.png",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Forests\\Included_Forests.png",
       "PackagePath": "staticwebassets\\images\\ManaSymbols\\Forests\\Included_Forests.png"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Islands\\Default_Islands.png",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Islands\\Default_Islands.png",
       "PackagePath": "staticwebassets\\images\\ManaSymbols\\Islands\\Default_Islands.png"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Islands\\Excluded_Islands.png",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Islands\\Excluded_Islands.png",
       "PackagePath": "staticwebassets\\images\\ManaSymbols\\Islands\\Excluded_Islands.png"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Islands\\Included_Islands.png",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Islands\\Included_Islands.png",
       "PackagePath": "staticwebassets\\images\\ManaSymbols\\Islands\\Included_Islands.png"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Mountains\\Default_Mountains.png",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Mountains\\Default_Mountains.png",
       "PackagePath": "staticwebassets\\images\\ManaSymbols\\Mountains\\Default_Mountains.png"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Mountains\\Excluded_Mountains.png",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Mountains\\Excluded_Mountains.png",
       "PackagePath": "staticwebassets\\images\\ManaSymbols\\Mountains\\Excluded_Mountains.png"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Mountains\\Included_Mountains.png",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Mountains\\Included_Mountains.png",
       "PackagePath": "staticwebassets\\images\\ManaSymbols\\Mountains\\Included_Mountains.png"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Plains\\Default_Plains.png",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Plains\\Default_Plains.png",
       "PackagePath": "staticwebassets\\images\\ManaSymbols\\Plains\\Default_Plains.png"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Plains\\Excluded_Plains.png",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Plains\\Excluded_Plains.png",
       "PackagePath": "staticwebassets\\images\\ManaSymbols\\Plains\\Excluded_Plains.png"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Plains\\Included_Plains.png",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Plains\\Included_Plains.png",
       "PackagePath": "staticwebassets\\images\\ManaSymbols\\Plains\\Included_Plains.png"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Swamps\\Default_Swamps.png",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Swamps\\Default_Swamps.png",
       "PackagePath": "staticwebassets\\images\\ManaSymbols\\Swamps\\Default_Swamps.png"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Swamps\\Excluded_Swamps.png",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Swamps\\Excluded_Swamps.png",
       "PackagePath": "staticwebassets\\images\\ManaSymbols\\Swamps\\Excluded_Swamps.png"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Swamps\\Included_Swamps.png",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\images\\ManaSymbols\\Swamps\\Included_Swamps.png",
       "PackagePath": "staticwebassets\\images\\ManaSymbols\\Swamps\\Included_Swamps.png"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\js\\site.js",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\LICENSE",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\LICENSE",
       "PackagePath": "staticwebassets\\lib\\bootstrap"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css.map"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js.map"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
       "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\LICENSE.md"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.js"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.min.js"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.js"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\jquery\\LICENSE.txt",
       "PackagePath": "staticwebassets\\lib\\jquery\\LICENSE.txt"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\jquery\\dist\\jquery.js",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.js"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.js"
     },
     {
-      "Id": "C:\\Users\\shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "Id": "C:\\Users\\Shado\\Documents\\GitHub\\MagicTheGathering-UnofficialCollectorsCompendium\\Website\\MtG_UCC\\MtG_UCC\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {

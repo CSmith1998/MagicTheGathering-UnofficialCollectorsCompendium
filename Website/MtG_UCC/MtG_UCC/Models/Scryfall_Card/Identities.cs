@@ -1,4 +1,4 @@
-﻿namespace MtG_UCC.Models {
+﻿namespace MtG_UCC.Models.Scryfall_Card {
     public static class Identities {
         public static Dictionary<List<string>, string> AvailableIdentities = new() {
             { new() { "B" }, "Mono Black" },

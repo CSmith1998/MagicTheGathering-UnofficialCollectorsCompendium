@@ -93,6 +93,7 @@ CREATE TABLE [User].[Collection] (
     CompendiumID VARCHAR(450) FOREIGN KEY REFERENCES [User].[Details](CompendiumID) NOT NULL,
     CardID VARCHAR(36) FOREIGN KEY REFERENCES [MtG].[Card](ID) NOT NULL,
     CardName VARCHAR(141),
+    ScryfallUri VARCHAR(450),
     CardFace AS [MtG].[GetCardFace](CardID),
     SetName AS [MtG].[GetSetName](CardID),
     SetIcon AS [MtG].[GetSetIcon](CardID),
@@ -101,6 +102,9 @@ CREATE TABLE [User].[Collection] (
     Quantity INT DEFAULT(1),
     CONSTRAINT CPK_UserCollection PRIMARY KEY (CompendiumID, CardID, Condition, StorageLocation)
 );
+
+ALTER TABLE [User].[Collection]
+ADD ScryfallUri AS [MtG].[GetScryfallUri];
 
 CREATE TABLE [User].[Access] (
     ID VARCHAR(45) FOREIGN KEY REFERENCES [User].[Details](AccessID) NOT NULL, 

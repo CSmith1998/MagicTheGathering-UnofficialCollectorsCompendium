@@ -1,37 +1,40 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
+﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net;
 using static MtG_UCC_API.ServiceMethods;
 using MtG_UCC_API.Models.Scryfall_Search;
 using Microsoft.IdentityModel.Tokens;
+using MtG_UCC_API.Models.Scryfall_Card;
 
 namespace MtG_UCC_API.Controllers {
     [Route("[controller]/[action]")]
     [ApiController]
     public class ScryfallController : ControllerBase {
         [HttpGet("{CardID}")]
-        public async Task<HttpResponseMessage> GetCardDetails(String CardID) {
+        public async Task<Card> GetCardDetails(String CardID) {
+            Card? RetrievedCard = new();
             String errorMessage = "";
 
             try {
-                Card? RetrievedCard = await RetrieveCardFromID(CardID);
+                RetrievedCard = await RetrieveCardFromID(CardID);
 
-                if(RetrievedCard != null) {
-                    return RequestResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(RetrievedCard), "application/json", $"Card '{RetrievedCard.Name}' was successfully retrieved at {DateTime.Now.ToLocalTime}.");
-                } else {
+                if(RetrievedCard == null) {
                     errorMessage = $"Card with ID '{CardID}' was not found!";
-                    return RequestResponse(HttpStatusCode.NotFound, errorMessage);
+                    RetrievedCard.Object = $"Error 404: {errorMessage}";
+                } else {
+                    
                 }
             } catch(Exception ex) {
                 errorMessage = GenerateUnknownError(this.ControllerContext.RouteData, ex);
-                return RequestResponse(HttpStatusCode.BadRequest, errorMessage);
+                RetrievedCard.Object = $"Error 400: {errorMessage}";
             }
+
+            return RetrievedCard;
         }
 
         [HttpGet]
-        public async Task<HttpResponseMessage> GetCardDetails() {
+        public async Task<Root> GetCardDetails() {
+            Root RetrievedCards = new();
             String errorMessage = "";
 
             try { 
@@ -39,22 +42,22 @@ namespace MtG_UCC_API.Controllers {
                 SearchParameters? parameters = RetrieveParameters(headers);
             
                 if(parameters != null) {
-                    List<Card>? RetrievedCards = await RetrieveCardsFromQuery(parameters);
+                    RetrievedCards = await RetrieveCardsFromQuery(parameters);
 
-                    if(RetrievedCards != null) {
-                        return RequestResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(RetrievedCards), "application/json", $"Your query produced {RetrievedCards.Count} cards successfully.");
-                    } else {
+                    if(RetrievedCards == null) {
                         errorMessage = "Your query produced no matching cards.";
-                        return RequestResponse(HttpStatusCode.NotFound, errorMessage);
+                        RetrievedCards.Object = $"Error 404: {errorMessage}";
                     }
                 } else {
                     errorMessage = "Expected JSON \"Search Parameters\" were not found!";
-                    return RequestResponse(HttpStatusCode.FailedDependency, errorMessage);
+                    RetrievedCards.Object = $"Error 424: {errorMessage}";
                 }
             } catch(Exception ex) {
                 errorMessage = GenerateUnknownError(this.ControllerContext.RouteData, ex);
-                return RequestResponse(HttpStatusCode.BadRequest, errorMessage);
+                RetrievedCards.Object = $"Error 400: {errorMessage}";
             }
+
+            return RetrievedCards;
         }
 
         [HttpGet]

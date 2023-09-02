@@ -1,12 +1,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using MtG_UCC.Data;
-using MtG_UCC.Models;
+using MtG_UCC.Services;
 using MtG_UCC.Services.GoogleReCaptcha;
 using MtG_UCC.Services.SendGrid;
-using System.Configuration;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,8 +18,22 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 //    .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = true;
+    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ()@.";
+    options.User.RequireUniqueEmail = true;
+})
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+//builder.Services.AddControllers()
+//    .AddJsonOptions(options =>
+//    {
+//        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+//        options.JsonSerializerOptions.Converters.Add(new ReferenceLoopResolver());
+//    });
+
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddRazorPages();

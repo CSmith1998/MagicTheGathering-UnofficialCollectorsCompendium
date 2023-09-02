@@ -1,12 +1,20 @@
+using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 
-public class PurchaseUris {
-    [JsonProperty("tcgplayer")]
-    public string Tcgplayer { get; set; }
+namespace MtG_UCC.Models.Scryfall_Card { 
 
-    [JsonProperty("cardmarket")]
-    public string Cardmarket { get; set; }
+    public class PurchaseUris {
+        [JsonProperty("tcgplayer", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("tcgplayer")]
+        public string Tcgplayer { get; set; }
 
-    [JsonProperty("cardhoarder")]
-    public string Cardhoarder { get; set; }
+        [JsonProperty("cardmarket", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("cardmarket")]
+        public string Cardmarket { get; set; }
+
+        [JsonProperty("cardhoarder", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("cardhoarder")]
+        public string Cardhoarder { get; set; }
+    }
+
 }

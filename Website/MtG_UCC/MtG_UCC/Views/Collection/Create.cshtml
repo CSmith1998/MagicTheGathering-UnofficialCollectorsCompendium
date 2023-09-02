@@ -1,0 +1,170 @@
+﻿@using MtG_UCC.Models.Scryfall_Card;
+@using Newtonsoft.Json;
+@model Collection
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<Condition> AvailableGrades = (List<Condition>)ViewData["AvailableGrades"];
+
+    var Grades = AvailableGrades.Select(c => new
+    {
+        Value = c.ID,
+        Text = $"{c.Type} - {c.Name}"
+    }).ToList();
+
+    var selectedValue = Model.CardCondition?.ID;
+
+    Card Prospect = (Card)ViewData["Card"];
+}
+
+<h1>Edit</h1>
+
+<h4>Collection</h4>
+<hr />
+<div class="col-10 m-3 p-0 mx-auto">
+    <div class="row w-100 justify-content-around m-0 p-0">
+        <div class="col-3 p-0 m-0">
+            @if (Prospect.ImageUris != null) {
+                <div class="container h-100 p-0 m-0">
+                    <div class="row">
+                        <div class="m-0 p-0">
+                            <img class="CardSearch" id="ImageDisplay" />
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    var imageUrl = ("@Prospect.ImageUris.Png");
+                    var containerId = "@("ImageDisplay")";
+                    var img = document.getElementById(containerId);
+
+                    function displayCard(img) {
+                        fetch(imageUrl)
+                            .then(response => response.blob())
+                            .then(blob => {
+                                var reader = new FileReader();
+                                reader.onloadend = function () {
+                                    img.src = reader.result;
+                                };
+                                reader.readAsDataURL(blob);
+                            });
+                    }
+                    displayCard(img);
+                </script>
+            } else if (Prospect.CardFaces != null && Prospect.CardFaces.FirstOrDefault().ImageUris != null) {
+                <div class="container h-100 p-0 m-0">
+                    <div class="row">
+                        <div class="m-0 p-0">
+                            <div class="position-relative">
+                                <img class="CardSearch" id="FlipDisplay" />
+                                <div class="tooltips swap-icon-alt" id="SwapIcon" data-placement="top" title="Click To View Reverse Side">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="#AAAAAA" viewBox="0 0 16 16">
+                                        <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" />
+                                        <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <script>
+                        function setupCardInstance() {
+                            var currentFace = 0;
+                            var faces = ["@Prospect.CardFaces[0].ImageUris.Png", "@Prospect.CardFaces[1].ImageUris.Png"];
+                            var img = document.getElementById("FlipDisplay");
+
+                            function displayCard(faceIndex) {
+                                var imageUrl = faces[faceIndex];
+                                img.src = imageUrl;
+                            }
+
+                            function swapCardFace() {
+                                currentFace = (currentFace + 1) % faces.length;
+                                displayCard(currentFace);
+                            }
+
+                            displayCard(0);
+
+                            var swapIconDiv = document.getElementById("SwapIcon");
+                            swapIconDiv.onclick = function () {
+                                swapCardFace();
+                            };
+                        }
+
+                        setupCardInstance();
+                    </script>
+                </div>
+            }
+        </div>
+        <div class="col-8 p-0 bg-light bg-gradient mx-3 h-100 my-auto">
+            <form asp-controller="Collection" asp-action="Create" method="post" id="CollectionRecord" class="p-0 m-3">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <input type="hidden" name="json" value="@JsonConvert.SerializeObject(Prospect)" />
+                @Html.TextBoxFor(m => m.CompendiumID, new { @class = "form-control", @type = "hidden", @value = "" })
+                @Html.TextBoxFor(m => m.CardID, new { @class = "form-control", @type = "hidden" })
+                @Html.TextBoxFor(m => m.CardFace, new { @class = "form-control", @type = "hidden" })
+                @Html.TextBoxFor(m => m.SetIcon, new { @class = "form-control", @type = "hidden", @value = "" })
+                <div class="d-flex flex-column justify-content-between">
+                    <div class="form-group my-2">
+                        @Html.TextBoxFor(m => m.CardName, new { @class = "form-control", @type = "hidden" })
+                        @Html.LabelFor(m => m.CardName, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.CardName, new { @class = "form-control", @disabled = "true" })
+                        @Html.ValidationMessageFor(m => m.CardName, String.Empty, new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group my-2">
+                        @Html.TextBoxFor(m => m.SetName, new { @class = "form-control", @type = "hidden" })
+                        @Html.LabelFor(m => m.SetName, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.SetName, new { @class = "form-control", @disabled = "true" })
+                        @Html.ValidationMessageFor(m => m.SetName, String.Empty, new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group my-2">
+                        @Html.LabelFor(m => m.CardCondition, new { @class = "control-label" })
+                        @Html.DropDownListFor(m => m.CardCondition.ID, new SelectList(Grades, "Value", "Text", selectedValue), new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.CardCondition, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group my-2">
+                        @Html.LabelFor(m => m.StorageLocation, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.StorageLocation, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.StorageLocation, String.Empty, new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group my-2">
+                        @Html.LabelFor(m => m.Quantity, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control", @type = "number" })
+                        @Html.ValidationMessageFor(m => m.Quantity, String.Empty, new { @class = "text-danger" })
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row w-100 justify-content-around mx-0 my-3 p-0">
+        <div class="col-6 mx-auto">
+            <button type="submit" form="CollectionRecord" class="btn btn-secondary btn-block w-100">Save</button>
+        </div>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Collection">Back to Collection</a>
+</div>
+
+@*<script>
+    var imageUrl = "@Model.SetIcon";
+    var containerId = "iconContainer";
+    var iframe = document.getElementById(containerId);
+
+    function displayIcon(iframe) {
+        iframe.src = imageUrl;
+    }
+    displayIcon(iframe);
+</script>*@
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

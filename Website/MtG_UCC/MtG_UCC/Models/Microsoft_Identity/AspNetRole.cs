@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace MtG_UCC.Models
-{
-    public partial class AspNetRole
-    {
-        public AspNetRole()
-        {
+﻿namespace MtG_UCC.Models {
+    public partial class AspNetRole {
+        public AspNetRole() {
             AspNetRoleClaims = new HashSet<AspNetRoleClaim>();
             Users = new HashSet<AspNetUser>();
         }

@@ -25,6 +25,7 @@ namespace MtG_UCC.Data
 
             builder.Entity<Compendium>().HasNoKey();
             builder.Entity<Collection>().HasNoKey();
+
         }
         public DbSet<MtG_UCC.Compendium>? Compendium { get; set; }
         public DbSet<MtG_UCC.Models.Collection>? Collection { get; set; }

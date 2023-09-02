@@ -1,13 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-
-namespace MtG_UCC.Models
-{
-    public partial class AspNetUser
-    {
-        public AspNetUser()
-        {
+﻿namespace MtG_UCC.Models {
+    public partial class AspNetUser {
+        public AspNetUser() {
             AspNetUserClaims = new HashSet<AspNetUserClaim>();
             AspNetUserLogins = new HashSet<AspNetUserLogin>();
             AspNetUserTokens = new HashSet<AspNetUserToken>();

@@ -1,0 +1,108 @@
+﻿@using MtG_UCC.Models.Database;
+@model CardStat
+
+<div class="d-flex flex-column align-items-center stat-flex">
+    <div class="row">
+        <div class="m-0 p-0">
+            <div class="card-container" id="@("cardContainer_" + Model.CardID)" onclick="toggleCardDisplay('@(Model.CardID)')">
+                <div class="card card-front" id="@("cardFront_" + Model.CardID)">
+                    <img class="card-image" src="@Model.PNG" alt="Card Image" id="@("cardImage_" + Model.CardID)" />
+                    <script>
+                        var imageUrl = "@Model.PNG";
+                        var containerId = "@("cardImage_" + Model.CardID)";
+                        var img = document.getElementById(containerId);
+
+                        function displayCard(img) {
+                            fetch(imageUrl)
+                                .then(response => response.blob())
+                                .then(blob => {
+                                    var reader = new FileReader();
+                                    reader.onloadend = function () {
+                                        img.src = reader.result;
+                                    };
+                                    reader.readAsDataURL(blob);
+                                });
+                        }
+                        displayCard(img);
+                    </script>
+                </div>
+                <div class="card card-back CardBackImg d-none" id="@("cardBack_" + Model.CardID)">
+                    <div class="card-details h-100">
+                        <div class="d-flex flex-column CardBackImgBacking justify-content-center">
+                            <div class="row p-0 m-0 d-flex flex-row my-3 justify-contents-baseline align-items-end">
+                                <div class="col-9 fs-6 align-self-center">
+                                    @Html.DisplayFor(m => m.Name, new { @class = ""})
+                                </div>
+                                <div class="col-3 p-0 align-self-center">
+                                    @Html.DisplayFor(m => m.ManaCost, new { @class = "" })
+                                </div>
+                            </div>
+                            <div class="row p-0 mx-0 my-3 d-flex flex-row justify-contents-baseline">
+                                <div class="col-3 d-flex flex-column justify-contents-between">
+                                    <iframe class="IconImage align-self-center" id="@("iconContainer_" + Model.CardID)"></iframe>
+                                    <script>
+                                        var imageUrl = "@Model.SetIcon";
+                                        var containerId = "@("iconContainer_" + Model.CardID)";
+                                        var iframe = document.getElementById(containerId);
+
+                                        function displayIcon(iframe) {
+                                            iframe.src = imageUrl;
+                                        }
+                                        displayIcon(iframe);
+                                    </script>
+                                </div>
+                                <div class="col-9 fs-5 align-self-center">
+                                    @Html.DisplayFor(m => m.SetName, new { @class = "" })
+                                </div>
+                            </div>
+                            <div class="row my-3 align-self-center">
+                                <div class="align-self-center">
+                                    @Html.DisplayFor(m => m.ColorIdentity, new { @class = ""})
+                                </div>
+                            </div>
+                            <div class="row align-self-center">
+                                <div class="fs-5">
+                                    @Html.LabelFor(m => m.Count, new { @class = "text-decoration-underline align-self-center" })
+                                </div>
+                            </div>
+                            <div class="row align-self-center">
+                                <div class="w-100">
+                                    <h1>@Model.Count</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleCardDisplay(containerId) {
+        var cardContainer = document.getElementById("cardContainer_" + containerId);
+        var cardFront = document.getElementById("cardFront_" + containerId);
+        var cardBack = document.getElementById("cardBack_" + containerId);
+
+        // Check if the card front is visible (not having 'd-none' class)
+        var isCardFrontVisible = !cardFront.classList.contains("d-none");
+
+        // Toggle the 'flipped' class on the container to trigger the animation
+        cardContainer.classList.toggle("flipped");
+
+        // Delay the addition/removal of 'd-none' class based on the current state
+        if (isCardFrontVisible) {
+            // If the front is visible, remove 'd-none' from the back after the transition ends
+            cardContainer.addEventListener("transitionend", function (event) {
+                if (event.propertyName === "transform") {
+                    cardBack.classList.remove("d-none");
+                    cardFront.classList.add("d-none");
+                }
+            });
+        } else {
+            // If the back is visible, apply 'd-none' to the back before the transition starts
+            cardBack.classList.add("d-none");
+            cardFront.classList.remove("d-none");
+        }
+    }
+</script>

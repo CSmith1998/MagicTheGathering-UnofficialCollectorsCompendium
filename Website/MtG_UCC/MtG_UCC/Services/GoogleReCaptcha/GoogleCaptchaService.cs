@@ -27,6 +27,7 @@ namespace MtG_UCC.Services.GoogleReCaptcha
                     return googleResult.Success;
                 }
             } catch(Exception ex) {
+                Console.WriteLine(ex.StackTrace);
                 return false;
             }
         }
@@ -48,6 +49,7 @@ namespace MtG_UCC.Services.GoogleReCaptcha
                     return googleResult.Success && googleResult.Score >= 0.5;
                 }
             } catch(Exception e) {
+                Console.WriteLine(e.StackTrace);
                 return false;
             }
         }

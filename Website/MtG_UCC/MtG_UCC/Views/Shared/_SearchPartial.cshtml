@@ -1,124 +1,61 @@
-﻿@page
-@using MtG_UCC.Models.Scryfall_Search;
+﻿@using MtG_UCC.Models.Scryfall_Search
 
-@model SearchParameters
+@model TrimmedSearch
 
-<div class="future_form">
-    <h4 class="text-center mb-2">Card Search</h4>
-    <div class="container justify-content-center border border-2 border-dark col-10 CardBack">
-        <div class="container my-3 col-11 border border-2 border-dark FormBack">
-            <h4 class="text-center mb-2">Search Modes</h4>
-            <div class="row mb-3 justify-content-center">
+<form asp-controller="@ViewContext.RouteData.Values["controller"]" asp-action="@ViewContext.RouteData.Values["action"]" method="post">
+    <div class="container justify-content-center border border-2 border-dark rounded-2 col-7 CardBack">
+        <div class="container my-2 border border-2 border-dark rounded-2 FormBack">
+            <div class="row justify-content-center my-2">
                 <div class="col-auto">
-                    @Html.LabelFor(m => m.Mode.Unique, new { @class = "col-form-label" })
+                    <div class="form-group row">
+                        <div class="col-auto">
+                            @Html.LabelFor(m => m.CardName, new { @class = "col-form-label" })
+                        </div>
+                        <div class="col-auto">
+                            @Html.TextBoxFor(m => m.CardName, new { @class = "form-control" })
+                        </div>
+                    </div>
                 </div>
                 <div class="col-auto">
-                    @Html.DropDownListFor(m => m.Mode.Unique, Html.GetEnumSelectList(typeof(RollupMode)), new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Mode.Unique, String.Empty, new { @class = "text-danger" })
-                </div>
-                <div class="col-auto">
-                    @Html.LabelFor(m => m.Mode.Sort, new { @class = "col-form-label" })
-                </div>
-                <div class="col-auto">
-                    @Html.DropDownListFor(m => m.Mode.Sort, Html.GetEnumSelectList(typeof(SortBy)), new { @class = "form-control" })
-                    @*<input type="search" list="mylist" />*@
-                    @Html.ValidationMessageFor(m => m.Mode.Sort, String.Empty, new { @class = "text-danger" })
-                </div>
-                <div class="col-auto">
-                    @Html.LabelFor(m => m.Mode.Order, new { @class = "col-form-label" })
-                </div>
-                <div class="col-auto">
-                    @Html.DropDownListFor(m => m.Mode.Order, Html.GetEnumSelectList(typeof(SortOrder)), new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Mode.Order, String.Empty, new { @class = "text-danger" })
-                </div>
-            </div>
-            <h4 class="text-center mb-2">Inclusions</h4>
-            <div class="row mb-3 justify-content-center">
-                <div class="col-auto">
-                    @Html.LabelFor(m => m.Inclusions.IncludeExtras, new { @class = "col-form-label" })
-                    @Html.CheckBoxFor(m => m.Inclusions.IncludeExtras, new { @class = "form-check-input", @style = "width:2em; height:2em;" })
-                    @Html.ValidationMessageFor(m => m.Inclusions.IncludeExtras, String.Empty, new { @class = "text-danger" })
-                </div>
-                <div class="col-auto">
-                    @Html.LabelFor(m => m.Inclusions.IncludeMultilingual, new { @class = "col-form-label" })
-                    @Html.CheckBoxFor(m => m.Inclusions.IncludeMultilingual, new { @class = "form-check-input", @style = "width:2em; height:2em;" })
-                    @Html.ValidationMessageFor(m => m.Inclusions.IncludeMultilingual, String.Empty, new { @class = "text-danger" })
-                </div>
-                <div class="col-auto">
-                    @Html.LabelFor(m => m.Inclusions.IncludeVariations, new { @class = "col-form-label" })
-                    @Html.CheckBoxFor(m => m.Inclusions.IncludeVariations, new { @class = "form-check-input", @style = "width:2em; height:2em;" })
-                    @Html.ValidationMessageFor(m => m.Inclusions.IncludeVariations, String.Empty, new { @class = "text-danger" })
+                    <div class="form-group row">
+                        <div class="col-auto">
+                            @Html.LabelFor(m => m.Set, new { @class = "col-form-label" })
+                        </div>
+                        <div class="col-auto">
+                            @Html.TextBoxFor(m => m.Set, new { @class = "form-control" })
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="container mb-3 col-11 border border-2 border-dark FormBack">
-            <h4 class="text-center mb-2">Card Details</h4>
-            <div class="row my-2 justify-content-center">
-                <div class="col-auto">
-                    @Html.LabelFor(m => m.ExactName, new { @class = "col-form-label" })
-                    @Html.CheckBoxFor(m => m.ExactName, new { @class = "form-check-input", @style = "width:2em; height:2em;" })
-                    @Html.ValidationMessageFor(m => m.ExactName, String.Empty, new { @class = "text-danger" })
-                </div>
-                <div class="col-auto">
-                    @Html.LabelFor(m => m.CardName, new { @class = "col-form-label" })
-                </div>
-                <div class="col-auto">
-                    @Html.TextBoxFor(m => m.CardName, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.CardName, String.Empty, new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="row my-2 justify-content-center">
-                <div class="col-auto">
-                    @Html.LabelFor(m => m.Set, new { @class = "col-form-label" })
-                </div>
-                <div class="col-auto">
-                    @Html.TextBoxFor(m => m.Set, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Set, String.Empty, new { @class = "text-danger" })
-                </div>
-                <div class="col-auto">
-                    @Html.LabelFor(m => m.Rarity, new { @class = "col-form-label" })
-                </div>
-                <div class="col-auto">
-                    @Html.DropDownListFor(m => m.Rarity, Html.GetEnumSelectList(typeof(Rarities)), new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Rarity, String.Empty, new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="row my-2 justify-content-center">
-                <div class="col-auto">
-                    @Html.LabelFor(m => m.Banned, new { @class = "col-form-label" })
-                    @Html.CheckBoxFor(m => m.Banned, new { @class = "form-check-input", @style = "width:2em; height:2em;" })
-                    @Html.ValidationMessageFor(m => m.Banned, String.Empty, new { @class = "text-danger" })
-                </div>
-                <div class="col-auto">
-                    @Html.LabelFor(m => m.Legality, new { @class = "col-form-label" })
-                </div>
-                <div class="col-auto">
-                    @Html.DropDownListFor(m => m.Legality, Html.GetEnumSelectList(typeof(Legalities)), new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Legality, String.Empty, new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="row justify-content-center my-3">
-                <div class="col-auto mana-checkbox" onclick="toggleManaCheckbox(this)">
+        <div class="container mb-2 border border-2 border-dark rounded-2 FormBack">
+            <div class="row justify-content-center my-2">
+                <div class="col-auto mx-4 mana-checkbox" onclick="toggleManaCheckbox(this)">
                     <span class="mana-icon check-swamp undecided"></span>
                     @Html.DropDownListFor(m => m.Colors.Black, Html.GetEnumSelectList(typeof(ColorOption)), new { @class = "d-none form-control" })
                 </div>
-                <div class="col-auto mana-checkbox" onclick="toggleManaCheckbox(this)">
+                <div class="col-auto mx-4 mana-checkbox" onclick="toggleManaCheckbox(this)">
                     <span class="mana-icon check-forest undecided"></span>
                     @Html.DropDownListFor(m => m.Colors.Green, Html.GetEnumSelectList(typeof(ColorOption)), new { @class = "d-none form-control" })
                 </div>
-                <div class="col-auto mana-checkbox" onclick="toggleManaCheckbox(this)">
+                <div class="col-auto mx-4 mana-checkbox" onclick="toggleManaCheckbox(this)">
                     <span class="mana-icon check-mountain undecided"></span>
                     @Html.DropDownListFor(m => m.Colors.Red, Html.GetEnumSelectList(typeof(ColorOption)), new { @class = "d-none form-control" })
                 </div>
-                <div class="col-auto mana-checkbox" onclick="toggleManaCheckbox(this)">
+                <div class="col-auto mx-4 mana-checkbox" onclick="toggleManaCheckbox(this)">
                     <span class="mana-icon check-island undecided"></span>
                     @Html.DropDownListFor(m => m.Colors.Blue, Html.GetEnumSelectList(typeof(ColorOption)), new { @class = "d-none form-control" })
                 </div>
-                <div class="col-auto mana-checkbox" onclick="toggleManaCheckbox(this)">
+                <div class="col-auto mx-4 mana-checkbox" onclick="toggleManaCheckbox(this)">
                     <span class="mana-icon check-plain undecided"></span>
                     @Html.DropDownListFor(m => m.Colors.White, Html.GetEnumSelectList(typeof(ColorOption)), new { @class = "d-none form-control" })
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="d-flex flex-row justify-content-center mb-2">
+                <button class="btn btn-block btn-Forest_BG w-50 px-5" type="submit">Search</button>
+            </div>
+        </div>
     </div>
-</div>
+</form>

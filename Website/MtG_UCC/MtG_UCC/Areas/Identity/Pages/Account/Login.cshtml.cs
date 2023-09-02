@@ -21,12 +21,14 @@ namespace MtG_UCC.Areas.Identity.Pages.Account
     public class LoginModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<LoginModel> _logger;
         private readonly GoogleCaptchaService _captchaService;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, GoogleCaptchaService captchaService)
+        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, UserManager<IdentityUser> userManager, GoogleCaptchaService captchaService)
         {
             _signInManager = signInManager;
+            _userManager = userManager;
             _logger = logger;
             _captchaService = captchaService;
         }
@@ -120,7 +122,8 @@ namespace MtG_UCC.Areas.Identity.Pages.Account
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                var username = _userManager.FindByEmailAsync(Input.Email).Result.UserName;
+                var result = await _signInManager.PasswordSignInAsync(username, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
