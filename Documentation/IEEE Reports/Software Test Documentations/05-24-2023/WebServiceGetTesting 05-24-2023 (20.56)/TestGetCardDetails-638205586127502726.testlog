@@ -1,0 +1,25 @@
+﻿ MtG_UCC_Testing.WebServiceTests.GET_Testing.TestGetCardDetails(cardID: "CardID", expectedCode: OK)
+   Source: GET_Testing.cs line 48
+   Duration: 4.2 sec
+
+  Message: 
+    System.Net.Http.HttpRequestException : No connection could be made because the target machine actively refused it. (localhost:80)
+    ---- System.Net.Sockets.SocketException : No connection could be made because the target machine actively refused it.
+
+  Stack Trace: 
+    HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+    HttpConnectionPool.ConnectAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+    HttpConnectionPool.CreateHttp11ConnectionAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+    HttpConnectionPool.AddHttp11ConnectionAsync(HttpRequestMessage request)
+    TaskCompletionSourceWithCancellation`1.WaitWithCancellationAsync(CancellationToken cancellationToken)
+    HttpConnectionPool.GetHttp11ConnectionAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+    HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
+    RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+    HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
+    GET_Testing.TestGetCardDetails(String cardID, HttpStatusCode expectedCode) line 53
+    <>c.<ThrowAsync>b__128_0(Object state)
+    ----- Inner Stack Trace -----
+    AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+    IValueTaskSource.GetResult(Int16 token)
+    Socket.<ConnectAsync>g__WaitForConnectWithCancellation|277_0(AwaitableSocketAsyncEventArgs saea, ValueTask connectTask, CancellationToken cancellationToken)
+    HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)

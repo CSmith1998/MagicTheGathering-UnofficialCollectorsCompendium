@@ -1,9 +1,12 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using MtG_UCC.Data;
+using MtG_UCC.Models;
+using MtG_UCC.Services.GoogleReCaptcha;
 using MtG_UCC.Services.SendGrid;
-using Recaptcha.Web.Configuration;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +14,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<MtG_UCC_Context>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -22,7 +27,8 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddTransient<IEmailSender, SendGridEmailSender>();
 
-RecaptchaConfigurationManager.SetConfiguration(builder.Configuration);
+builder.Services.Configure<GoogleCaptchaConfig>(builder.Configuration.GetSection("GoogleReCaptcha"));
+builder.Services.AddTransient(typeof(GoogleCaptchaService));
 
 var app = builder.Build();
 
