@@ -1,0 +1,22 @@
+﻿@using MtG_UCC.Models.Scryfall_Card;
+@model List<Card>
+
+@{
+    ViewData["Title"] = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row m-0 p-0">
+        <div class="container m-0 p-0">
+            @{await Html.RenderPartialAsync("_SearchFull", ViewData["Parameters"]);}
+        </div>
+    </div>
+    <div class="row my-3 mx-0 p-0">
+        <div class="container p-0 m-0">
+            @{
+                await Html.RenderPartialAsync("_SearchGrid", Model);
+            }
+        </div>
+    </div>
+</div>

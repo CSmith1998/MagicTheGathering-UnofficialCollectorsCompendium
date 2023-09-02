@@ -1,0 +1,135 @@
+﻿@using MtG_UCC.Models.Scryfall_Search;
+@using Newtonsoft.Json;
+@model Collection
+
+@{
+    var uuid = Guid.NewGuid();
+}
+
+<div class="container p-grid col-4">
+    <div class="card h-100 m-0 p-card">
+        <div class="row h-100">
+            <div class="col-card h-100 p-0 m-0 tooltips" data-placement="top" title="View Card Details">
+                <img class="CardImage" id="@("cardContainer_" + uuid)" />
+            </div>
+
+            <div class="margin-collection Plains_FG rounded-3 tooltips" data-placement="top" title="Edit Collection Entry">
+                <div class="d-flex flex-column justify-content-around card-body p-0 m-1" style="height: 100%">
+                    @*<a class="text-dark text-decoration-none" asp-controller="Controller" asp-action="Edit" asp-route-Collection="@Model">*@
+                        <div class="card-text">
+                            <h6 class="text-decoration-underline m-0">Set:</h6>
+                            <div class="d-flex flex-row align-items-center">
+                                <div class="m-0 align-self-center">
+                                    <iframe class="IconImage" id="@("iconContainer_" + uuid)"></iframe>
+                                </div>
+                                <span class="m-0 align-self-start">@Model.SetName</span>
+                            </div>
+                        </div>
+                        <div class="card-text">
+                            <h6 class="text-decoration-underline m-0">Storage Location:</h6>
+                            <p class="m-0">@Model.StorageLocation</p>
+                        </div>
+                        <div class="card-text">
+                            <div class="d-flex flex-row justify-content-between">
+                                <h6 class="m-0 align-self-start text-decoration-underline">Condition:</h6>
+                                <h6 class="m-0 align-self-end text-decoration-underline">Quantity:</h6>
+                            </div>
+                            <div class="d-flex flex-row justify-content-between">
+                                <p class="m-0 align-self-center">@Model.CardCondition.Name</p>
+                                <p class="m-0 align-self-center">@Model.Quantity</p>
+                            </div>
+
+                            @*<div class="d-flex flex-row justify-content-between">
+                                <p class="m-0 align-self-center">@Model.CardCondition.Name</p>
+                                <div class="m-0 d-flex flex-row justify-content-between w-Quantity">
+                                    <div class="m-0 align-self-center">
+                                    <a href="#" class="text-danger text-decoration-none">
+                                    <i class="bi bi-dash-circle-fill minus-icon"></i>
+                                    </a>
+                                    </div>
+                                    <div class="m-0 align-self-center">
+                                        <p class="m-0">@Model.Quantity</p>
+                                    </div>
+                                    <div class="m-0 align-self-center">
+                                    <a href="#" class="text-primary text-decoration-none">
+                                    <i class="bi bi-plus-circle-fill plus-icon"></i>
+                                    </a>
+                                    </div>
+                                </div>
+                            </div>*@
+
+                        </div>
+                    @*</a>*@
+                    <div class="card-text">
+                        <div class="d-flex flex-row justify-content-between">
+                            <!-- Minus Button -->
+                            @*<div class="m-0 align-self-center">
+                                <a href="#" class="text-danger text-decoration-none">
+                                    <i class="bi bi-dash-circle-fill minus-icon fs-3"></i>
+                                </a>
+                            </div>*@
+                            @*<div class="m-0 align-self-center">
+                                <a class="btn btn-sm btn-block btn-info rounded-pill px-5" asp-controller="Collection" asp-action="Edit" asp-route-Record="@Model">Edit</a>
+                            </div>*@
+                            <form class="d-none" id="editForm_@uuid" method="get" action="@Url.Action("Edit", "Collection")">
+                                <input type="hidden" name="json" value="@JsonConvert.SerializeObject(Model)" />
+                            </form>
+                            @*<form class="d-none" id="deleteForm_@uuid" method="get" action="@Url.Action("Delete", "Collection")">
+                                <input type="hidden" name="json" value="@JsonConvert.SerializeObject(Model)" />
+                            </form>*@
+                            <div class="m-0 row">
+                                @*<div class="col-6">
+                                    <button class="btn btn-sm btn-block btn-danger rounded-pill px-3 edit-button" form="deleteForm_@uuid">Delete</button>
+                                </div>*@
+                                <div class="col-6 px-4">
+                                    <button class="btn btn-sm btn-block btn-warning rounded-pill text-center px-5 edit-button" form="editForm_@uuid">Edit</button>
+                                </div>
+                            </div>
+                            <!-- Plus Button -->
+                            @*<div class="m-0 align-self-center">
+                                <a href="#" class="text-primary text-decoration-none">
+                                    <i class="bi bi-plus-circle-fill plus-icon fs-3"></i>
+                                </a>
+                            </div>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<script>
+    var imageUrl = "@Model.CardFace";
+    var containerId = "@("cardContainer_" + uuid.ToString())";
+    var img = document.getElementById(containerId);
+
+    function displayCard(img) {
+        fetch(imageUrl)
+            .then(response => response.blob())
+            .then(blob => {
+                var reader = new FileReader();
+                reader.onloadend = function () {
+                    img.src = reader.result;
+                };
+                reader.readAsDataURL(blob);
+            });
+    }
+    displayCard(img);
+</script>
+
+<script>
+    var imageUrl = "@Model.SetIcon";
+    var containerId = "@("iconContainer_" + uuid.ToString())";
+    var iframe = document.getElementById(containerId);
+
+    function displayIcon(iframe) {
+        iframe.src = imageUrl;
+    }
+    displayIcon(iframe);
+</script>

@@ -1,0 +1,19 @@
+﻿@using MtG_UCC.Models.Database;
+
+@model List<CardStat>
+
+
+<div class="p-0 m-0">
+    <h1 class="text-center Plains_pFG Handwritten">Top 25 Cards</h1>
+    <div class="scroll-view-5 m-5">
+        <div class="row">
+            @if (Model != null && Model.Count > 0)
+            {
+                foreach (CardStat stat in Model)
+                {
+                    await Html.RenderPartialAsync("_StatsItem", stat);
+                }
+            }
+        </div>
+    </div>
+</div>

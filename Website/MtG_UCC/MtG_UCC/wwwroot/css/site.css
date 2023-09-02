@@ -1,18 +1,596 @@
+/*#region Imports*/
+
+/*#endregion*/
+
+/*#region Variables*/
+/*#region Custom*/
+:root {
+    --Radial: radial-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5));
+
+    --Swamps_FG: radial-gradient(circle, #150b00, #0b0600);
+    --Swamps_BG: radial-gradient(circle, #a69f9d, #53504f);
+    --Swamps_pFG: ##150b00;
+    --Swamps_pBG: #a69f9d;
+    --Swamps: radial-gradient(circle, #150b00, #a69f9d);
+    --DefaultSwamp: url(../images/ManaSymbols/Swamps/Default_Swamps.png);
+    --IncludedSwamp: url(../images/ManaSymbols/Swamps/Included_Swamps.png);
+    --ExcludedSwamp: url(../images/ManaSymbols/Swamps/Excluded_Swamps.png);
+
+    --Forests_FG: radial-gradient(circle, #00733d, #003a1f);
+    --Forests_BG: radial-gradient(circle, #c4d3ca, #626a65);
+    --Forests_pFG: #00733d;
+    --Forests_pBG: #c4d3ca;
+    --Forests: radial-gradient(circle, #00733d, #c4d3ca);
+    --DefaultForest: url(../images/ManaSymbols/Forests/Default_Forests.png);
+    --IncludedForest: url(../images/ManaSymbols/Forests/Included_Forests.png);
+    --ExcludedForest: url(../images/ManaSymbols/Forests/Excluded_Forests.png);
+
+    --Mountains_FG: radial-gradient(circle, #d32029, #6a1015);
+    --Mountains_BG: radial-gradient(circle, #eb9f82, #765041);
+    --Mountains_pFG: #d32029;
+    --Mountains_pBG: #eb9f82;
+    --Mountains: radial-gradient(circle, #d32029, #eb9f82);
+    --DefaultMountain: url(../images/ManaSymbols/Mountains/Default_Mountains.png);
+    --IncludedMountain: url(../images/ManaSymbols/Mountains/Included_Mountains.png);
+    --ExcludedMountain: url(../images/ManaSymbols/Mountains/Excluded_Mountains.png);
+
+    --Islands_FG: radial-gradient(circle, #0e68ab, #073456);
+    --Islands_BG: radial-gradient(circle, #b3ceea, #5a6775);
+    --Islands_pFG: #0e68ab;
+    --Islands_pBG: #b3ceea;
+    --Islands: radial-gradient(circle, #0e68ab, #b3ceea);
+    --DefaultIsland: url(../images/ManaSymbols/Islands/Default_Islands.png);
+    --IncludedIsland: url(../images/ManaSymbols/Islands/Included_Islands.png);
+    --ExcludedIsland: url(../images/ManaSymbols/Islands/Excluded_Islands.png);
+
+    --Plains_FG: radial-gradient(circle, #f9faf4, #7d7d7a);
+    --Plains_BG: radial-gradient(circle, #f8e7b9, #7c745d);
+    --Plains_pFG: #f9faf4;
+    --Plains_pBG: #f8e7b9;
+    --Plains: radial-gradient(circle, #f9faf4, #f8e7b9);
+    --DefaultPlain: url(../images/ManaSymbols/Plains/Default_Plains.png);
+    --IncludedPlain: url(../images/ManaSymbols/Plains/Included_Plains.png);
+    --ExcludedPlain: url(../images/ManaSymbols/Plains/Excluded_Plains.png);
+
+    --CardBack_FG: radial-gradient(circle, #703C2E, #381e17);
+    --CardBack_BG: radial-gradient(circle, #332D13, #1a170a);
+    --CardBack_pFG: #703C2E;
+    --CardBack_pBG: #332D13;
+    --CardBack: radial-gradient(circle, #703C2E, #332D13);
+
+    --CardBack_Img: url(../images/CardBack.png);
+
+    --ColoredManaIcon: url(../images/Icon/ColoredMana.png);
+    --ColorlessManaIcon: url(../images/Icon/Colorless.png);
+
+    /*#region Dupes*/
+    --Btn: 
+    /*#endregion*/
+}
+/*#endregion*/
+/*#region Fonts*/
+@font-face {
+    font-family: 'HandwritingBlack';
+    src: url("../fonts/handwriting-black.otf") format('opentype');
+}
+@font-face {
+    font-family: 'MagicMedieval';
+    src: url("../fonts/magic-medieval.ttf") format('truetype');
+}
+@font-face {
+    font-family: 'PlaneswalkerDings';
+    src: url("../fonts/planeswalker-dings.ttf") format('truetype');
+}
+/*#endregion*/
+/*#endregion*/
+
+/*#region html*/
 html {
-  font-size: 14px;
+    background: var(--ColoredManaIcon), radial-gradient(circle, rgba(125,125,122,1) 0%, rgba(0,0,0,1) 75%);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 75vh, 100%;
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
+/*#endregion*/
 
-html {
-  position: relative;
-  min-height: 100%;
-}
-
+/*#region body*/
 body {
-  margin-bottom: 60px;
+    background-color: rgba(0, 0, 0, 0);
 }
+/*#endregion*/
+
+/*#region Defaults*/
+h1 {
+    font-family: 'HandwritingBlack'!important;
+}
+h2, h3, h4, .text-dark {
+    font-family: 'MagicMedieval'!important;
+}
+
+.text-dark {
+    font-size: 1.5rem;
+}
+.nav-link {
+    font-weight: bold;
+}
+/*#endregion*/
+
+/*#region Custom Fonts*/
+.Handwritten {
+    font-family: 'HandwritingBlack', Arial, sans-serif;
+}
+.Magic {
+    font-family: 'MagicMedieval', Arial, sans-serif;
+}
+.Dings {
+    font-family: 'PlaneswalkerDings';
+}
+/*#endregion*/
+
+/*#region Form Override*/
+.form-control {
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+/*#endregion*/
+
+/*#region Custom Columns*/
+.col-card {
+    flex: 0 0 auto;
+    width: 41.26%;
+}
+.col-search {
+    flex: 0 0 auto;
+    width: 15%;
+}
+.col-details {
+    flex: 0 0 auto;
+    width: 55%;
+    height: 100%;
+}
+/*#endregion*/
+
+/*#region Custom Padding*/
+p-grid {
+    padding-right: 0.75rem !important;
+    padding-left: 0.75rem !important;
+}
+.p-card {
+    padding-left: 0.75rem!important;
+}
+/*#endregion*/
+
+/*#region Custom Width*/
+.w-Quantity {
+    width: 35% !important;
+}
+/*#endregion*/
+
+/*#region Backgrounds*/
+.CardBack {
+    background: var(--CardBack_FG);
+}
+.FormBack {
+    background-image: var(--bs-gradient);
+    background-color: rgba(255, 255, 255, 0.5);
+}
+/*#endregion*/
+
+/*#region Custom ManaIcon CheckBox*/
+
+/*#region Custom CheckBox*/
+.mana-checkbox {
+    display: inline-block;
+    cursor: pointer;
+}
+
+    .mana-checkbox .mana-icon {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+    }
+/*#endregion*/
+
+/*#region Individual Mana Variants*/
+
+/*#region ManaIcon Swamp*/
+.mana-icon.check-swamp.included {
+    background-image: var(--IncludedSwamp);
+}
+
+.mana-icon.check-swamp.excluded {
+    background-image: var(--ExcludedSwamp);
+}
+
+.mana-icon.check-swamp.undecided {
+    background-image: var(--DefaultSwamp);
+}
+/*#endregion*/
+
+/*#region ManaIcon Forest*/
+.mana-icon.check-forest.included {
+    background-image: var(--IncludedForest);
+}
+
+.mana-icon.check-forest.excluded {
+    background-image: var(--ExcludedForest);
+}
+
+.mana-icon.check-forest.undecided {
+    background-image: var(--DefaultForest);
+}
+/*#endregion*/
+
+/*#region ManaIcon Mountain*/
+.mana-icon.check-mountain.included {
+    background-image: var(--IncludedMountain);
+}
+
+.mana-icon.check-mountain.excluded {
+    background-image: var(--ExcludedMountain);
+}
+
+.mana-icon.check-mountain.undecided {
+    background-image: var(--DefaultMountain);
+}
+/*#endregion*/
+
+/*#region ManaIcon Island*/
+.mana-icon.check-island.included {
+    background-image: var(--IncludedIsland);
+}
+
+.mana-icon.check-island.excluded {
+    background-image: var(--ExcludedIsland);
+}
+
+.mana-icon.check-island.undecided {
+    background-image: var(--DefaultIsland);
+}
+/*#endregion*/
+
+/*#region ManaIcon Plain*/
+.mana-icon.check-plain.included {
+    background-image: var(--IncludedPlain);
+}
+
+.mana-icon.check-plain.excluded {
+    background-image: var(--ExcludedPlain);
+}
+
+.mana-icon.check-plain.undecided {
+    background-image: var(--DefaultPlain);
+}
+/*#endregion*/
+
+/*#endregion*/
+
+/*#endregion*/
+
+/*#region CardSizing*/
+.CardImage {
+    max-width: 15vw;
+    max-height: 25vh;
+}
+.CardSearch {
+    cursor: pointer;
+    max-width: 100%;
+}
+.CardSearchM {
+    max-width: 12.45vw;
+}
+/*#endregion*/
+
+/*#region CustomIcons*/
+
+.logo {
+    max-width: 7.5vw;
+    max-height: 7.5vh;
+}
+.plus-icon, .minus-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+.IconImage {
+    max-width: 3vh;
+    max-height: 3vh;
+}
+
+/*#region Swappable Icon*/
+.swap-icon {
+    position: absolute;
+    bottom: 37.5%;
+    right: 27.5%;
+    background-color: rgba(255, 255, 255, 0.0);
+    font-size: 5em;
+    padding: 5px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.swap-icon-alt {
+    position: absolute;
+    bottom: 50%;
+    right: 35%;
+    background-color: rgba(255, 255, 255, 0.0);
+    font-size: 5em;
+    padding: 5px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+/*#endregion*/
+
+/*#endregion*/
+
+/*#region Grid Items*/
+.grid-item {
+    max-height: 25vh;
+}
+.grid-spacer {
+    min-width: 30vw;
+}
+/*#endregion*/
+
+/*#region CustomColorations*/
+
+/*#region Mana*/
+
+/*#region Swamps*/
+.Swamps_FG {
+    background: var(--Swamps_FG);
+}
+.Swamps_BG {
+    background: var(--Swamps_BG);
+}
+/*#endregion*/
+
+/*#region Forests*/
+.Forests_FG {
+    background: var(--Forests_FG);
+    color: var(--Plains_pFG);
+}
+
+.Forests_BG {
+    background: var(--Forests_BG);
+}
+/*#endregion*/
+
+/*#region Mountains*/
+.Mountains_FG {
+    background: var(--Mountains_FG);
+    color: var(--Plains_pFG);
+}
+
+.Mountains_BG {
+    background: var(--Mountains_BG);
+}
+/*#endregion*/
+
+/*#region Islands*/
+.Islands_FG {
+    background: var(--Islands_FG);
+    color: var(--Plains_pFG);
+}
+
+.Islands_BG {
+    background: var(--Islands_BG);
+}
+/*#endregion*/
+
+/*#region Plains*/
+.Plains_FG {
+    background: var(--Plains_FG);
+    color: var(--Swamp_pFG);
+}
+
+.Plains_BG {
+    background: var(--Plains_BG);
+}
+.Plains_pFG {
+    color: var(--Plains_pFG);
+}
+/*#endregion*/
+
+/*#endregion*/
+
+/*#region Cards*/
+.Cards_FG {
+    background: var(--Cards_FG);
+}
+
+.Cards_BG {
+    background: var(--Cards_BG);
+}
+/*#endregion*/
+
+/*#region Color Overrides*/
+/*#region Button Overrides*/
+/*#region Forests*/
+.btn-Forest_BG {
+    background: var(--Forests_BG);
+}
+
+.btn-Forest_BG:hover {
+    background: var(--Forests_FG) !important;
+}
+/*#endregion*/
+/*#region Islands*/
+.btn-Island_BG {
+    background: var(--Islands_BG);
+}
+
+    .btn-Island_BG:hover {
+        background: var(--Islands_FG) !important;
+    }
+/*#endregion*/
+/*#endregion*/
+/*#region Text Overrides*/
+
+.tooltip {
+    background: var(--Swamps_pFG);
+    color: var(--Plains_pFG);
+}
+.card-text {
+    color: var(--Swamps_pFG)
+}
+.nav-link:hover {
+    color: var(--Islands_pFG)!important;
+}
+.dropdown-menu {
+    /*min-height: 10vh;
+    min-width: 10vw;
+    padding: 0 !important;
+    margin: 0 !important;*/
+    background: var(--Islands_FG);
+}
+.dropdown-item {
+    font-weight: bold!important;
+    color: var(--Plains_pFG)!important;
+}
+.dropdown-menu:hover {
+    background: var(--Islands)!important;
+}
+.dropdown-item:hover, .dropdown-item:focus {
+    font-weight: bolder!important;
+    color: var(--Swamps_pFG)!important;
+    background: var(--Forests)!important;
+}
+.dropdown-menu[data-bs-popper] {
+    top: 80%!important;
+    left: 0!important;
+}
+/*#endregion*/
+/*#endregion*/
+/*#endregion*/
+
+.text-start {
+    text-align: left !important;
+}
+
+
+
+
+.siteName {
+    font-size: 1.25em;
+    font-weight: bold;
+    margin-left: 0.5vw;
+    font-family: 'HandwritingBlack', Arial, sand-serif;
+}
+
+.scroll-view {
+    height: 40vh; /* Set your desired height */
+    width: 100%;
+    overflow: auto; /* Enable vertical and/or horizontal scrolling when content overflows */
+    overflow-x: hidden;
+}
+.scroll-view-5 {
+    height: 90%;
+    overflow: auto; /* Enable vertical and/or horizontal scrolling when content overflows */
+    overflow-x: hidden;
+}
+
+.container.col-search {
+    /* Add any specific styling for the container here */
+}
+
+.stat-flex {
+    flex: 0 0 auto;
+    width: 20% !important;
+}
+
+.card-container {
+    width: 14vw;
+    height: 38.5vh;
+    perspective: 1000px; /* Set the perspective for the 3D effect */
+    cursor: pointer;
+}
+
+.card {
+    width: 95%;
+    height: 95%;
+    background-color: transparent;
+    transition: transform 0.6s; /* Add a transition for the flip effect */
+}
+
+.card-front {
+    transform: rotateY(0deg);
+}
+
+.card-back {
+    transform: rotateY(180deg);
+}
+
+.card-container.flipped .card-front {
+    transform: rotateY(180deg);
+}
+
+.card-container.flipped .card-back {
+    transform: rotateY(0deg);
+}
+
+.CardBackImg {
+    font-weight: bolder;
+    background-image: var(--CardBack_Img);
+    background-size: cover;
+    background-color: transparent;
+}
+.CardBackImgBacking {
+    background: radial-gradient(circle, rgba(249, 250, 244, 0.65), rgba(125, 125, 122, 0.65));
+    width: 100%;
+    height: 36.75vh!important;
+    border-radius: 1vw;
+}
+.AdjustedBacking {
+    background: radial-gradient(circle, rgba(249, 250, 244, 0.75), rgba(125, 125, 122, 0.75));
+    border-radius: 1vw;
+}
+.zFix {
+    z-index: -1;
+}
+
+/*#region Custom Table*/
+
+div table.Clickable tbody tr {
+    background: var(--Islands_BG)!important;
+    cursor: pointer;
+}
+
+table.Clickable tbody tr:hover {
+    background: var(--Forests_BG)!important;
+}
+
+.margin-collection {
+    flex: 0 0 auto;
+    width: 53%;
+    height: 100%;
+    margin-left: 1.3rem !important;
+}
+/*#endregion*/

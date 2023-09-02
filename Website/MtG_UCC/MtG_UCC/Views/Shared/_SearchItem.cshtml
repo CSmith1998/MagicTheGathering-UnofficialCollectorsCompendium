@@ -1,0 +1,113 @@
+﻿@using Newtonsoft.Json;
+@using MtG_UCC.Models.Scryfall_Card;
+@using System.Diagnostics;
+
+@model Card
+@{
+    var uuid = Guid.NewGuid();
+}
+
+@if(Model.ImageUris != null) {
+    <div class="container col-search">
+        <div class="row">
+            <div class="m-0 p-0">
+                <a class="text-decoration-none" href="@Model.ScryfallUri" target="_blank" >
+                    <img class="CardSearch tooltips" data-placement="top" title="Click to view card details on Scryfall" id="@("cardContainer_" + uuid)" />
+                </a>
+            </div>
+        </div>
+        @if (User.Identity.IsAuthenticated) {
+            <div class="row">
+                <form class="d-none" id="selectCard_@uuid" method="get" action="@Url.Action("Create", "Collection")">
+                    <input type="hidden" name="json" value="@JsonConvert.SerializeObject(Model)" />
+                </form>
+                <div class="row m-0 p-0">
+                    <div class="col-12 m-0 p-0">
+                        <button class="btn btn-sm btn-block btn-success rounded-bottom w-100 edit-button" form="selectCard_@uuid">Add to Collection</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <script>
+        var imageUrl = ("@Model.ImageUris.Png");
+        var containerId = "@("cardContainer_" + uuid.ToString())";
+        var img = document.getElementById(containerId);
+
+        function displayCard(img) {
+            fetch(imageUrl)
+                .then(response => response.blob())
+                .then(blob => {
+                    var reader = new FileReader();
+                    reader.onloadend = function () {
+                        img.src = reader.result;
+                    };
+                    reader.readAsDataURL(blob);
+                });
+        }
+        displayCard(img);
+    </script>
+} else if (Model.CardFaces != null && Model.CardFaces.FirstOrDefault().ImageUris != null) {
+    <div class="container p-grid col-search">
+        <div class="row">
+            <div class="m-0 p-0">
+                <div class="position-relative">
+                    <a class="text-decoration-none" href="@Model.ScryfallUri" target="_blank">
+                        <img class="CardSearch tooltips" data-placement="top" title="Click to view card details on Scryfall" id="@("faceContainer_" + uuid)" />
+                    </a>
+                    <div class="tooltips swap-icon" id="@("swapContainer_" + uuid)" data-placement="top" title="Click To View Reverse Side">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="#AAAAAA" viewBox="0 0 16 16">
+                            <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" />
+                            <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @if (User.Identity.IsAuthenticated) {
+            <div class="row">
+                <form class="d-none" id="selectCard_@uuid" method="get" action="@Url.Action("Create", "Collection")">
+                    <input type="hidden" name="json" value="@JsonConvert.SerializeObject(Model)" />
+                </form>
+                <div class="row m-0 p-0">
+                    <div class="col-12 m-0 p-0">
+                        <button class="btn btn-sm btn-block btn-success rounded-bottom w-100 edit-button" form="selectCard_@uuid">Add to Collection</button>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <script>
+            (function () {
+                // Function to handle each card instance
+                function setupCardInstance(uuid) {
+                    var currentFace = 0;
+                    var faces = ["@Model.CardFaces[0].ImageUris.Png", "@Model.CardFaces[1].ImageUris.Png"];
+                    var img = document.getElementById("faceContainer_" + uuid);
+
+                    function displayCard(faceIndex) {
+                        var imageUrl = faces[faceIndex];
+                        img.src = imageUrl;
+                    }
+
+                    function swapCardFace() {
+                        currentFace = (currentFace + 1) % faces.length;
+                        displayCard(currentFace);
+                    }
+
+                    // Display the initial face (first face) of the card
+                    displayCard(0);
+
+                    // Add the swapCardFace function to the swap-icon div's onclick event
+                    var swapIconDiv = document.getElementById("swapContainer_" + uuid);
+                    swapIconDiv.onclick = function () {
+                        swapCardFace();
+                    };
+                }
+
+                // Call setupCardInstance with the unique identifier (uuid) to set up each card instance separately
+                setupCardInstance('@uuid');
+            })();
+        </script>
+    </div>
+}

@@ -1,0 +1,61 @@
+﻿@using MtG_UCC.Models.Scryfall_Search
+
+@model TrimmedSearch
+
+<form asp-controller="@ViewContext.RouteData.Values["controller"]" asp-action="@ViewContext.RouteData.Values["action"]" method="post">
+    <div class="container justify-content-center border border-2 border-dark rounded-2 col-7 CardBack">
+        <div class="container my-2 border border-2 border-dark rounded-2 FormBack">
+            <div class="row justify-content-center my-2">
+                <div class="col-auto">
+                    <div class="form-group row">
+                        <div class="col-auto">
+                            @Html.LabelFor(m => m.CardName, new { @class = "col-form-label" })
+                        </div>
+                        <div class="col-auto">
+                            @Html.TextBoxFor(m => m.CardName, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="form-group row">
+                        <div class="col-auto">
+                            @Html.LabelFor(m => m.Set, new { @class = "col-form-label" })
+                        </div>
+                        <div class="col-auto">
+                            @Html.TextBoxFor(m => m.Set, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container mb-2 border border-2 border-dark rounded-2 FormBack">
+            <div class="row justify-content-center my-2">
+                <div class="col-auto mx-4 mana-checkbox" onclick="toggleManaCheckbox(this)">
+                    <span class="mana-icon check-swamp undecided"></span>
+                    @Html.DropDownListFor(m => m.Colors.Black, Html.GetEnumSelectList(typeof(ColorOption)), new { @class = "d-none form-control" })
+                </div>
+                <div class="col-auto mx-4 mana-checkbox" onclick="toggleManaCheckbox(this)">
+                    <span class="mana-icon check-forest undecided"></span>
+                    @Html.DropDownListFor(m => m.Colors.Green, Html.GetEnumSelectList(typeof(ColorOption)), new { @class = "d-none form-control" })
+                </div>
+                <div class="col-auto mx-4 mana-checkbox" onclick="toggleManaCheckbox(this)">
+                    <span class="mana-icon check-mountain undecided"></span>
+                    @Html.DropDownListFor(m => m.Colors.Red, Html.GetEnumSelectList(typeof(ColorOption)), new { @class = "d-none form-control" })
+                </div>
+                <div class="col-auto mx-4 mana-checkbox" onclick="toggleManaCheckbox(this)">
+                    <span class="mana-icon check-island undecided"></span>
+                    @Html.DropDownListFor(m => m.Colors.Blue, Html.GetEnumSelectList(typeof(ColorOption)), new { @class = "d-none form-control" })
+                </div>
+                <div class="col-auto mx-4 mana-checkbox" onclick="toggleManaCheckbox(this)">
+                    <span class="mana-icon check-plain undecided"></span>
+                    @Html.DropDownListFor(m => m.Colors.White, Html.GetEnumSelectList(typeof(ColorOption)), new { @class = "d-none form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="d-flex flex-row justify-content-center mb-2">
+                <button class="btn btn-block btn-Forest_BG w-50 px-5" type="submit">Search</button>
+            </div>
+        </div>
+    </div>
+</form>

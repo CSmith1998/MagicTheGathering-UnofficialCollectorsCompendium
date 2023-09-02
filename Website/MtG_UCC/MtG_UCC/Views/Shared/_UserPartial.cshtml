@@ -1,0 +1,26 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using MtG_UCC.Models.Database;
+@using MtG_UCC.Models.Microsoft_Identity;
+@model UsersWithRoles
+
+@{
+    List<IdentityRole> roles = (List<IdentityRole>)ViewData["RolesList"];
+    var uuid = Guid.NewGuid();
+
+    var temp = "user_" + uuid;
+}
+
+<tr>
+    <td>@Model.UserId</td>
+    <td>@Model.UserName</td>
+    <td>
+        @Html.TextBoxFor(m => m.RoleName, new { @type="hidden" })
+        @Html.DropDownListFor(m => m.RoleId, new SelectList(roles, "Id", "Name"), new { @form=$"{temp}" })
+    </td>
+    <td>
+        <form id="@("user_" + uuid)" asp-controller="Admin" asp-action="EditRole" method="post">
+            <input type="hidden" name="UserId" value="@Model.UserId" />
+            <button type="submit" class="btn btn-primary save-button">Save</button>
+        </form>
+    </td>
+</tr>
